@@ -1,5 +1,3 @@
-import React from "react";
-
 const RunningText = () => (
   <div
     style={{
@@ -9,11 +7,30 @@ const RunningText = () => (
       fontWeight: 500,
       margin: "2rem 0",
       letterSpacing: "1px",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
     }}
   >
-    <marquee>
+    <div
+      style={{
+        display: "inline-block",
+        animation: "marquee 20s linear infinite",
+      }}
+    >
       <span>--------------running text for updates--------------</span>
-    </marquee>
+    </div>
+    <style>
+      {`
+        @keyframes marquee {
+          0% {
+            transform: translateX(100%);
+          }
+          100% {
+            transform: translateX(-100%);
+          }
+        }
+      `}
+    </style>
   </div>
 );
 

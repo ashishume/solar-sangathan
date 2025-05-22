@@ -11,9 +11,9 @@ const RunningText = () => (
       letterSpacing: "1px",
     }}
   >
-    <span style={{ borderBottom: "3px solid #000", paddingBottom: "0.2rem" }}>
-      --------------running text for updates--------------
-    </span>
+    <marquee>
+      <span>--------------running text for updates--------------</span>
+    </marquee>
   </div>
 );
 

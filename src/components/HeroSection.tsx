@@ -1,4 +1,5 @@
 import React from "react";
+import RunningText from "./RunningText";
 
 const HeroSection = () => (
   <section className="hero-section">
@@ -8,6 +9,8 @@ const HeroSection = () => (
       className="hero-img"
     />
     <div className="hero-content">
+      <RunningText />
+
       <div className="hero-title">
         Join <span style={{ color: "#b22222" }}>Solar Sangathan</span>,<br />
         the world's largest and most successful solar association.

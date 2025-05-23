@@ -1,4 +1,4 @@
-const RunningText = () => (
+const RunningText = ({ runningText }: { runningText: string }) => (
   <div
     style={{
       width: "100%",
@@ -17,7 +17,7 @@ const RunningText = () => (
         animation: "marquee 20s linear infinite",
       }}
     >
-      <span>--------------running text for updates--------------</span>
+      <span>{runningText}</span>
     </div>
     <style>
       {`

@@ -11,7 +11,7 @@ const Home = () => (
     <Navbar />
     <main className="bg-white min-h-screen">
       <HeroSection />
-      <section className="stats-video-section container">
+      <section className="container flex flex-col md:flex-row gap-4 justify-center items-center">
         <VideoSection />
         <StatsGrid />
       </section>

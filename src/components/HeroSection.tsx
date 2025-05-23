@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import RunningText from "./RunningText";
 import LeftArrow from "../assets/icons/left-arrow";
 import RightArrow from "../assets/icons/right-arrow";

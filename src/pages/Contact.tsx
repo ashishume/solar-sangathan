@@ -1,5 +1,3 @@
-import React from "react";
-
 const Contact = () => (
   <div style={{ padding: "2rem" }}>
     <h2>Contact Page</h2>

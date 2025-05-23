@@ -1,5 +1,3 @@
-import React from "react";
-
 const stats = [
   { label: "500+ Members" },
   { label: "28+ States" },

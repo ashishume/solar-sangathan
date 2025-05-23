@@ -1,5 +1,3 @@
-import React from "react";
-
 const About = () => (
   <div style={{ padding: "2rem" }}>
     <h2>About Page</h2>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import MenuIcon from "../assets/icons/menu";
 import CloseIcon from "../assets/icons/close";

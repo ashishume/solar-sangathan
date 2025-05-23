@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PlayIcon from "../assets/icons/play";
 
 interface VideoData {
   id: string;
@@ -36,17 +37,7 @@ const VideoSection = () => {
             onClick={handlePlay}
           >
             <div className="w-20 h-20 flex items-center justify-center">
-              <svg
-                width="48"
-                height="48"
-                viewBox="0 0 32 32"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="transform hover:scale-110 transition-transform"
-              >
-                <circle cx="16" cy="16" r="16" fill="white" />
-                <polygon points="13,10 24,16 13,22" fill="#b22222" />
-              </svg>
+              <PlayIcon className="transform hover:scale-110 transition-transform" />
             </div>
           </div>
         </div>

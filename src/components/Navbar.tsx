@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import MenuIcon from "../assets/icons/menu";
+import CloseIcon from "../assets/icons/close";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="bg-white h-18 shadow-sm transition-all duration-300">
+    <nav className="bg-white h-18 sticky top-0 z-50 transition-all duration-300 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -23,40 +25,16 @@ const Navbar = () => {
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
-              <svg
+              <MenuIcon
                 className={`${
                   open ? "hidden" : "block"
                 } h-6 w-6 transition-transform duration-300`}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-              <svg
+              />
+              <CloseIcon
                 className={`${
                   open ? "block" : "hidden"
                 } h-6 w-6 transition-transform duration-300`}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              />
             </button>
           </div>
 
@@ -105,7 +83,7 @@ const Navbar = () => {
       <div
         className={`${
           open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-        } md:hidden overflow-hidden transition-all duration-300 ease-in-out`}
+        } md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white shadow-lg`}
       >
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <Link

@@ -6,6 +6,7 @@ import YouTubeBanner from "../components/YouTubeBanner";
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
 import StepsToSuccess from "../components/StepsToSuccess";
+import BrandBanner from "../components/BrandBanner";
 
 const Home = () => {
   return (
@@ -23,6 +24,9 @@ const Home = () => {
       <section className="py-16 bg-gradient-to-b from-white to-gray-50">
         <MediaStatsSection />
       </section>
+
+      {/* Brand Banner Section */}
+      <BrandBanner />
 
       {/* YouTube Banner */}
       <section className="py-8">

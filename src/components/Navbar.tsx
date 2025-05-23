@@ -1,10 +1,19 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import MenuIcon from "../assets/icons/menu";
 import CloseIcon from "../assets/icons/close";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+
+  const navLinks = [
+    { to: "/about", label: "About" },
+    { to: "/shop", label: "Shop" },
+    { to: "/blog", label: "Blog" },
+    { to: "/training", label: "Training" },
+    { to: "/contact", label: "Contact Us" },
+  ];
 
   return (
     <nav className="bg-white h-18 sticky top-0 z-50 transition-all duration-300 shadow-lg">
@@ -40,36 +49,19 @@ const Navbar = () => {
 
           {/* Desktop menu */}
           <div className="hidden md:flex md:items-center md:space-x-8">
-            <Link
-              to="/about"
-              className="text-gray-700 hover:text-red-600 px-3 py-2 text-sm font-medium transition-colors duration-300"
-            >
-              About
-            </Link>
-            <Link
-              to="/shop"
-              className="text-gray-700 hover:text-red-600 px-3 py-2 text-sm font-medium transition-colors duration-300"
-            >
-              Shop
-            </Link>
-            <Link
-              to="/blog"
-              className="text-gray-700 hover:text-red-600 px-3 py-2 text-sm font-medium transition-colors duration-300"
-            >
-              Blog
-            </Link>
-            <Link
-              to="/training"
-              className="text-gray-700 hover:text-red-600 px-3 py-2 text-sm font-medium transition-colors duration-300"
-            >
-              Training
-            </Link>
-            <Link
-              to="/contact"
-              className="text-gray-700 hover:text-red-600 px-3 py-2 text-sm font-medium transition-colors duration-300"
-            >
-              Contact Us
-            </Link>
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`px-3 py-2 text-sm font-medium transition-colors duration-300 ${
+                  location.pathname === link.to
+                    ? "text-red-600 font-bold underline underline-offset-4"
+                    : "text-gray-700 hover:text-red-600"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
             <Link to="/join">
               <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 transform hover:scale-105">
                 Join as member
@@ -86,41 +78,20 @@ const Navbar = () => {
         } md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white shadow-lg`}
       >
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <Link
-            to="/about"
-            onClick={() => setOpen(false)}
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-red-600 hover:bg-gray-50 transition-all duration-300"
-          >
-            About
-          </Link>
-          <Link
-            to="/shop"
-            onClick={() => setOpen(false)}
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-red-600 hover:bg-gray-50 transition-all duration-300"
-          >
-            Shop
-          </Link>
-          <Link
-            to="/blog"
-            onClick={() => setOpen(false)}
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-red-600 hover:bg-gray-50 transition-all duration-300"
-          >
-            Blog
-          </Link>
-          <Link
-            to="/training"
-            onClick={() => setOpen(false)}
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-red-600 hover:bg-gray-50 transition-all duration-300"
-          >
-            Training
-          </Link>
-          <Link
-            to="/contact"
-            onClick={() => setOpen(false)}
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-red-600 hover:bg-gray-50 transition-all duration-300"
-          >
-            Contact Us
-          </Link>
+          {navLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              onClick={() => setOpen(false)}
+              className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-300 ${
+                location.pathname === link.to
+                  ? "text-red-600 font-bold bg-red-100"
+                  : "text-gray-700 hover:text-red-600 hover:bg-gray-50"
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
           <Link
             to="/join"
             onClick={() => setOpen(false)}

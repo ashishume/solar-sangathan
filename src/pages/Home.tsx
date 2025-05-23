@@ -5,6 +5,7 @@ import TestimonialBanner from "../components/TestimonialBanner";
 import YouTubeBanner from "../components/YouTubeBanner";
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
+import StepsToSuccess from "../components/StepsToSuccess";
 
 const Home = () => {
   return (
@@ -14,6 +15,9 @@ const Home = () => {
       <section className="relative">
         <HeroSection />
       </section>
+
+      {/* Steps to Success Section */}
+      <StepsToSuccess />
 
       {/* Media and Stats Section */}
       <section className="py-16 bg-gradient-to-b from-white to-gray-50">

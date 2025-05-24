@@ -166,9 +166,10 @@ const BlogPostPage = () => {
               </div>
 
               {/* Blog Content */}
-              <div className="prose prose-lg max-w-none">
-                <p>{blog.content}</p>
-              </div>
+              <div
+                className="prose prose-lg max-w-none"
+                dangerouslySetInnerHTML={{ __html: blog.content }}
+              />
 
               {/* Tags */}
               <div className="mt-8 pt-8 border-t border-gray-200">

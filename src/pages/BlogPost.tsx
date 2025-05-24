@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/footer";
 import BlogSidebar from "../components/BlogSidebar";
 import { blogService } from "../services/blogService";
 import type { BlogPost } from "../services/blogService";
@@ -103,116 +101,109 @@ const BlogPostPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
-          </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
         </div>
-        <Footer />
       </div>
     );
   }
 
   if (error || !blog) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <Navbar />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center text-red-600">
-            {error || "Blog post not found"}
-          </div>
-          <div className="text-center mt-4">
-            <button
-              onClick={() => navigate("/blog")}
-              className="text-red-600 hover:text-red-700"
-            >
-              ← Back to Blog
-            </button>
-          </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center text-red-600">
+          {error || "Blog post not found"}
         </div>
-        <Footer />
+        <div className="text-center mt-4">
+          <button
+            onClick={() => navigate("/blog")}
+            className="text-red-600 hover:text-red-700"
+          >
+            ← Back to Blog
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-3">
-            <button
-              onClick={() => navigate("/blog")}
-              className="text-red-600 hover:text-red-700 mb-8"
-            >
-              ← Back to Blog
-            </button>
-
-            <article className="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        {/* Main Content */}
+        <div className="lg:col-span-3">
+          <article className="bg-white rounded-xl shadow-lg overflow-hidden">
+            {/* Cover Image */}
+            <div className="relative h-[400px]">
               <img
                 src={blog.coverImage}
                 alt={blog.title}
-                className="w-full h-96 object-cover"
+                className="w-full h-full object-cover"
               />
-              <div className="p-8">
+            </div>
+
+            {/* Content */}
+            <div className="p-8">
+              {/* Header */}
+              <div className="mb-8">
                 <h1 className="text-4xl font-bold text-gray-900 mb-4">
                   {blog.title}
                 </h1>
-                <div className="flex items-center gap-4 mb-6">
-                  <img
-                    src={blog.author.avatar}
-                    alt={blog.author.name}
-                    className="w-12 h-12 rounded-full"
-                  />
-                  <div>
-                    <p className="font-medium text-gray-900">
-                      {blog.author.name}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      {new Date(blog.publishedAt).toLocaleDateString()} ·{" "}
-                      {blog.readTime} min read
-                    </p>
+                <div className="flex items-center gap-4 text-gray-600">
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={blog.author.avatar}
+                      alt={blog.author.name}
+                      className="w-10 h-10 rounded-full"
+                    />
+                    <span>{blog.author.name}</span>
                   </div>
-                </div>
-                <div className="prose prose-lg max-w-none">{blog.content}</div>
-                <div className="mt-8 pt-8 border-t border-gray-200">
-                  <div className="flex flex-wrap gap-2">
-                    <span
-                      key={blog.category}
-                      className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm"
-                    >
-                      {blog.category}
-                    </span>
-                  </div>
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {blog.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm"
-                      >
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
+                  <span>•</span>
+                  <span>{new Date(blog.publishedAt).toLocaleDateString()}</span>
+                  <span>•</span>
+                  <span>{blog.readTime} min read</span>
                 </div>
               </div>
-            </article>
-          </div>
 
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <BlogSidebar
-              popularPosts={popularPosts}
-              categories={categoryCounts}
-              tags={popularTags}
-            />
-          </div>
+              {/* Blog Content */}
+              <div className="prose prose-lg max-w-none">
+                <p>{blog.content}</p>
+              </div>
+
+              {/* Tags */}
+              <div className="mt-8 pt-8 border-t border-gray-200">
+                <div className="flex flex-wrap gap-2">
+                  <span
+                    key={blog.category}
+                    className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm"
+                  >
+                    {blog.category}
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {blog.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        {/* Sidebar */}
+        <div className="lg:col-span-1">
+          <BlogSidebar
+            popularPosts={popularPosts}
+            categories={categoryCounts}
+            tags={popularTags}
+          />
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

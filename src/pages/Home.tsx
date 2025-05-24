@@ -3,15 +3,12 @@ import MediaStatsSection from "../components/MediaStatsSection";
 import OurPresence from "../components/OurPresence";
 import TestimonialBanner from "../components/TestimonialBanner";
 import YouTubeBanner from "../components/YouTubeBanner";
-import Navbar from "../components/Navbar";
-import Footer from "../components/footer";
 import StepsToSuccess from "../components/StepsToSuccess";
 import BrandBanner from "../components/BrandBanner";
 
 const Home = () => {
   return (
-    <main className="min-h-screen bg-white">
-      <Navbar />
+    <>
       {/* Hero Section */}
       <section className="relative">
         <HeroSection />
@@ -42,9 +39,7 @@ const Home = () => {
       <section className="py-16">
         <TestimonialBanner />
       </section>
-      {/* Footer section */}
-      <Footer />
-    </main>
+    </>
   );
 };
 

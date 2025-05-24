@@ -8,20 +8,23 @@ import Training from "./pages/Training";
 import Contact from "./pages/Contact";
 import Join from "./pages/Join";
 import BlogPost from "./pages/BlogPost";
+import Layout from "./components/Layout";
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/:id" element={<BlogPost />} />
-        <Route path="/training" element={<Training />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/join" element={<Join />} />
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
+          <Route path="/training" element={<Training />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/join" element={<Join />} />
+        </Routes>
+      </Layout>
     </Router>
   );
 }

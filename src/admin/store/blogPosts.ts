@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import type { StateCreator } from "zustand";
 
 export interface BlogPost {
   id: number;

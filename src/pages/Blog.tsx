@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
 import BlogCard from "../components/BlogCard";
+import BlogSidebar from "../components/BlogSidebar";
 import { blogService } from "../services/blogService";
 import type { BlogPost } from "../services/blogService";
 
@@ -22,6 +23,26 @@ const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Mock data for sidebar
+  const popularPosts = recentBlogs;
+  const categoryCounts = [
+    { name: "Solar Technology", count: 12 },
+    { name: "Industry News", count: 8 },
+    { name: "Installation Guide", count: 15 },
+    { name: "Market Trends", count: 10 },
+    { name: "Sustainability", count: 7 },
+  ];
+  const popularTags = [
+    { name: "Solar Energy", count: 25 },
+    { name: "Renewable Energy", count: 20 },
+    { name: "Technology", count: 18 },
+    { name: "Sustainability", count: 15 },
+    { name: "Green Living", count: 12 },
+    { name: "Innovation", count: 10 },
+    { name: "India", count: 8 },
+    { name: "Market Trends", count: 7 },
+  ];
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -136,55 +157,69 @@ const Blog = () => {
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
           </div>
         ) : (
-          <>
-            {/* Recent Blogs */}
-            {selectedCategory === "All" && (
-              <section className="mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            {/* Main Content */}
+            <div className="lg:col-span-3">
+              {/* Recent Blogs */}
+              {selectedCategory === "All" && (
+                <section className="mb-12">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                    Recent Posts
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {recentBlogs.map((blog) => (
+                      <BlogCard key={blog.id} blog={blog} />
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* All Blogs */}
+              <section>
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  Recent Posts
+                  {selectedCategory === "All"
+                    ? "All Posts"
+                    : `${selectedCategory} Posts`}
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {recentBlogs.map((blog) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {allBlogs.map((blog) => (
                     <BlogCard key={blog.id} blog={blog} />
                   ))}
                 </div>
               </section>
-            )}
 
-            {/* All Blogs */}
-            <section>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                {selectedCategory === "All"
-                  ? "All Posts"
-                  : `${selectedCategory} Posts`}
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {allBlogs.map((blog) => (
-                  <BlogCard key={blog.id} blog={blog} />
-                ))}
+              {/* Pagination */}
+              <div className="flex justify-center mt-12">
+                <button
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 mx-1 rounded-lg bg-white text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+                >
+                  Previous
+                </button>
+                <span className="px-4 py-2 mx-1 rounded-lg bg-red-600 text-white">
+                  {currentPage}
+                </span>
+                <button
+                  onClick={() => setCurrentPage((prev) => prev + 1)}
+                  className="px-4 py-2 mx-1 rounded-lg bg-white text-gray-600 hover:bg-gray-100"
+                >
+                  Next
+                </button>
               </div>
-            </section>
-
-            {/* Pagination */}
-            <div className="flex justify-center mt-12">
-              <button
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
-                className="px-4 py-2 mx-1 rounded-lg bg-white text-gray-600 hover:bg-gray-100 disabled:opacity-50"
-              >
-                Previous
-              </button>
-              <span className="px-4 py-2 mx-1 rounded-lg bg-red-600 text-white">
-                {currentPage}
-              </span>
-              <button
-                onClick={() => setCurrentPage((prev) => prev + 1)}
-                className="px-4 py-2 mx-1 rounded-lg bg-white text-gray-600 hover:bg-gray-100"
-              >
-                Next
-              </button>
             </div>
-          </>
+
+            {/* Sidebar */}
+            <div className="lg:col-span-1">
+              <BlogSidebar
+                popularPosts={popularPosts}
+                categories={categoryCounts}
+                tags={popularTags}
+              />
+            </div>
+          </div>
         )}
       </div>
       <Footer />

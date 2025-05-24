@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import RunningText from "./RunningText";
-import LeftArrow from "../assets/icons/left-arrow";
-import RightArrow from "../assets/icons/right-arrow";
 
 const images = [
   "https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=3272&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",

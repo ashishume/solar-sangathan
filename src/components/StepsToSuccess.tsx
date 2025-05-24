@@ -1,7 +1,6 @@
 import UserIcon from "../assets/icons/step1";
 import DollarIcon from "../assets/icons/step2";
 import ChartIcon from "../assets/icons/step3";
-import Step3Icon from "../assets/icons/step3";
 
 const StepsToSuccess = () => {
   return (

@@ -21,9 +21,12 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <div className="text-xl font-semibold text-red-600 transition-colors duration-300 hover:text-red-700">
+            <Link
+              to="/"
+              className="text-xl font-semibold text-red-600 transition-colors duration-300 hover:text-red-700"
+            >
               Logo
-            </div>
+            </Link>
           </div>
 
           {/* Mobile menu button */}

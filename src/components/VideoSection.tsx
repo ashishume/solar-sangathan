@@ -30,7 +30,7 @@ const VideoSection = () => {
         </div>
       ) : (
         <iframe
-          src={`https://www.youtube.com/embed/${videoData.id}?autoplay=1`}
+          src={`https://www.youtube.com/embed/${videoData.videoUrl}?autoplay=1`}
           title={videoData.title}
           className="w-full h-full"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

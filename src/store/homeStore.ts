@@ -30,7 +30,7 @@ interface Brand {
 }
 
 interface VideoData {
-  id: string;
+  videoUrl: string;
   title: string;
   thumbnailUrl: string;
 }
@@ -71,7 +71,7 @@ export const useHomeStore = create<HomeState>((set) => ({
   channels: [],
   brands: [],
   videoData: {
-    id: "",
+    videoUrl: "",
     title: "",
     thumbnailUrl: "",
   },

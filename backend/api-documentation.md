@@ -1073,7 +1073,7 @@ Response (200 OK):
 #### Get All Hero Images
 
 ```http
-GET /hero-images
+GET /carousel
 ```
 
 Response (200 OK):
@@ -1094,7 +1094,7 @@ Response (200 OK):
 #### Get Hero Image by ID
 
 ```http
-GET /hero-images/:id
+GET /carousel/:id
 ```
 
 Response (200 OK):
@@ -1113,7 +1113,7 @@ Response (200 OK):
 #### Create Hero Image
 
 ```http
-POST /hero-images
+POST /carousel
 ```
 
 Request Body:
@@ -1142,7 +1142,7 @@ Response (201 Created):
 #### Update Hero Image
 
 ```http
-PUT /hero-images/:id
+PUT /carousel/:id
 ```
 
 Request Body:
@@ -1171,7 +1171,7 @@ Response (200 OK):
 #### Delete Hero Image
 
 ```http
-DELETE /hero-images/:id
+DELETE /carousel/:id
 ```
 
 Response (200 OK):

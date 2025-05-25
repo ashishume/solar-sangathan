@@ -25,28 +25,30 @@ const OurPresence = () => {
               {/* Image Container */}
               <div className="relative h-48 overflow-hidden">
                 <img
-                  src={ch.img}
+                  src={ch.image}
                   alt={ch.title}
                   className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                 />
                 <div
-                  className={`absolute inset-0 bg-gradient-to-b from-transparent to-${ch.color} opacity-60`}
+                  className={`absolute inset-0 bg-gradient-to-b from-transparent to-blue-500 opacity-60`}
                 ></div>
               </div>
 
               {/* Content */}
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="text-3xl">{ch.icon}</span>
+                  {ch.icon && <span className="text-3xl">{ch.icon}</span>}
                   <h3 className="text-xl font-bold text-gray-900">
                     {ch.title}
                   </h3>
                 </div>
 
-                <p className="text-gray-600 mb-6 min-h-[60px]">{ch.desc}</p>
+                <p className="text-gray-600 mb-6 min-h-[60px]">
+                  {ch.description}
+                </p>
 
                 <button
-                  className={`w-full py-3 px-6 rounded-xl bg-gradient-to-r ${ch.color} text-white font-semibold 
+                  className={`w-full py-3 px-6 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold 
                   transform hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg`}
                 >
                   Join Channel

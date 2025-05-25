@@ -5,9 +5,9 @@ import { useHomeStore } from "../store/homeStore";
 const TestimonialBanner = () => {
   const { testimonials } = useHomeStore();
   const [scrollPosition1, setScrollPosition1] = useState(0);
-  const [scrollPosition2, setScrollPosition2] = useState(0);
+  // const [scrollPosition2, setScrollPosition2] = useState(0);
   const containerRef1 = useRef<HTMLDivElement>(null);
-  const containerRef2 = useRef<HTMLDivElement>(null);
+  // const containerRef2 = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -15,10 +15,10 @@ const TestimonialBanner = () => {
         if (prev <= -100) return 0;
         return prev - 0.5;
       });
-      setScrollPosition2((prev) => {
-        if (prev >= 100) return 0;
-        return prev + 0.5;
-      });
+      // setScrollPosition2((prev) => {
+      //   if (prev >= 100) return 0;
+      //   return prev + 0.5;
+      // });
     }, 50);
 
     return () => clearInterval(timer);
@@ -72,7 +72,7 @@ const TestimonialBanner = () => {
               transform: `translateX(${scrollPosition1}%)`,
             }}
           >
-            {[...testimonials, ...testimonials].map((testimonial, index) => (
+            {testimonials.map((testimonial, index) => (
               <div key={`row1-${index}`}>
                 {renderTestimonialCard(testimonial)}
               </div>
@@ -81,7 +81,7 @@ const TestimonialBanner = () => {
         </div>
 
         {/* Second Row of Testimonials */}
-        <div className="relative overflow-hidden" ref={containerRef2}>
+        {/* <div className="relative overflow-hidden" ref={containerRef2}>
           <div
             className="flex transition-transform duration-1000"
             style={{
@@ -94,7 +94,7 @@ const TestimonialBanner = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
 
         {/* CTA Button */}
         <div className="text-center mt-12">

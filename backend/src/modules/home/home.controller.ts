@@ -166,17 +166,17 @@ export class HomeController {
   }
 
   // Hero Images endpoints
-  @Get("hero-images")
-  async getHeroImages() {
-    return this.homeService.getHeroImages();
+  @Get("carousel")
+  async getCarouselImages() {
+    return this.homeService.getCarouselImages();
   }
 
-  @Get("hero-images/:id")
+  @Get("carousel/:id")
   async getHeroImage(@Param("id", MongoIdPipe) id: string) {
     return this.homeService.getHeroImage(id);
   }
 
-  @Post("hero-images")
+  @Post("carousel")
   async createHeroImage(@Body() createHeroImageDto: { urls: string[] }) {
     const heroImages = await Promise.all(
       createHeroImageDto.urls.map((url) =>
@@ -186,7 +186,7 @@ export class HomeController {
     return heroImages;
   }
 
-  @Put("hero-images/:id")
+  @Put("carousel/:id")
   async updateHeroImage(
     @Param("id", MongoIdPipe) id: string,
     @Body() updateHeroImageDto: Partial<HeroImage>
@@ -194,7 +194,7 @@ export class HomeController {
     return this.homeService.updateHeroImage(id, updateHeroImageDto);
   }
 
-  @Delete("hero-images/:id")
+  @Delete("carousel/:id")
   async deleteHeroImage(@Param("id", MongoIdPipe) id: string) {
     return this.homeService.deleteHeroImage(id);
   }

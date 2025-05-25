@@ -2,6 +2,9 @@ import LinkedInIcon from "../assets/icons/linkedin";
 import TwitterIcon from "../assets/icons/twitter";
 import FacebookIcon from "../assets/icons/facebook";
 import YouTubeIcon from "../assets/icons/youtube";
+import team3 from "../assets/team-3.png";
+import team1 from "../assets/team-1.png";
+import team2 from "../assets/team-2.png";
 
 const About = () => {
   const images = [
@@ -13,7 +16,7 @@ const About = () => {
 
   const members = [
     {
-      img: "../assets/team-3.png",
+      img: team3,
       name: "Er Ashish Sahu",
       role: "Tech & Marketing Head",
       social: {
@@ -24,7 +27,7 @@ const About = () => {
       },
     },
     {
-      img: "../assets/team-1.png",
+      img: team1,
       name: "Arvind Sindhawa Chairman",
       role: "Chairman",
       social: {
@@ -35,7 +38,7 @@ const About = () => {
       },
     },
     {
-      img: "../assets/team-2.png",
+      img: team2,
       name: "Dr. Sharad Dutt Acharya",
       role: "National General Secretary",
       social: {

@@ -205,7 +205,7 @@ export class HomeService {
   }
 
   // Hero Images CRUD
-  async getHeroImages() {
+  async getCarouselImages() {
     const heroImages = await this.heroImageModel.find().exec();
     return heroImages.map((image) => image.url);
   }

@@ -86,7 +86,7 @@ const TestimonialBanner = () => {
   }, []);
 
   const renderTestimonialCard = (testimonial: (typeof testimonials)[0]) => (
-    <div className="flex-shrink-0 w-[400px] bg-white rounded-2xl shadow-xl p-6 mx-4">
+    <div className="flex-shrink-0 w-[400px] bg-white rounded-xl shadow p-6 mx-4 m-6">
       <div className="flex items-center gap-4">
         <img
           src={testimonial.image}

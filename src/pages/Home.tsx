@@ -9,13 +9,43 @@ import BrandBanner from "../components/BrandBanner";
 import { useHomeStore } from "../store/homeStore";
 
 const Home = () => {
-  const { fetchHomeData, loading, error } = useHomeStore();
+  const {
+    fetchTestimonials,
+    fetchChannels,
+    fetchBrands,
+    fetchVideoData,
+    fetchStats,
+    fetchHeroImages,
+    loading,
+    error,
+  } = useHomeStore();
 
   useEffect(() => {
-    fetchHomeData();
-  }, [fetchHomeData]);
+    // Fetch all data in parallel
+    Promise.all([
+      fetchTestimonials(),
+      fetchChannels(),
+      fetchBrands(),
+      fetchVideoData(),
+      fetchStats(),
+      fetchHeroImages(),
+    ]);
+  }, [
+    fetchTestimonials,
+    fetchChannels,
+    fetchBrands,
+    fetchVideoData,
+    fetchStats,
+    fetchHeroImages,
+  ]);
 
-  if (loading) {
+  // Check if any section is loading
+  const isLoading = Object.values(loading).some(Boolean);
+
+  // Check if any section has an error
+  const hasError = Object.values(error).some(Boolean);
+
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-red-600"></div>
@@ -23,10 +53,16 @@ const Home = () => {
     );
   }
 
-  if (error) {
+  if (hasError) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-red-600 text-xl">{error}</div>
+        <div className="text-red-600 text-xl">
+          {Object.entries(error)
+            .filter(([_, value]) => value)
+            .map(([key, value]) => (
+              <div key={key}>{value}</div>
+            ))}
+        </div>
       </div>
     );
   }

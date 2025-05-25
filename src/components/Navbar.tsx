@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import MenuIcon from "../assets/icons/menu";
 import CloseIcon from "../assets/icons/close";
-import logo from "../../public/solar-light-logo.jpg";
+import logo from "../assets/solar-light-logo.jpg";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);

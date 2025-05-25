@@ -839,6 +839,154 @@ DELETE /home/testimonials/:id
 
 Response (204 No Content)
 
+## Rate Cards Module
+
+### Rate Cards
+
+#### Create Rate Card
+
+```http
+POST /rate-cards
+```
+
+Request Body:
+
+```json
+{
+  "title": "string",
+  "description": "string",
+  "price": "number",
+  "duration": "string",
+  "features": ["string"],
+  "isActive": "boolean (optional)",
+  "isPopular": "boolean (optional)",
+  "buttonText": "string (optional)",
+  "buttonLink": "string (optional)"
+}
+```
+
+Response (201 Created):
+
+```json
+{
+  "id": "string",
+  "title": "string",
+  "description": "string",
+  "price": "number",
+  "duration": "string",
+  "features": ["string"],
+  "isActive": "boolean",
+  "isPopular": "boolean",
+  "buttonText": "string",
+  "buttonLink": "string",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Get All Rate Cards
+
+```http
+GET /rate-cards
+```
+
+Response (200 OK):
+
+```json
+{
+  "data": [
+    {
+      "id": "string",
+      "title": "string",
+      "description": "string",
+      "price": "number",
+      "duration": "string",
+      "features": ["string"],
+      "isActive": "boolean",
+      "isPopular": "boolean",
+      "buttonText": "string",
+      "buttonLink": "string",
+      "createdAt": "string",
+      "updatedAt": "string"
+    }
+  ]
+}
+```
+
+#### Get Rate Card by ID
+
+```http
+GET /rate-cards/:id
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string",
+  "title": "string",
+  "description": "string",
+  "price": "number",
+  "duration": "string",
+  "features": ["string"],
+  "isActive": "boolean",
+  "isPopular": "boolean",
+  "buttonText": "string",
+  "buttonLink": "string",
+  "createdAt": "string",
+  "updatedAt": "string"
+}
+```
+
+#### Update Rate Card
+
+```http
+PATCH /rate-cards/:id
+```
+
+Request Body:
+
+```json
+{
+  "title": "string (optional)",
+  "description": "string (optional)",
+  "price": "number (optional)",
+  "duration": "string (optional)",
+  "features": ["string"] (optional),
+  "isActive": "boolean (optional)",
+  "isPopular": "boolean (optional)",
+  "buttonText": "string (optional)",
+  "buttonLink": "string (optional)"
+}
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string",
+  "title": "string",
+  "description": "string",
+  "price": "number",
+  "duration": "string",
+  "features": ["string"],
+  "isActive": "boolean",
+  "isPopular": "boolean",
+  "buttonText": "string",
+  "buttonLink": "string",
+  "createdAt": "string",
+  "updatedAt": "string"
+}
+```
+
+#### Delete Rate Card
+
+```http
+DELETE /rate-cards/:id
+```
+
+Response (200 OK)
+
 ## Error Responses
 
 All endpoints may return the following error responses:

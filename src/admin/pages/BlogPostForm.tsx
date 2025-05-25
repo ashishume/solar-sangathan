@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useBlogPosts } from "../store/blogPosts";
 import type { BlogPost } from "../store/blogPosts";
+import Input from "../../components/ui/Input";
+import Textarea from "../../components/ui/Textarea";
+import Button from "../../components/ui/Button";
 
 const BlogPostForm = () => {
   const navigate = useNavigate();
@@ -53,58 +56,34 @@ const BlogPostForm = () => {
       </h1>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            value={post.title}
-            onChange={(e) => setPost({ ...post, title: e.target.value })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            required
-          />
-        </div>
+        <Input
+          label="Title"
+          type="text"
+          id="title"
+          value={post.title}
+          onChange={(e) => setPost({ ...post, title: e.target.value })}
+          required
+        />
 
-        <div>
-          <label
-            htmlFor="content"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Content
-          </label>
-          <textarea
-            id="content"
-            value={post.content}
-            onChange={(e) => setPost({ ...post, content: e.target.value })}
-            rows={10}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            required
-          />
-        </div>
+        <Textarea
+          label="Content"
+          id="content"
+          value={post.content}
+          onChange={(e) => setPost({ ...post, content: e.target.value })}
+          rows={10}
+          required
+        />
 
-        <div>
-          <label
-            htmlFor="author"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Author
-          </label>
-          <input
-            type="text"
-            id="author"
-            value={post.author}
-            onChange={(e) => setPost({ ...post, author: e.target.value })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            required
-          />
-        </div>
+        <Input
+          label="Author"
+          type="text"
+          id="author"
+          value={post.author}
+          onChange={(e) => setPost({ ...post, author: e.target.value })}
+          required
+        />
 
-        <div>
+        <div className="space-y-2">
           <label
             htmlFor="status"
             className="block text-sm font-medium text-gray-700"
@@ -120,7 +99,7 @@ const BlogPostForm = () => {
                 status: e.target.value as "Draft" | "Published",
               })
             }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200 px-4 py-3"
           >
             <option value="Draft">Draft</option>
             <option value="Published">Published</option>
@@ -128,19 +107,16 @@ const BlogPostForm = () => {
         </div>
 
         <div className="flex justify-end space-x-4">
-          <button
+          <Button
             type="button"
+            variant="outline"
             onClick={() => navigate("/admin/blog-posts")}
-            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
           >
             Cancel
-          </button>
-          <button
-            type="submit"
-            className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-          >
+          </Button>
+          <Button type="submit" variant="primary">
             {isEditing ? "Update Post" : "Create Post"}
-          </button>
+          </Button>
         </div>
       </form>
     </div>

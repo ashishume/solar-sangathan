@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCategories } from "../store/categories";
 import type { Category } from "../store/categories";
+import Input from "../../components/ui/Input";
+import Textarea from "../../components/ui/Textarea";
+import Button from "../../components/ui/Button";
 
 const CategoryForm = () => {
   const navigate = useNavigate();
@@ -83,60 +86,36 @@ const CategoryForm = () => {
       </h1>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          />
-        </div>
+        <Input
+          label="Name"
+          type="text"
+          id="name"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
 
-        <div>
-          <label
-            htmlFor="slug"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Slug
-          </label>
-          <input
-            type="text"
-            id="slug"
-            name="slug"
-            value={formData.slug}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          />
-        </div>
+        <Input
+          label="Slug"
+          type="text"
+          id="slug"
+          name="slug"
+          value={formData.slug}
+          onChange={handleChange}
+          required
+        />
 
-        <div>
-          <label
-            htmlFor="description"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Description
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            rows={4}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-          />
-        </div>
+        <Textarea
+          label="Description"
+          id="description"
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          rows={4}
+        />
 
-        <div>
+        <div className="space-y-2">
           <label
             htmlFor="parentId"
             className="block text-sm font-medium text-gray-700"
@@ -148,7 +127,7 @@ const CategoryForm = () => {
             name="parentId"
             value={formData.parentId}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200 px-4 py-3"
           >
             <option value="">None</option>
             {getParentOptions().map((category) => (
@@ -160,19 +139,16 @@ const CategoryForm = () => {
         </div>
 
         <div className="flex justify-end space-x-4">
-          <button
+          <Button
             type="button"
+            variant="outline"
             onClick={() => navigate("/admin/categories")}
-            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
           >
             Cancel
-          </button>
-          <button
-            type="submit"
-            className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-          >
+          </Button>
+          <Button type="submit" variant="primary">
             {isEditMode ? "Update" : "Create"}
-          </button>
+          </Button>
         </div>
       </form>
     </div>

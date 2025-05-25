@@ -1,5 +1,8 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
+import Input from "../components/ui/Input";
+import Textarea from "../components/ui/Textarea";
+import Button from "../components/ui/Button";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -42,89 +45,50 @@ const Contact = () => {
           <div className="bg-white rounded-2xl shadow-xl p-8">
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <label
-                    htmlFor="firstName"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    First Name <span className="text-red-600">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    id="firstName"
-                    required
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200 px-4 py-3"
-                    placeholder="Enter your first name"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label
-                    htmlFor="lastName"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    id="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200 px-4 py-3"
-                    placeholder="Enter your last name"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Email <span className="text-red-600">*</span>
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
+                <Input
+                  label="First Name"
+                  name="firstName"
+                  id="firstName"
                   required
-                  value={formData.email}
+                  value={formData.firstName}
                   onChange={handleChange}
-                  className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200 px-4 py-3"
-                  placeholder="Enter your email address"
+                  placeholder="Enter your first name"
+                />
+                <Input
+                  label="Last Name"
+                  name="lastName"
+                  id="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  placeholder="Enter your last name"
                 />
               </div>
 
-              <div className="space-y-2">
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Message <span className="text-red-600">*</span>
-                </label>
-                <textarea
-                  name="message"
-                  id="message"
-                  required
-                  rows={6}
-                  value={formData.message}
-                  onChange={handleChange}
-                  className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200 px-4 py-3"
-                  placeholder="How can we help you?"
-                />
-              </div>
+              <Input
+                label="Email"
+                type="email"
+                name="email"
+                id="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email address"
+              />
 
-              <div>
-                <button
-                  type="submit"
-                  className="w-full flex justify-center py-3 px-6 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200"
-                >
-                  Send Message
-                </button>
-              </div>
+              <Textarea
+                label="Message"
+                name="message"
+                id="message"
+                required
+                rows={6}
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="How can we help you?"
+              />
+
+              <Button type="submit" fullWidth>
+                Send Message
+              </Button>
             </form>
           </div>
         </div>

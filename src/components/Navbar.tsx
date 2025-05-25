@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import MenuIcon from "../assets/icons/menu";
 import CloseIcon from "../assets/icons/close";
+import logo from "../../public/solar-light-logo.jpg";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -26,7 +27,7 @@ const Navbar = () => {
               to="/"
               className="text-xl font-semibold text-red-600 transition-colors duration-300 hover:text-red-700"
             >
-              Logo
+              <img src={logo} alt="Logo" className="w-20 h-20" />
             </Link>
           </div>
 

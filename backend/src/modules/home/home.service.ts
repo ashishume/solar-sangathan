@@ -7,10 +7,6 @@ import { Brand } from "./schemas/brand.schema";
 import { Video } from "./schemas/video.schema";
 import { Stat } from "./schemas/stat.schema";
 import { HeroImage } from "./schemas/hero-image.schema";
-import { Carousel } from "./entities/carousel.entity";
-import { Presence } from "./entities/presence.entity";
-import { CreatePresenceDto } from "./dto/create-presence.dto";
-import { CreateCarouselDto } from "./dto/create-carousel.dto";
 
 @Injectable()
 export class HomeService {
@@ -20,11 +16,7 @@ export class HomeService {
     @InjectModel(Brand.name) private brandModel: Model<Brand>,
     @InjectModel(Video.name) private videoModel: Model<Video>,
     @InjectModel(Stat.name) private statModel: Model<Stat>,
-    @InjectModel(HeroImage.name) private heroImageModel: Model<HeroImage>,
-    @InjectModel(Carousel.name)
-    private carouselModel: Model<Carousel>,
-    @InjectModel(Presence.name)
-    private presenceModel: Model<Presence>
+    @InjectModel(HeroImage.name) private heroImageModel: Model<HeroImage>
   ) {}
 
   // Testimonials CRUD
@@ -249,63 +241,5 @@ export class HomeService {
       throw new NotFoundException(`Hero Image with ID ${id} not found`);
     }
     return deletedHeroImage;
-  }
-
-  // Carousel operations
-  async createCarousel(
-    createCarouselDto: CreateCarouselDto
-  ): Promise<Carousel> {
-    const carousel = new this.carouselModel(createCarouselDto);
-    return carousel.save();
-  }
-
-  async findAllCarousels(): Promise<Carousel[]> {
-    return this.carouselModel.find().sort({ order: 1 }).exec();
-  }
-
-  async findCarouselById(id: string): Promise<Carousel> {
-    return this.carouselModel.findById(id).exec();
-  }
-
-  async updateCarousel(
-    id: string,
-    updateCarouselDto: Partial<CreateCarouselDto>
-  ): Promise<Carousel> {
-    return this.carouselModel
-      .findByIdAndUpdate(id, updateCarouselDto, { new: true })
-      .exec();
-  }
-
-  async deleteCarousel(id: string): Promise<void> {
-    await this.carouselModel.findByIdAndDelete(id).exec();
-  }
-
-  // Presence operations
-  async createPresence(
-    createPresenceDto: CreatePresenceDto
-  ): Promise<Presence> {
-    const presence = new this.presenceModel(createPresenceDto);
-    return presence.save();
-  }
-
-  async findAllPresences(): Promise<Presence[]> {
-    return this.presenceModel.find().sort({ order: 1 }).exec();
-  }
-
-  async findPresenceById(id: string): Promise<Presence> {
-    return this.presenceModel.findById(id).exec();
-  }
-
-  async updatePresence(
-    id: string,
-    updatePresenceDto: Partial<CreatePresenceDto>
-  ): Promise<Presence> {
-    return this.presenceModel
-      .findByIdAndUpdate(id, updatePresenceDto, { new: true })
-      .exec();
-  }
-
-  async deletePresence(id: string): Promise<void> {
-    await this.presenceModel.findByIdAndDelete(id).exec();
   }
 }

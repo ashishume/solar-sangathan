@@ -8,8 +8,6 @@ import { Stat, StatSchema } from "./schemas/stat.schema";
 import { HeroImage, HeroImageSchema } from "./schemas/hero-image.schema";
 import { HomeService } from "./home.service";
 import { HomeController } from "./home.controller";
-import { Carousel, CarouselSchema } from "./entities/carousel.entity";
-import { Presence, PresenceSchema } from "./entities/presence.entity";
 
 @Module({
   imports: [
@@ -20,8 +18,6 @@ import { Presence, PresenceSchema } from "./entities/presence.entity";
       { name: Video.name, schema: VideoSchema },
       { name: Stat.name, schema: StatSchema },
       { name: HeroImage.name, schema: HeroImageSchema },
-      { name: Carousel.name, schema: CarouselSchema },
-      { name: Presence.name, schema: PresenceSchema },
     ]),
   ],
   controllers: [HomeController],

@@ -3,17 +3,14 @@ import { Document } from "mongoose";
 
 @Schema({ timestamps: true })
 export class Video extends Document {
-  @Prop({ required: true })
+  @Prop({ required: false })
   title: string;
-
-  @Prop({ required: true })
-  description: string;
 
   @Prop({ required: true })
   videoUrl: string;
 
   @Prop({ required: true })
-  thumbnail: string;
+  thumbnailUrl: string;
 }
 
 export const VideoSchema = SchemaFactory.createForClass(Video);

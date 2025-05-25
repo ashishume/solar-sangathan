@@ -15,8 +15,6 @@ import { Video } from "./schemas/video.schema";
 import { Stat } from "./schemas/stat.schema";
 import { HeroImage } from "./schemas/hero-image.schema";
 import { MongoIdPipe } from "./pipes/mongo-id.pipe";
-import { CreateCarouselDto } from "./dto/create-carousel.dto";
-import { CreatePresenceDto } from "./dto/create-presence.dto";
 
 @Controller("api")
 export class HomeController {
@@ -199,63 +197,5 @@ export class HomeController {
   @Delete("hero-images/:id")
   async deleteHeroImage(@Param("id", MongoIdPipe) id: string) {
     return this.homeService.deleteHeroImage(id);
-  }
-
-  // Carousel endpoints
-  @Post("carousels")
-  createCarousel(@Body() createCarouselDto: CreateCarouselDto) {
-    return this.homeService.createCarousel(createCarouselDto);
-  }
-
-  @Get("carousels")
-  findAllCarousels() {
-    return this.homeService.findAllCarousels();
-  }
-
-  @Get("carousels/:id")
-  findCarouselById(@Param("id") id: string) {
-    return this.homeService.findCarouselById(id);
-  }
-
-  @Put("carousels/:id")
-  updateCarousel(
-    @Param("id") id: string,
-    @Body() updateCarouselDto: Partial<CreateCarouselDto>
-  ) {
-    return this.homeService.updateCarousel(id, updateCarouselDto);
-  }
-
-  @Delete("carousels/:id")
-  deleteCarousel(@Param("id") id: string) {
-    return this.homeService.deleteCarousel(id);
-  }
-
-  // Presence endpoints
-  @Post("presences")
-  createPresence(@Body() createPresenceDto: CreatePresenceDto) {
-    return this.homeService.createPresence(createPresenceDto);
-  }
-
-  @Get("presences")
-  findAllPresences() {
-    return this.homeService.findAllPresences();
-  }
-
-  @Get("presences/:id")
-  findPresenceById(@Param("id") id: string) {
-    return this.homeService.findPresenceById(id);
-  }
-
-  @Put("presences/:id")
-  updatePresence(
-    @Param("id") id: string,
-    @Body() updatePresenceDto: Partial<CreatePresenceDto>
-  ) {
-    return this.homeService.updatePresence(id, updatePresenceDto);
-  }
-
-  @Delete("presences/:id")
-  deletePresence(@Param("id") id: string) {
-    return this.homeService.deletePresence(id);
   }
 }

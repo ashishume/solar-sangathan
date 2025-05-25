@@ -1,23 +1,10 @@
 import { useState } from "react";
 import PlayIcon from "../assets/icons/play";
-
-interface VideoData {
-  id: string;
-  title: string;
-  thumbnailUrl: string;
-}
-
-// This would typically come from your API
-const sampleVideo: VideoData = {
-  id: "VQRLujxTm3c",
-  title: "Sample Video",
-  thumbnailUrl:
-    "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
-};
+import { useHomeStore } from "../store/homeStore";
 
 const VideoSection = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [videoData] = useState<VideoData>(sampleVideo);
+  const { videoData } = useHomeStore();
 
   const handlePlay = () => {
     setIsPlaying(true);

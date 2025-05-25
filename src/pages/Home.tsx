@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import HeroSection from "../components/HeroSection";
 import MediaStatsSection from "../components/MediaStatsSection";
 import OurPresence from "../components/OurPresence";
@@ -5,8 +6,31 @@ import TestimonialBanner from "../components/TestimonialBanner";
 import YouTubeBanner from "../components/YouTubeBanner";
 import StepsToSuccess from "../components/StepsToSuccess";
 import BrandBanner from "../components/BrandBanner";
+import { useHomeStore } from "../store/homeStore";
 
 const Home = () => {
+  const { fetchHomeData, loading, error } = useHomeStore();
+
+  useEffect(() => {
+    fetchHomeData();
+  }, [fetchHomeData]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-red-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-red-600 text-xl">{error}</div>
+      </div>
+    );
+  }
+
   return (
     <>
       {/* Hero Section */}

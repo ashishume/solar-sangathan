@@ -1,25 +1,20 @@
 import { useState, useEffect } from "react";
 import RunningText from "./RunningText";
-
-const images = [
-  "https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=3272&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1497440001374-f26997328c1b?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-];
+import { useHomeStore } from "../store/homeStore";
 
 const HeroSection = () => {
+  const { heroImages } = useHomeStore();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImageIndex((prevIndex) =>
-        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+        prevIndex === heroImages.length - 1 ? 0 : prevIndex + 1
       );
     }, 5000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [heroImages.length]);
 
   // const goToNext = () => {
   //   setCurrentImageIndex((prevIndex) =>
@@ -36,7 +31,7 @@ const HeroSection = () => {
   return (
     <section className="py-8">
       <div className="relative w-[95%] h-[420px] rounded-3xl overflow-hidden mb-8 mx-auto">
-        {images.map((src, index) => (
+        {heroImages.map((src, index) => (
           <img
             key={src}
             src={src}
@@ -65,7 +60,7 @@ const HeroSection = () => {
 
         {/* Dots Indicator */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-          {images.map((_, index) => (
+          {heroImages.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentImageIndex(index)}

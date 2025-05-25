@@ -1,70 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import YouTubeIcon from "../assets/icons/youtube";
-
-const testimonials = [
-  {
-    quote:
-      "Solar Sangathan has transformed our business. The network and support are incredible!",
-    author: "Rajesh Kumar",
-    role: "Solar EPC Owner",
-    location: "Delhi",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80",
-  },
-  {
-    quote:
-      "The best platform for solar professionals. Made significant connections here.",
-    author: "Priya Sharma",
-    role: "Solar Consultant",
-    location: "Mumbai",
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80",
-  },
-  {
-    quote:
-      "Joining Solar Sangathan was the best decision for our solar manufacturing business.",
-    author: "Amit Patel",
-    role: "Manufacturing Director",
-    location: "Gujarat",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80",
-  },
-  {
-    quote:
-      "The platform has helped us scale our solar installation business significantly.",
-    author: "Neha Gupta",
-    role: "Business Owner",
-    location: "Bangalore",
-    image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80",
-  },
-  {
-    quote: "Excellent networking opportunities and valuable industry insights.",
-    author: "Vikram Singh",
-    role: "Solar Engineer",
-    location: "Pune",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&q=80",
-  },
-  {
-    quote: "Excellent networking opportunities and valuable industry insights.",
-    author: "Vikram Singh",
-    role: "Solar Engineer",
-    location: "Pune",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&q=80",
-  },
-  {
-    quote: "Excellent networking opportunities and valuable industry insights.",
-    author: "Vikram Singh",
-    role: "Solar Engineer",
-    location: "Pune",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&q=80",
-  },
-];
+import { useHomeStore } from "../store/homeStore";
 
 const TestimonialBanner = () => {
+  const { testimonials } = useHomeStore();
   const [scrollPosition1, setScrollPosition1] = useState(0);
   const [scrollPosition2, setScrollPosition2] = useState(0);
   const containerRef1 = useRef<HTMLDivElement>(null);

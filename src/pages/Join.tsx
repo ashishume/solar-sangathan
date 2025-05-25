@@ -1,8 +1,60 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { FormEvent } from "react";
 import Input from "../components/ui/Input";
 import Textarea from "../components/ui/Textarea";
 import Button from "../components/ui/Button";
+
+interface RateCard {
+  id: number;
+  title: string;
+  price: number;
+  duration: string;
+  features: string[];
+  popular?: boolean;
+}
+
+const mockRateCards: RateCard[] = [
+  {
+    id: 1,
+    title: "Basic",
+    price: 999,
+    duration: "year",
+    features: [
+      "Access to basic resources",
+      "Monthly newsletter",
+      "Community forum access",
+      "Basic training materials",
+    ],
+  },
+  {
+    id: 2,
+    title: "Professional",
+    price: 2499,
+    duration: "year",
+    popular: true,
+    features: [
+      "All Basic features",
+      "Priority support",
+      "Advanced training materials",
+      "Networking events access",
+      "Business listing in directory",
+    ],
+  },
+  {
+    id: 3,
+    title: "Enterprise",
+    price: 4999,
+    duration: "year",
+    features: [
+      "All Professional features",
+      "Dedicated account manager",
+      "Custom training programs",
+      "Premium business listing",
+      "Exclusive event invitations",
+      "Industry reports access",
+    ],
+  },
+];
 
 const Join = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +66,26 @@ const Join = () => {
     occupation: "",
     interests: "",
   });
+
+  const [rateCards, setRateCards] = useState<RateCard[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulating API call
+    const fetchRateCards = async () => {
+      try {
+        // Simulate API delay
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        setRateCards(mockRateCards);
+      } catch (error) {
+        console.error("Error fetching rate cards:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRateCards();
+  }, []);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -45,7 +117,7 @@ const Join = () => {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="bg-white rounded-2xl shadow-xl p-8 mb-16">
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
                 <Input
@@ -127,8 +199,90 @@ const Join = () => {
               </Button>
             </form>
           </div>
+
+          {/* Rate Cards Section */}
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Choose Your Plan
+            </h2>
+            <p className="text-lg text-gray-600">
+              Select the perfect plan for your needs
+            </p>
+          </div>
         </div>
       </div>
+
+      {loading ? (
+        <div className="text-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
+        </div>
+      ) : (
+        <div className="w-[100vw] flex justify-center items-center gap-10 mb-20">
+          {rateCards.map((card) => (
+            <div
+              key={card.id}
+              className={`bg-white rounded-3xl shadow-xl p-10 relative transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 flex flex-col h-full !h-[600px] ${
+                card.popular ? "border-2 border-red-500 scale-105" : ""
+              }`}
+            >
+              {card.popular && (
+                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-gradient-to-r from-red-500 to-red-600 text-white px-8 py-3 rounded-full text-sm font-semibold shadow-lg">
+                    Most Popular
+                  </div>
+                </div>
+              )}
+              <div className="text-center flex-grow">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                  {card.title}
+                </h3>
+                <div className="mb-8">
+                  <span className="text-2xl font-bold text-gray-900">
+                    ₹{card.price}
+                  </span>
+                  <span className="text-gray-600 text-xl">
+                    /{card.duration}
+                  </span>
+                </div>
+                <ul className="space-y-5 mb-10 text-left">
+                  {card.features.map((feature, index) => (
+                    <li
+                      key={index}
+                      className="text-gray-600 flex items-start text-lg"
+                    >
+                      <svg
+                        className="w-6 h-6 text-red-500 mr-3 mt-1 flex-shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M5 13l4 4L19 7"
+                        ></path>
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-auto pt-6">
+                <Button
+                  fullWidth
+                  variant={card.popular ? "primary" : "secondary"}
+                  className={`text-lg py-4 ${
+                    card.popular ? "bg-red-500 hover:bg-red-600" : ""
+                  } rounded-xl`}
+                >
+                  Get Started
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

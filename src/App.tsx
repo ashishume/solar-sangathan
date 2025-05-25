@@ -21,23 +21,16 @@ function App() {
         <Route path="/admin/login" element={<Login />} />
 
         {/* Main Website Routes */}
-        <Route
-          path="/"
-          element={
-            <Layout>
-              <Routes>
-                <Route index element={<Home />} />
-                <Route path="about" element={<About />} />
-                <Route path="shop" element={<Shop />} />
-                <Route path="blog" element={<Blog />} />
-                <Route path="blog/:id" element={<BlogPost />} />
-                <Route path="training" element={<Training />} />
-                <Route path="contact" element={<Contact />} />
-                <Route path="join" element={<Join />} />
-              </Routes>
-            </Layout>
-          }
-        />
+        <Route element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="shop" element={<Shop />} />
+          <Route path="blog" element={<Blog />} />
+          <Route path="blog/:id" element={<BlogPost />} />
+          <Route path="training" element={<Training />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="join" element={<Join />} />
+        </Route>
       </Routes>
     </Router>
   );

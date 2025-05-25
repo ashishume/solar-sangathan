@@ -13,7 +13,7 @@ const About = () => {
 
   const members = [
     {
-      img: "src/assets/team-3.png",
+      img: "../assets/team-3.png",
       name: "Er Ashish Sahu",
       role: "Tech & Marketing Head",
       social: {
@@ -24,7 +24,7 @@ const About = () => {
       },
     },
     {
-      img: "src/assets/team-1.png",
+      img: "../assets/team-1.png",
       name: "Arvind Sindhawa Chairman",
       role: "Chairman",
       social: {
@@ -35,7 +35,7 @@ const About = () => {
       },
     },
     {
-      img: "src/assets/team-2.png",
+      img: "../assets/team-2.png",
       name: "Dr. Sharad Dutt Acharya",
       role: "National General Secretary",
       social: {

@@ -461,345 +461,89 @@ Response (200 OK):
 
 ## Home Module
 
-### Carousels
-
-#### Create Carousel
-
-```http
-POST /home/carousels
-```
-
-Request Body:
-
-```json
-{
-  "title": "string",
-  "description": "string",
-  "imageUrl": "string",
-  "link": "string",
-  "order": "number",
-  "isActive": "boolean"
-}
-```
-
-Response (201 Created):
-
-```json
-{
-  "id": "string",
-  "title": "string",
-  "description": "string",
-  "imageUrl": "string",
-  "link": "string",
-  "order": "number",
-  "isActive": "boolean",
-  "createdAt": "string",
-  "updatedAt": "string"
-}
-```
-
-#### Get All Carousels
-
-```http
-GET /home/carousels
-```
-
-Response (200 OK):
-
-```json
-{
-  "data": [
-    {
-      "id": "string",
-      "title": "string",
-      "description": "string",
-      "imageUrl": "string",
-      "link": "string",
-      "order": "number",
-      "isActive": "boolean",
-      "createdAt": "string",
-      "updatedAt": "string"
-    }
-  ]
-}
-```
-
-#### Get Carousel by ID
-
-```http
-GET /home/carousels/:id
-```
-
-Response (200 OK):
-
-```json
-{
-  "id": "string",
-  "title": "string",
-  "description": "string",
-  "imageUrl": "string",
-  "link": "string",
-  "order": "number",
-  "isActive": "boolean",
-  "createdAt": "string",
-  "updatedAt": "string"
-}
-```
-
-#### Update Carousel
-
-```http
-PUT /home/carousels/:id
-```
-
-Request Body:
-
-```json
-{
-  "title": "string",
-  "description": "string",
-  "imageUrl": "string",
-  "link": "string",
-  "order": "number",
-  "isActive": "boolean"
-}
-```
-
-Response (200 OK):
-
-```json
-{
-  "id": "string",
-  "title": "string",
-  "description": "string",
-  "imageUrl": "string",
-  "link": "string",
-  "order": "number",
-  "isActive": "boolean",
-  "createdAt": "string",
-  "updatedAt": "string"
-}
-```
-
-#### Delete Carousel
-
-```http
-DELETE /home/carousels/:id
-```
-
-Response (204 No Content)
-
-### Presences
-
-#### Create Presence
-
-```http
-POST /home/presences
-```
-
-Request Body:
-
-```json
-{
-  "title": "string",
-  "description": "string",
-  "imageUrl": "string",
-  "location": "string",
-  "isActive": "boolean"
-}
-```
-
-Response (201 Created):
-
-```json
-{
-  "id": "string",
-  "title": "string",
-  "description": "string",
-  "imageUrl": "string",
-  "location": "string",
-  "isActive": "boolean",
-  "createdAt": "string",
-  "updatedAt": "string"
-}
-```
-
-#### Get All Presences
-
-```http
-GET /home/presences
-```
-
-Response (200 OK):
-
-```json
-{
-  "data": [
-    {
-      "id": "string",
-      "title": "string",
-      "description": "string",
-      "imageUrl": "string",
-      "location": "string",
-      "isActive": "boolean",
-      "createdAt": "string",
-      "updatedAt": "string"
-    }
-  ]
-}
-```
-
-#### Get Presence by ID
-
-```http
-GET /home/presences/:id
-```
-
-Response (200 OK):
-
-```json
-{
-  "id": "string",
-  "title": "string",
-  "description": "string",
-  "imageUrl": "string",
-  "location": "string",
-  "isActive": "boolean",
-  "createdAt": "string",
-  "updatedAt": "string"
-}
-```
-
-#### Update Presence
-
-```http
-PUT /home/presences/:id
-```
-
-Request Body:
-
-```json
-{
-  "title": "string",
-  "description": "string",
-  "imageUrl": "string",
-  "location": "string",
-  "isActive": "boolean"
-}
-```
-
-Response (200 OK):
-
-```json
-{
-  "id": "string",
-  "title": "string",
-  "description": "string",
-  "imageUrl": "string",
-  "location": "string",
-  "isActive": "boolean",
-  "createdAt": "string",
-  "updatedAt": "string"
-}
-```
-
-#### Delete Presence
-
-```http
-DELETE /home/presences/:id
-```
-
-Response (204 No Content)
-
 ### Testimonials
-
-#### Create Testimonial
-
-```http
-POST /home/testimonials
-```
-
-Request Body:
-
-```json
-{
-  "name": "string",
-  "role": "string",
-  "content": "string",
-  "imageUrl": "string",
-  "rating": "number (1-5)",
-  "isActive": "boolean"
-}
-```
-
-Response (201 Created):
-
-```json
-{
-  "id": "string",
-  "name": "string",
-  "role": "string",
-  "content": "string",
-  "imageUrl": "string",
-  "rating": "number",
-  "isActive": "boolean",
-  "createdAt": "string",
-  "updatedAt": "string"
-}
-```
 
 #### Get All Testimonials
 
 ```http
-GET /home/testimonials
+GET /testimonials
 ```
 
 Response (200 OK):
 
 ```json
-{
-  "data": [
-    {
-      "id": "string",
-      "name": "string",
-      "role": "string",
-      "content": "string",
-      "imageUrl": "string",
-      "rating": "number",
-      "isActive": "boolean",
-      "createdAt": "string",
-      "updatedAt": "string"
-    }
-  ]
-}
+[
+  {
+    "id": "string (MongoDB ObjectId)",
+    "name": "string",
+    "role": "string",
+    "company": "string",
+    "content": "string",
+    "image": "string (URL)",
+    "createdAt": "string (ISO date)",
+    "updatedAt": "string (ISO date)"
+  }
+]
 ```
 
 #### Get Testimonial by ID
 
 ```http
-GET /home/testimonials/:id
+GET /testimonials/:id
 ```
 
 Response (200 OK):
 
 ```json
 {
-  "id": "string",
+  "id": "string (MongoDB ObjectId)",
   "name": "string",
   "role": "string",
+  "company": "string",
   "content": "string",
-  "imageUrl": "string",
-  "rating": "number",
-  "isActive": "boolean",
-  "createdAt": "string",
-  "updatedAt": "string"
+  "image": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Create Testimonial
+
+```http
+POST /testimonials
+```
+
+Request Body:
+
+```json
+{
+  "name": "string",
+  "role": "string",
+  "company": "string",
+  "content": "string",
+  "image": "string (URL)"
+}
+```
+
+Response (201 Created):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "name": "string",
+  "role": "string",
+  "company": "string",
+  "content": "string",
+  "image": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
 }
 ```
 
 #### Update Testimonial
 
 ```http
-PUT /home/testimonials/:id
+PUT /testimonials/:id
 ```
 
 Request Body:
@@ -808,10 +552,9 @@ Request Body:
 {
   "name": "string",
   "role": "string",
+  "company": "string",
   "content": "string",
-  "imageUrl": "string",
-  "rating": "number (1-5)",
-  "isActive": "boolean"
+  "image": "string (URL)"
 }
 ```
 
@@ -819,25 +562,630 @@ Response (200 OK):
 
 ```json
 {
-  "id": "string",
+  "id": "string (MongoDB ObjectId)",
   "name": "string",
   "role": "string",
+  "company": "string",
   "content": "string",
-  "imageUrl": "string",
-  "rating": "number",
-  "isActive": "boolean",
-  "createdAt": "string",
-  "updatedAt": "string"
+  "image": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
 }
 ```
 
 #### Delete Testimonial
 
 ```http
-DELETE /home/testimonials/:id
+DELETE /testimonials/:id
 ```
 
-Response (204 No Content)
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "name": "string",
+  "role": "string",
+  "company": "string",
+  "content": "string",
+  "image": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+### Channels
+
+#### Get All Channels
+
+```http
+GET /channels
+```
+
+Response (200 OK):
+
+```json
+[
+  {
+    "id": "string (MongoDB ObjectId)",
+    "name": "string",
+    "icon": "string (URL)",
+    "url": "string (URL)",
+    "createdAt": "string (ISO date)",
+    "updatedAt": "string (ISO date)"
+  }
+]
+```
+
+#### Get Channel by ID
+
+```http
+GET /channels/:id
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "name": "string",
+  "icon": "string (URL)",
+  "url": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Create Channel
+
+```http
+POST /channels
+```
+
+Request Body:
+
+```json
+{
+  "name": "string",
+  "icon": "string (URL)",
+  "url": "string (URL)"
+}
+```
+
+Response (201 Created):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "name": "string",
+  "icon": "string (URL)",
+  "url": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Update Channel
+
+```http
+PUT /channels/:id
+```
+
+Request Body:
+
+```json
+{
+  "name": "string",
+  "icon": "string (URL)",
+  "url": "string (URL)"
+}
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "name": "string",
+  "icon": "string (URL)",
+  "url": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Delete Channel
+
+```http
+DELETE /channels/:id
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "name": "string",
+  "icon": "string (URL)",
+  "url": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+### Brands
+
+#### Get All Brands
+
+```http
+GET /brands
+```
+
+Response (200 OK):
+
+```json
+[
+  {
+    "id": "string (MongoDB ObjectId)",
+    "name": "string",
+    "logo": "string (URL)",
+    "url": "string (URL)",
+    "createdAt": "string (ISO date)",
+    "updatedAt": "string (ISO date)"
+  }
+]
+```
+
+#### Get Brand by ID
+
+```http
+GET /brands/:id
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "name": "string",
+  "logo": "string (URL)",
+  "url": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Create Brand
+
+```http
+POST /brands
+```
+
+Request Body:
+
+```json
+{
+  "name": "string",
+  "logo": "string (URL)",
+  "url": "string (URL)"
+}
+```
+
+Response (201 Created):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "name": "string",
+  "logo": "string (URL)",
+  "url": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Update Brand
+
+```http
+PUT /brands/:id
+```
+
+Request Body:
+
+```json
+{
+  "name": "string",
+  "logo": "string (URL)",
+  "url": "string (URL)"
+}
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "name": "string",
+  "logo": "string (URL)",
+  "url": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Delete Brand
+
+```http
+DELETE /brands/:id
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "name": "string",
+  "logo": "string (URL)",
+  "url": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+### Video
+
+#### Get Main Video
+
+```http
+GET /video
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "title": "string",
+  "description": "string",
+  "videoUrl": "string (URL)",
+  "thumbnail": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Get Video by ID
+
+```http
+GET /video/:id
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "title": "string",
+  "description": "string",
+  "videoUrl": "string (URL)",
+  "thumbnail": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Create Video
+
+```http
+POST /video
+```
+
+Request Body:
+
+```json
+{
+  "title": "string",
+  "description": "string",
+  "videoUrl": "string (URL)",
+  "thumbnail": "string (URL)"
+}
+```
+
+Response (201 Created):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "title": "string",
+  "description": "string",
+  "videoUrl": "string (URL)",
+  "thumbnail": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Update Video
+
+```http
+PUT /video/:id
+```
+
+Request Body:
+
+```json
+{
+  "title": "string",
+  "description": "string",
+  "videoUrl": "string (URL)",
+  "thumbnail": "string (URL)"
+}
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "title": "string",
+  "description": "string",
+  "videoUrl": "string (URL)",
+  "thumbnail": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Delete Video
+
+```http
+DELETE /video/:id
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "title": "string",
+  "description": "string",
+  "videoUrl": "string (URL)",
+  "thumbnail": "string (URL)",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+### Stats
+
+#### Get All Stats
+
+```http
+GET /stats
+```
+
+Response (200 OK):
+
+```json
+[
+  {
+    "id": "string (MongoDB ObjectId)",
+    "label": "string",
+    "value": "string",
+    "createdAt": "string (ISO date)",
+    "updatedAt": "string (ISO date)"
+  }
+]
+```
+
+#### Get Stat by ID
+
+```http
+GET /stats/:id
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "label": "string",
+  "value": "string",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Create Stat
+
+```http
+POST /stats
+```
+
+Request Body:
+
+```json
+{
+  "label": "string",
+  "value": "string"
+}
+```
+
+Response (201 Created):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "label": "string",
+  "value": "string",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Update Stat
+
+```http
+PUT /stats/:id
+```
+
+Request Body:
+
+```json
+{
+  "label": "string",
+  "value": "string"
+}
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "label": "string",
+  "value": "string",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Delete Stat
+
+```http
+DELETE /stats/:id
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "label": "string",
+  "value": "string",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+### Hero Images
+
+#### Get All Hero Images
+
+```http
+GET /hero-images
+```
+
+Response (200 OK):
+
+```json
+[
+  {
+    "id": "string (MongoDB ObjectId)",
+    "url": "string (URL)",
+    "alt": "string",
+    "title": "string",
+    "createdAt": "string (ISO date)",
+    "updatedAt": "string (ISO date)"
+  }
+]
+```
+
+#### Get Hero Image by ID
+
+```http
+GET /hero-images/:id
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "url": "string (URL)",
+  "alt": "string",
+  "title": "string",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Create Hero Image
+
+```http
+POST /hero-images
+```
+
+Request Body:
+
+```json
+{
+  "url": "string (URL)",
+  "alt": "string",
+  "title": "string"
+}
+```
+
+Response (201 Created):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "url": "string (URL)",
+  "alt": "string",
+  "title": "string",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Update Hero Image
+
+```http
+PUT /hero-images/:id
+```
+
+Request Body:
+
+```json
+{
+  "url": "string (URL)",
+  "alt": "string",
+  "title": "string"
+}
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "url": "string (URL)",
+  "alt": "string",
+  "title": "string",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
+
+#### Delete Hero Image
+
+```http
+DELETE /hero-images/:id
+```
+
+Response (200 OK):
+
+```json
+{
+  "id": "string (MongoDB ObjectId)",
+  "url": "string (URL)",
+  "alt": "string",
+  "title": "string",
+  "createdAt": "string (ISO date)",
+  "updatedAt": "string (ISO date)"
+}
+```
 
 ## Rate Cards Module
 

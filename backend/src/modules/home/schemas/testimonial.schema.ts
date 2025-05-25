@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from "mongoose";
 
-@Schema()
+@Schema({ timestamps: true })
 export class Testimonial extends Document {
   @Prop({ required: true })
   quote: string;
@@ -15,11 +15,8 @@ export class Testimonial extends Document {
   @Prop({ required: true })
   location: string;
 
-  @Prop()
+  @Prop({ required: true })
   image: string;
-
-  @Prop({ default: Date.now })
-  createdAt: Date;
 }
 
 export const TestimonialSchema = SchemaFactory.createForClass(Testimonial);

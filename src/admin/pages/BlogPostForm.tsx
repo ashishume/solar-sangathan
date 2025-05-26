@@ -8,6 +8,7 @@ import Input from "../../components/ui/Input";
 import Textarea from "../../components/ui/Textarea";
 import Button from "../../components/ui/Button";
 import RichTextEditor from "../../components/ui/RichTextEditor";
+import MultiSelect from "../../components/ui/MultiSelect";
 
 const BlogPostForm = () => {
   const navigate = useNavigate();
@@ -241,39 +242,13 @@ const BlogPostForm = () => {
           </select>
         </div>
 
-        <div className="space-y-2">
-          <label
-            htmlFor="tags"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Tags
-          </label>
-          <select
-            id="tags"
-            multiple
-            value={post.tags.map((tag) => tag._id)}
-            onChange={(e) => {
-              const selectedTagIds = Array.from(e.target.selectedOptions).map(
-                (option) => option.value
-              );
-              const selectedTags = tags.filter((tag) =>
-                selectedTagIds.includes(tag._id)
-              );
-              setPost({ ...post, tags: selectedTags });
-            }}
-            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200 px-4 py-3 min-h-[120px]"
-            size={5}
-          >
-            {tags.map((tag) => (
-              <option key={tag._id} value={tag._id}>
-                {tag.name}
-              </option>
-            ))}
-          </select>
-          <p className="text-sm text-gray-500">
-            Hold Ctrl/Cmd to select multiple tags
-          </p>
-        </div>
+        <MultiSelect
+          label="Tags"
+          options={tags}
+          value={post.tags}
+          onChange={(selectedTags) => setPost({ ...post, tags: selectedTags })}
+          placeholder="Select tags..."
+        />
 
         <div className="space-y-2">
           <label

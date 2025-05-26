@@ -9,7 +9,7 @@ const Tags = () => {
     fetchTags();
   }, [fetchTags]);
 
-  const handleDelete = (id: string | number) => {
+  const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete this tag?")) {
       // deleteTag(Number(id));
     }

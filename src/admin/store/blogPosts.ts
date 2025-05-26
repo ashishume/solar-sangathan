@@ -15,7 +15,7 @@ interface BlogPostsStore {
   fetchPosts: () => Promise<void>;
 }
 
-export const useBlogPosts = create<BlogPostsStore>((set, get) => ({
+export const useBlogPosts = create<BlogPostsStore>((set) => ({
   posts: [],
   loading: false,
   error: null,

@@ -20,6 +20,36 @@ const Dashboard = () => {
       link: "/admin/categories",
       color: "bg-purple-500",
     },
+    {
+      title: "New Blog Post",
+      description: "Create a new blog post",
+      link: "/admin/blog-posts/new",
+      color: "bg-red-500",
+    },
+    {
+      title: "New Category",
+      description: "Create a new category",
+      link: "/admin/categories/new",
+      color: "bg-yellow-500",
+    },
+    {
+      title: "New Tag",
+      description: "Create a new tag",
+      link: "/admin/tags/new",
+      color: "bg-indigo-500",
+    },
+    {
+      title: "Testimonials",
+      description: "Manage testimonials",
+      link: "/admin/testimonials",
+      color: "bg-orange-500",
+    },
+    {
+      title: "Channels",
+      description: "Manage channels",
+      link: "/admin/channels",
+      color: "bg-pink-500",
+    },
   ];
 
   return (

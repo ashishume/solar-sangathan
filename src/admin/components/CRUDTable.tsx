@@ -65,7 +65,7 @@ const CRUDTable = ({
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {data.map((item, index) => (
-              <tr key={item.id || index}>
+              <tr key={item._id || index}>
                 {columns.map((column) => (
                   <td
                     key={column.header}
@@ -76,13 +76,13 @@ const CRUDTable = ({
                 ))}
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <Link
-                    to={`${basePath}/${item.id}/edit`}
+                    to={`${basePath}/${item._id}/edit`}
                     className="text-indigo-600 hover:text-indigo-900 mr-4"
                   >
                     Edit
                   </Link>
                   <button
-                    onClick={() => onDelete(item.id)}
+                    onClick={() => onDelete(item._id)}
                     className="text-red-600 hover:text-red-900"
                   >
                     Delete

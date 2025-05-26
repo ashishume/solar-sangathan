@@ -1,70 +1,85 @@
 import { create } from "zustand";
-
-export interface BlogPost {
-  id: number;
-  title: string;
-  content: string;
-  author: string;
-  status: "Draft" | "Published";
-  date: string;
-}
+import type { BlogPost } from "../types/blogPost";
+import { blogPostService } from "../services/blogPostService";
 
 interface BlogPostsStore {
   posts: BlogPost[];
-  addPost: (post: Omit<BlogPost, "id" | "date">) => void;
-  updatePost: (id: number, post: Partial<BlogPost>) => void;
-  deletePost: (id: number) => void;
-  getPost: (id: number) => BlogPost | undefined;
+  loading: boolean;
+  error: string | null;
+  addPost: (
+    post: Omit<BlogPost, "id" | "createdAt" | "updatedAt">
+  ) => Promise<void>;
+  updatePost: (id: string, post: Partial<BlogPost>) => Promise<void>;
+  deletePost: (id: string) => Promise<void>;
+  getPost: (id: string) => Promise<BlogPost | null>;
+  fetchPosts: () => Promise<void>;
 }
 
-// Initial mock data
-const initialPosts: BlogPost[] = [
-  {
-    id: 1,
-    title: "Getting Started with Solar Energy",
-    content:
-      "This is a comprehensive guide to getting started with solar energy...",
-    author: "John Doe",
-    status: "Published",
-    date: "2024-03-15",
-  },
-  {
-    id: 2,
-    title: "Benefits of Renewable Energy",
-    content: "Exploring the various benefits of renewable energy sources...",
-    author: "Jane Smith",
-    status: "Draft",
-    date: "2024-03-14",
-  },
-];
-
 export const useBlogPosts = create<BlogPostsStore>((set, get) => ({
-  posts: initialPosts,
+  posts: [],
+  loading: false,
+  error: null,
 
-  addPost: (post: Omit<BlogPost, "id" | "date">) => {
-    const newPost: BlogPost = {
-      ...post,
-      id: Math.max(0, ...get().posts.map((p: BlogPost) => p.id)) + 1,
-      date: new Date().toISOString().split("T")[0],
-    };
-    set((state: BlogPostsStore) => ({ posts: [...state.posts, newPost] }));
+  fetchPosts: async () => {
+    set({ loading: true, error: null });
+    try {
+      const posts = await blogPostService.getAllPosts();
+      set({ posts, loading: false });
+    } catch (error) {
+      set({ error: (error as Error).message, loading: false });
+    }
   },
 
-  updatePost: (id: number, updatedPost: Partial<BlogPost>) => {
-    set((state: BlogPostsStore) => ({
-      posts: state.posts.map((post: BlogPost) =>
-        post.id === id ? { ...post, ...updatedPost } : post
-      ),
-    }));
+  addPost: async (post) => {
+    set({ loading: true, error: null });
+    try {
+      const newPost = await blogPostService.createPost(post);
+      set((state) => ({
+        posts: [...state.posts, newPost],
+        loading: false,
+      }));
+    } catch (error) {
+      set({ error: (error as Error).message, loading: false });
+    }
   },
 
-  deletePost: (id: number) => {
-    set((state: BlogPostsStore) => ({
-      posts: state.posts.filter((post: BlogPost) => post.id !== id),
-    }));
+  updatePost: async (id, updatedPost) => {
+    set({ loading: true, error: null });
+    try {
+      const updated = await blogPostService.updatePost(id, updatedPost);
+      if (updated) {
+        set((state) => ({
+          posts: state.posts.map((post) => (post.id === id ? updated : post)),
+          loading: false,
+        }));
+      }
+    } catch (error) {
+      set({ error: (error as Error).message, loading: false });
+    }
   },
 
-  getPost: (id: number) => {
-    return get().posts.find((post: BlogPost) => post.id === id);
+  deletePost: async (id) => {
+    set({ loading: true, error: null });
+    try {
+      await blogPostService.deletePost(id);
+      set((state) => ({
+        posts: state.posts.filter((post) => post.id !== id),
+        loading: false,
+      }));
+    } catch (error) {
+      set({ error: (error as Error).message, loading: false });
+    }
+  },
+
+  getPost: async (id) => {
+    set({ loading: true, error: null });
+    try {
+      const post = await blogPostService.getPost(id);
+      set({ loading: false });
+      return post;
+    } catch (error) {
+      set({ error: (error as Error).message, loading: false });
+      return null;
+    }
   },
 }));

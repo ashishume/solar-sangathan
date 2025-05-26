@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useBlogPosts } from "../store/blogPosts";
-import type { BlogPost } from "../store/blogPosts";
+import { useCategories } from "../store/categories";
+import { useTags } from "../store/tags";
+import type { BlogPost } from "../types/blogPost";
 import Input from "../../components/ui/Input";
 import Textarea from "../../components/ui/Textarea";
 import Button from "../../components/ui/Button";
@@ -10,44 +12,88 @@ const BlogPostForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const isEditing = Boolean(id);
-  const { addPost, updatePost, getPost } = useBlogPosts();
+  const {
+    addPost,
+    updatePost,
+    getPost,
+    loading: postLoading,
+    error: postError,
+  } = useBlogPosts();
+  const {
+    categories,
+    loading: categoriesLoading,
+    error: categoriesError,
+    fetchCategories,
+  } = useCategories();
+  const { tags, loading: tagsLoading, error: tagsError, fetchTags } = useTags();
 
-  const [post, setPost] = useState<Omit<BlogPost, "id" | "date">>({
+  const [post, setPost] = useState<
+    Omit<BlogPost, "id" | "createdAt" | "updatedAt">
+  >({
     title: "",
+    excerpt: "",
+    coverImage: "",
+    author: {
+      name: "",
+      avatar: "",
+    },
+    publishedAt: new Date().toISOString().split("T")[0],
+    readTime: 5,
     content: "",
-    author: "",
+    category: {
+      _id: "",
+      name: "",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    tags: [],
     status: "Draft",
   });
 
   useEffect(() => {
-    console.log("Edit mode:", isEditing);
-    console.log("Post ID:", id);
+    const fetchData = async () => {
+      await Promise.all([fetchCategories(), fetchTags()]);
 
-    if (isEditing && id) {
-      const existingPost = getPost(Number(id));
-      console.log("Existing post:", existingPost);
-
-      if (existingPost) {
-        const { id: _, date: __, ...postData } = existingPost;
-        console.log("Post data to set:", postData);
-        setPost(postData);
-      } else {
-        console.log("No post found with ID:", id);
+      if (isEditing && id) {
+        const existingPost = await getPost(id);
+        if (existingPost) {
+          const {
+            id: _,
+            createdAt: __,
+            updatedAt: ___,
+            ...postData
+          } = existingPost;
+          setPost(postData);
+        }
       }
-    }
-  }, [isEditing, id, getPost]);
+    };
+    fetchData();
+  }, [isEditing, id, getPost, fetchCategories, fetchTags]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isEditing && id) {
-      console.log("Updating post:", { id, post });
-      updatePost(Number(id), post);
-    } else {
-      console.log("Creating new post:", post);
-      addPost(post);
+    try {
+      if (isEditing && id) {
+        await updatePost(id, post);
+      } else {
+        await addPost(post);
+      }
+      navigate("/admin/blog-posts");
+    } catch (err) {
+      console.error("Failed to save post:", err);
     }
-    navigate("/admin/blog-posts");
   };
+
+  const loading = postLoading || categoriesLoading || tagsLoading;
+  const error = postError || categoriesError || tagsError;
+
+  if (loading) {
+    return <div className="text-center py-8">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-500 text-center py-8">{error}</div>;
+  }
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -66,6 +112,76 @@ const BlogPostForm = () => {
         />
 
         <Textarea
+          label="Excerpt"
+          id="excerpt"
+          value={post.excerpt}
+          onChange={(e) => setPost({ ...post, excerpt: e.target.value })}
+          rows={3}
+          required
+        />
+
+        <Input
+          label="Cover Image URL"
+          type="text"
+          id="coverImage"
+          value={post.coverImage}
+          onChange={(e) => setPost({ ...post, coverImage: e.target.value })}
+          required
+        />
+
+        <div className="grid grid-cols-2 gap-4">
+          <Input
+            label="Author Name"
+            type="text"
+            id="authorName"
+            value={post.author.name}
+            onChange={(e) =>
+              setPost({
+                ...post,
+                author: { ...post.author, name: e.target.value },
+              })
+            }
+            required
+          />
+
+          <Input
+            label="Author Avatar URL"
+            type="text"
+            id="authorAvatar"
+            value={post.author.avatar}
+            onChange={(e) =>
+              setPost({
+                ...post,
+                author: { ...post.author, avatar: e.target.value },
+              })
+            }
+            required
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <Input
+            label="Published Date"
+            type="date"
+            id="publishedAt"
+            value={post.publishedAt}
+            onChange={(e) => setPost({ ...post, publishedAt: e.target.value })}
+            required
+          />
+
+          <Input
+            label="Read Time (minutes)"
+            type="number"
+            id="readTime"
+            value={post.readTime}
+            onChange={(e) =>
+              setPost({ ...post, readTime: parseInt(e.target.value) })
+            }
+            required
+          />
+        </div>
+
+        <Textarea
           label="Content"
           id="content"
           value={post.content}
@@ -74,14 +190,65 @@ const BlogPostForm = () => {
           required
         />
 
-        <Input
-          label="Author"
-          type="text"
-          id="author"
-          value={post.author}
-          onChange={(e) => setPost({ ...post, author: e.target.value })}
-          required
-        />
+        <div className="space-y-2">
+          <label
+            htmlFor="category"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Category
+          </label>
+          <select
+            id="category"
+            value={post.category._id}
+            onChange={(e) => {
+              const selectedCategory = categories.find(
+                (cat) => cat._id === e.target.value
+              );
+              if (selectedCategory) {
+                setPost({ ...post, category: selectedCategory });
+              }
+            }}
+            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200 px-4 py-3"
+            required
+          >
+            <option value="">Select a category</option>
+            {categories.map((category) => (
+              <option key={category._id} value={category._id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="space-y-2">
+          <label
+            htmlFor="tags"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Tags
+          </label>
+          <select
+            id="tags"
+            multiple
+            value={post.tags.map((tag) => tag._id)}
+            onChange={(e) => {
+              const selectedTagIds = Array.from(e.target.selectedOptions).map(
+                (option) => option.value
+              );
+              const selectedTags = tags.filter((tag) =>
+                selectedTagIds.includes(tag._id)
+              );
+              setPost({ ...post, tags: selectedTags });
+            }}
+            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200 px-4 py-3"
+          >
+            {tags.map((tag) => (
+              <option key={tag._id} value={tag._id}>
+                {tag.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <div className="space-y-2">
           <label
@@ -111,11 +278,12 @@ const BlogPostForm = () => {
             type="button"
             variant="outline"
             onClick={() => navigate("/admin/blog-posts")}
+            disabled={loading}
           >
             Cancel
           </Button>
-          <Button type="submit" variant="primary">
-            {isEditing ? "Update Post" : "Create Post"}
+          <Button type="submit" variant="primary" disabled={loading}>
+            {loading ? "Saving..." : isEditing ? "Update Post" : "Create Post"}
           </Button>
         </div>
       </form>

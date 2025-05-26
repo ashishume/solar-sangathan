@@ -12,7 +12,27 @@ export class Post extends Document {
   content: string;
 
   @Prop()
-  featuredImage: string;
+  excerpt: string;
+
+  @Prop()
+  coverImage: string;
+
+  @Prop({
+    type: {
+      name: String,
+      avatar: String,
+    },
+  })
+  author: {
+    name: string;
+    avatar: string;
+  };
+
+  @Prop()
+  publishedAt: Date;
+
+  @Prop()
+  readTime: number;
 
   @Prop({ default: false })
   isPublished: boolean;

@@ -4,7 +4,22 @@ import {
   IsOptional,
   IsBoolean,
   IsMongoId,
+  IsNumber,
+  IsDate,
+  ValidateNested,
+  IsObject,
 } from "class-validator";
+import { Type } from "class-transformer";
+
+class AuthorDto {
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  avatar: string;
+}
 
 export class CreatePostDto {
   @IsString()
@@ -16,8 +31,24 @@ export class CreatePostDto {
   content: string;
 
   @IsString()
-  @IsOptional()
-  featuredImage?: string;
+  @IsNotEmpty()
+  excerpt: string;
+
+  @IsString()
+  @IsNotEmpty()
+  coverImage: string;
+
+  @IsObject()
+  @ValidateNested()
+  @Type(() => AuthorDto)
+  author: AuthorDto;
+
+  @IsDate()
+  @Type(() => Date)
+  publishedAt: Date;
+
+  @IsNumber()
+  readTime: number;
 
   @IsBoolean()
   @IsOptional()

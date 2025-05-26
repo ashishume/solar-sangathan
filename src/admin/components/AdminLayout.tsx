@@ -32,47 +32,59 @@ const AdminLayout = () => {
               Dashboard
             </Link>
             <Link
-              to="blog-posts"
+              to="/admin/blog-posts"
               className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
             >
               Blog Posts
             </Link>
             <Link
-              to="tags"
+              to="/admin/tags"
               className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
             >
               Tags
             </Link>
             <Link
-              to="categories"
+              to="/admin/categories"
               className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
             >
               Categories
             </Link>
             <Link
-              to="home-content"
+              to="/admin/testimonials"
+              className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
+            >
+              Testimonials
+            </Link>
+            <Link
+              to="/admin/channels"
+              className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
+            >
+              Channels
+            </Link>
+            {/* <Link
+              to="/admin/home-content"
               className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
             >
               Home Content
             </Link>
             <Link
-              to="about-content"
+              to="/admin/about-content"
               className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
             >
               About Content
             </Link>
             <Link
-              to="training"
+              to="/admin/training"
               className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
             >
               Training
             </Link>
             <Link
-              to="shop"
+              to="/admin/shop"
               className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
             >
               Shop
-            </Link>
+            </Link> */}
             <button
               onClick={handleLogout}
               className="w-full text-left px-4 py-2 text-gray-300 hover:bg-gray-700"

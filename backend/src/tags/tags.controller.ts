@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  ParseIntPipe,
   Query,
 } from "@nestjs/common";
 import { TagsService } from "./tags.service";
@@ -34,20 +33,20 @@ export class TagsController {
   }
 
   @Get(":id")
-  findOne(@Param("id", ParseIntPipe) id: number): Promise<Tag> {
+  findOne(@Param("id") id: string): Promise<Tag> {
     return this.tagsService.findOne(id);
   }
 
   @Patch(":id")
   update(
-    @Param("id", ParseIntPipe) id: number,
+    @Param("id") id: string,
     @Body() updateTagDto: UpdateTagDto
   ): Promise<Tag> {
     return this.tagsService.update(id, updateTagDto);
   }
 
   @Delete(":id")
-  remove(@Param("id", ParseIntPipe) id: number): Promise<void> {
+  remove(@Param("id") id: string): Promise<void> {
     return this.tagsService.remove(id);
   }
 }

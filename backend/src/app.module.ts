@@ -1,10 +1,11 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
+import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { BlogModule } from "./modules/blog/blog.module";
 import { HomeModule } from "./modules/home/home.module";
-import { AuthModule } from "./modules/auth/auth.module";
 import { RateCardsModule } from "./rate-cards/rate-cards.module";
+import { TagsModule } from "./tags/tags.module";
 
 @Module({
   imports: [
@@ -18,10 +19,11 @@ import { RateCardsModule } from "./rate-cards/rate-cards.module";
       }),
       inject: [ConfigService],
     }),
+
     BlogModule,
     HomeModule,
-    AuthModule,
     RateCardsModule,
+    TagsModule,
   ],
 })
 export class AppModule {}

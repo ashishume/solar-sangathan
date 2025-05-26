@@ -1,30 +1,19 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from "typeorm";
-import { Post } from "../../posts/entities/post.entity";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
 
-@Entity("tags")
-export class Tag {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({ unique: true })
+@Schema()
+export class Tag extends Document {
+  @Prop({ required: true, unique: true })
   name: string;
 
-  @Column({ default: 0 })
+  @Prop({ default: 0 })
   usageCount: number;
 
-  @ManyToMany(() => Post, (post) => post.tags)
-  posts: Post[];
-
-  @CreateDateColumn()
+  @Prop({ default: Date.now })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @Prop({ default: Date.now })
   updatedAt: Date;
 }
+
+export const TagSchema = SchemaFactory.createForClass(Tag);

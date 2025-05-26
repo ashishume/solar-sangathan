@@ -1,3 +1,4 @@
+import { Post } from "src/modules/blog/entities/post.entity";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -6,7 +7,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Post } from "../../posts/entities/post.entity";
 
 @Entity("categories")
 export class Category {

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
 import { Tag } from "./entities/tag.entity";
 import { CreateTagDto } from "./dto/create-tag.dto";
 import { UpdateTagDto } from "./dto/update-tag.dto";
@@ -8,55 +8,55 @@ import { UpdateTagDto } from "./dto/update-tag.dto";
 @Injectable()
 export class TagsService {
   constructor(
-    @InjectRepository(Tag)
-    private tagsRepository: Repository<Tag>
+    @InjectModel(Tag.name)
+    private tagModel: Model<Tag>
   ) {}
 
   async create(createTagDto: CreateTagDto): Promise<Tag> {
-    const tag = this.tagsRepository.create(createTagDto);
-    return await this.tagsRepository.save(tag);
+    const tag = new this.tagModel(createTagDto);
+    return await tag.save();
   }
 
   async findAll(): Promise<Tag[]> {
-    return await this.tagsRepository.find({
-      relations: ["posts"],
-    });
+    return await this.tagModel.find().exec();
   }
 
-  async findOne(id: number): Promise<Tag> {
-    const tag = await this.tagsRepository.findOne({
-      where: { id },
-      relations: ["posts"],
-    });
+  async findOne(id: string): Promise<Tag> {
+    const tag = await this.tagModel.findById(id).exec();
     if (!tag) {
       throw new NotFoundException(`Tag with ID ${id} not found`);
     }
     return tag;
   }
 
-  async update(id: number, updateTagDto: UpdateTagDto): Promise<Tag> {
-    const tag = await this.findOne(id);
-    Object.assign(tag, updateTagDto);
-    return await this.tagsRepository.save(tag);
+  async update(id: string, updateTagDto: UpdateTagDto): Promise<Tag> {
+    const tag = await this.tagModel
+      .findByIdAndUpdate(id, updateTagDto, { new: true })
+      .exec();
+    if (!tag) {
+      throw new NotFoundException(`Tag with ID ${id} not found`);
+    }
+    return tag;
   }
 
-  async remove(id: number): Promise<void> {
-    const tag = await this.findOne(id);
-    await this.tagsRepository.remove(tag);
+  async remove(id: string): Promise<void> {
+    const result = await this.tagModel.findByIdAndDelete(id).exec();
+    if (!result) {
+      throw new NotFoundException(`Tag with ID ${id} not found`);
+    }
   }
 
   async findPopular(limit: number = 10): Promise<Tag[]> {
-    return await this.tagsRepository.find({
-      order: {
-        usageCount: "DESC",
-      },
-      take: limit,
-    });
+    return await this.tagModel
+      .find()
+      .sort({ usageCount: -1 })
+      .limit(limit)
+      .exec();
   }
 
-  async incrementUsageCount(id: number): Promise<void> {
+  async incrementUsageCount(id: string): Promise<void> {
     const tag = await this.findOne(id);
     tag.usageCount += 1;
-    await this.tagsRepository.save(tag);
+    await tag.save();
   }
 }

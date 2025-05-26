@@ -7,6 +7,8 @@ interface CategoriesStore {
   loading: boolean;
   error: string | null;
   fetchCategories: () => Promise<void>;
+  createCategory: (category: Category) => Promise<void>;
+  updateCategory: (id: string, category: Category) => Promise<void>;
 }
 
 export const useCategories = create<CategoriesStore>((set) => ({
@@ -22,5 +24,17 @@ export const useCategories = create<CategoriesStore>((set) => ({
     } catch (error) {
       set({ error: (error as Error).message, loading: false });
     }
+  },
+  createCategory: async (category: Category) => {
+    const newCategory = await categoryService.createCategory(category);
+    set((state) => ({ categories: [...state.categories, newCategory] }));
+  },
+  updateCategory: async (id: string, category: Category) => {
+    const updatedCategory = await categoryService.updateCategory(id, category);
+    set((state) => ({
+      categories: state.categories.map((c) =>
+        c._id === id ? updatedCategory : c
+      ),
+    }));
   },
 }));

@@ -32,7 +32,6 @@ const Dashboard = () => {
             to={section.link}
             className="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
           >
-            <div className={`w-12 h-12 ${section.color} rounded-lg mb-4`} />
             <h2 className="text-xl font-semibold mb-2">{section.title}</h2>
             <p className="text-gray-600">{section.description}</p>
           </Link>

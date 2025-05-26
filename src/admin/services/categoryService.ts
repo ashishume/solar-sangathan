@@ -13,6 +13,18 @@ class CategoryService {
 
     return response.data;
   }
+
+  async createCategory(category: Category): Promise<Category> {
+    const response = await axiosInstance.post(`/categories`, category);
+
+    return response.data;
+  }
+
+  async updateCategory(id: string, category: Category): Promise<Category> {
+    const response = await axiosInstance.put(`/categories/${id}`, category);
+
+    return response.data;
+  }
 }
 
 export const categoryService = new CategoryService();

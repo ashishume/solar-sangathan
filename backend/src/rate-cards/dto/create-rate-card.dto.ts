@@ -25,11 +25,11 @@ export class CreateRateCardDto {
 
   @IsBoolean()
   @IsOptional()
-  isActive?: boolean;
+  isActive: boolean = true;
 
   @IsBoolean()
   @IsOptional()
-  isPopular?: boolean;
+  isPopular: boolean = false;
 
   @IsString()
   @IsOptional()

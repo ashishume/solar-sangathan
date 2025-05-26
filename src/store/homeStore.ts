@@ -7,7 +7,7 @@ import {
   getVideoData,
   getStats,
   getCarouselImages,
-} from "../api/home";
+} from "../api/api-calls";
 
 interface Testimonial {
   quote: string;

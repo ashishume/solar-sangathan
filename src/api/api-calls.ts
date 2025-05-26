@@ -4,7 +4,7 @@ import { mockBrands } from "./mockData/brands";
 import { mockVideoData } from "./mockData/video";
 import { mockStats } from "./mockData/stats";
 import { mockHeroImages } from "./mockData/hero";
-import apiService from "./axios";
+import { mockRateCards } from "./mockData/rateCards";
 
 // Simulate API delay
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -49,4 +49,11 @@ export const getCarouselImages = async () => {
   // In a real application, this would be an API call
   // return apiService.get("/api/carousel").then((res) => res.data);
   return mockHeroImages;
+};
+
+export const getRateCards = async () => {
+  await delay(500);
+  // In a real application, this would be an API call
+  // return apiService.get("/rate-cards").then((res) => res.data);
+  return mockRateCards;
 };

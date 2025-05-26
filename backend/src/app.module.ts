@@ -6,6 +6,7 @@ import { BlogModule } from "./modules/blog/blog.module";
 import { HomeModule } from "./modules/home/home.module";
 import { RateCardsModule } from "./rate-cards/rate-cards.module";
 import { TagsModule } from "./tags/tags.module";
+import { CategoriesModule } from "./modules/categories/categories.module";
 
 @Module({
   imports: [
@@ -19,11 +20,11 @@ import { TagsModule } from "./tags/tags.module";
       }),
       inject: [ConfigService],
     }),
-
     BlogModule,
     HomeModule,
     RateCardsModule,
     TagsModule,
+    CategoriesModule,
   ],
 })
 export class AppModule {}

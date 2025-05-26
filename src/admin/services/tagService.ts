@@ -13,6 +13,18 @@ class TagService {
 
     return response.data;
   }
+
+  async createTag(tag: Tag): Promise<Tag> {
+    const response = await axiosInstance.post(`/tags`, tag);
+
+    return response.data;
+  }
+
+  async updateTag(id: string, tag: Tag): Promise<Tag> {
+    const response = await axiosInstance.put(`/tags/${id}`, tag);
+
+    return response.data;
+  }
 }
 
 export const tagService = new TagService();

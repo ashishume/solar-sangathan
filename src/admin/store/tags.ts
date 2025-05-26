@@ -7,6 +7,8 @@ interface TagsStore {
   loading: boolean;
   error: string | null;
   fetchTags: () => Promise<void>;
+  addTag: (tag: Tag) => Promise<void>;
+  editTag: (id: string, tag: Tag) => Promise<void>;
 }
 
 export const useTags = create<TagsStore>((set) => ({
@@ -22,5 +24,15 @@ export const useTags = create<TagsStore>((set) => ({
     } catch (error) {
       set({ error: (error as Error).message, loading: false });
     }
+  },
+  addTag: async (tag: Tag) => {
+    const newTag = await tagService.createTag(tag);
+    set((state) => ({ tags: [...state.tags, newTag] }));
+  },
+  editTag: async (id: string, tag: Tag) => {
+    const updatedTag = await tagService.updateTag(id, tag);
+    set((state) => ({
+      tags: state.tags.map((t) => (t._id === id ? updatedTag : t)),
+    }));
   },
 }));

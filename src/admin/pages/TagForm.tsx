@@ -2,29 +2,25 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTags } from "../store/tags";
 import Input from "../../components/ui/Input";
-import Textarea from "../../components/ui/Textarea";
 import Button from "../../components/ui/Button";
+import type { Tag } from "../types/tag";
 
 const TagForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { tags, addTag, updateTag } = useTags();
+  const { tags, addTag, editTag } = useTags();
   const isEditMode = Boolean(id);
 
   const [formData, setFormData] = useState({
     name: "",
-    slug: "",
-    description: "",
   });
 
   useEffect(() => {
     if (isEditMode) {
-      const existingTag = tags.find((tag) => tag.id === Number(id));
+      const existingTag = tags.find((tag) => tag._id === id);
       if (existingTag) {
         setFormData({
           name: existingTag.name,
-          slug: existingTag.slug,
-          description: existingTag.description,
         });
       }
     }
@@ -34,9 +30,9 @@ const TagForm = () => {
     e.preventDefault();
 
     if (isEditMode) {
-      updateTag(Number(id), formData);
+      editTag(id as string, formData as unknown as Tag);
     } else {
-      addTag(formData);
+      addTag(formData as unknown as Tag);
     }
 
     navigate("/admin/tags");
@@ -67,25 +63,6 @@ const TagForm = () => {
           value={formData.name}
           onChange={handleChange}
           required
-        />
-
-        <Input
-          label="Slug"
-          type="text"
-          id="slug"
-          name="slug"
-          value={formData.slug}
-          onChange={handleChange}
-          required
-        />
-
-        <Textarea
-          label="Description"
-          id="description"
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          rows={4}
         />
 
         <div className="flex justify-end space-x-4">

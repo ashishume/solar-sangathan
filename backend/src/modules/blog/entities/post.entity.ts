@@ -34,8 +34,8 @@ export class Post extends Document {
   @Prop()
   readTime: number;
 
-  @Prop({ default: false })
-  isPublished: boolean;
+  @Prop()
+  status: string;
 
   @Prop({ default: 0 })
   viewCount: number;

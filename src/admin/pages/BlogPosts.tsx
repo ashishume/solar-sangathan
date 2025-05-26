@@ -15,7 +15,6 @@ export interface BlogPost {
   };
   publishedAt: string;
   readTime: number;
-  isPublished: boolean;
   viewCount: number;
   category: {
     _id: string;
@@ -27,6 +26,7 @@ export interface BlogPost {
   }>;
   createdAt: string;
   updatedAt: string;
+  status: string;
 }
 
 const BlogPosts = () => {
@@ -94,12 +94,12 @@ const BlogPosts = () => {
       accessor: (item: BlogPost) => (
         <span
           className={`px-2 py-1 rounded-full text-xs ${
-            item.isPublished
+            item.status === "Published"
               ? "bg-green-100 text-green-800"
               : "bg-yellow-100 text-yellow-800"
           }`}
         >
-          {item.isPublished ? "Published" : "Draft"}
+          {item.status === "Published" ? "Published" : "Draft"}
         </span>
       ),
     },

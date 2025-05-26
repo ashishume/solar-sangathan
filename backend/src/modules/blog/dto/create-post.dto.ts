@@ -2,7 +2,6 @@ import {
   IsString,
   IsNotEmpty,
   IsOptional,
-  IsBoolean,
   IsMongoId,
   IsNumber,
   IsDate,
@@ -47,12 +46,12 @@ export class CreatePostDto {
   @Type(() => Date)
   publishedAt: Date;
 
+  @IsString()
+  @IsNotEmpty()
+  status: string;
+
   @IsNumber()
   readTime: number;
-
-  @IsBoolean()
-  @IsOptional()
-  isPublished?: boolean;
 
   @IsMongoId()
   @IsOptional()

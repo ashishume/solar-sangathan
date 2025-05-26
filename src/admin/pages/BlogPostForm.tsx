@@ -54,7 +54,12 @@ const BlogPostForm = () => {
   useEffect(() => {
     const fetchData = async () => {
       await Promise.all([fetchCategories(), fetchTags()]);
+    };
+    fetchData();
+  }, [fetchCategories, fetchTags]);
 
+  useEffect(() => {
+    const loadPost = async () => {
       if (isEditing && id) {
         const existingPost = await getPost(id);
         if (existingPost) {
@@ -68,8 +73,18 @@ const BlogPostForm = () => {
         }
       }
     };
-    fetchData();
-  }, [isEditing, id, getPost, fetchCategories, fetchTags]);
+    loadPost();
+  }, [isEditing, id, getPost]);
+
+  // Update category when categories are loaded
+  useEffect(() => {
+    if (post.category._id && categories.length > 0) {
+      const category = categories.find((cat) => cat._id === post.category._id);
+      if (category) {
+        setPost((prev) => ({ ...prev, category }));
+      }
+    }
+  }, [categories]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -246,7 +261,8 @@ const BlogPostForm = () => {
               );
               setPost({ ...post, tags: selectedTags });
             }}
-            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200 px-4 py-3"
+            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200 px-4 py-3 min-h-[120px]"
+            size={5}
           >
             {tags.map((tag) => (
               <option key={tag._id} value={tag._id}>
@@ -254,6 +270,9 @@ const BlogPostForm = () => {
               </option>
             ))}
           </select>
+          <p className="text-sm text-gray-500">
+            Hold Ctrl/Cmd to select multiple tags
+          </p>
         </div>
 
         <div className="space-y-2">

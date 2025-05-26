@@ -7,6 +7,7 @@ import type { BlogPost } from "../types/blogPost";
 import Input from "../../components/ui/Input";
 import Textarea from "../../components/ui/Textarea";
 import Button from "../../components/ui/Button";
+import RichTextEditor from "../../components/ui/RichTextEditor";
 
 const BlogPostForm = () => {
   const navigate = useNavigate();
@@ -181,14 +182,19 @@ const BlogPostForm = () => {
           />
         </div>
 
-        <Textarea
-          label="Content"
-          id="content"
-          value={post.content}
-          onChange={(e) => setPost({ ...post, content: e.target.value })}
-          rows={10}
-          required
-        />
+        <div className="space-y-2">
+          <label
+            htmlFor="content"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Content <span className="text-red-600">*</span>
+          </label>
+          <RichTextEditor
+            value={post.content}
+            onChange={(value) => setPost({ ...post, content: value })}
+            placeholder="Write your blog post content here..."
+          />
+        </div>
 
         <div className="space-y-2">
           <label

@@ -13,28 +13,28 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export const getTestimonials = async () => {
   await delay(500);
   // In a real application, this would be an API call
-  return apiService.get("/api/testimonials").then((res) => res.data);
+  return apiService.get("/testimonials").then((res) => res.data);
   // return mockTestimonials;
 };
 
 export const getChannels = async () => {
   await delay(500);
   // In a real application, this would be an API call
-  return apiService.get("/api/channels").then((res) => res.data);
+  return apiService.get("/channels").then((res) => res.data);
   // return mockChannels;
 };
 
 export const getBrands = async () => {
   await delay(500);
   // In a real application, this would be an API call
-  return apiService.get("/api/brands").then((res) => res.data);
+  return apiService.get("/brands").then((res) => res.data);
   // return mockBrands;
 };
 
 export const getVideoData = async () => {
   await delay(500);
   // In a real application, this would be an API call
-  return apiService.get("/api/video").then((res) => res.data);
+  return apiService.get("/video").then((res) => res.data);
   // return mockVideoData;
 };
 
@@ -48,7 +48,7 @@ export const getStats = async () => {
 export const getCarouselImages = async () => {
   await delay(500);
   // In a real application, this would be an API call
-  return apiService.get("/api/carousel").then((res) => res.data);
+  return apiService.get("/carousel").then((res) => res.data);
   // return mockHeroImages;
 };
 

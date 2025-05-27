@@ -50,6 +50,18 @@ const Dashboard = () => {
       link: "/admin/channels",
       color: "bg-pink-500",
     },
+    {
+      title: "Carousel",
+      description: "Manage carousel",
+      link: "/admin/carousel",
+      color: "bg-pink-500",
+    },
+    {
+      title: "Add Video",
+      description: "Add video",
+      link: "/admin/video/new",
+      color: "bg-pink-500",
+    },
   ];
 
   return (

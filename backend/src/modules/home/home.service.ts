@@ -134,7 +134,7 @@ export class HomeService {
 
   // Video CRUD
   async getVideoData() {
-    return this.videoModel.findOne().exec();
+    return this.videoModel.findOne().sort({ createdAt: -1 }).exec();
   }
 
   async getVideo(id: string) {

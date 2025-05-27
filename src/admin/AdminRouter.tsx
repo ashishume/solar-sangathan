@@ -1,17 +1,19 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import AdminLayout from "./components/AdminLayout";
 import Dashboard from "./pages/Dashboard";
-import BlogPosts from "./pages/BlogPosts";
-import BlogPostForm from "./pages/BlogPostForm";
-import Tags from "./pages/Tags";
-import TagForm from "./pages/TagForm";
-import Categories from "./pages/Categories";
-import CategoryForm from "./pages/CategoryForm";
-import Testimonials from "./pages/Testimonials";
-import TestimonialForm from "./pages/TestimonialForm";
-import Channels from "./pages/Channels";
-import ChannelForm from "./pages/ChannelForm";
-
+import BlogPostForm from "./pages/Blog/BlogPostForm";
+import BlogPosts from "./pages/Blog/BlogPosts";
+import Categories from "./pages/Categories/Categories";
+import CategoryForm from "./pages/Categories/CategoryForm";
+import ChannelForm from "./pages/Channels/ChannelForm";
+import Channels from "./pages/Channels/Channels";
+import TagForm from "./pages/Tags/TagForm";
+import Tags from "./pages/Tags/Tags";
+import TestimonialForm from "./pages/Testimonials/TestimonialForm";
+import Testimonials from "./pages/Testimonials/Testimonials";
+import Carousel from "./pages/Carousel/Carousel";
+import NewCarousel from "./pages/Carousel/NewCarousel";
+import VideoForm from "./pages/Video/VideoForm";
 const AdminRouter = () => {
   return (
     <Routes>
@@ -32,6 +34,10 @@ const AdminRouter = () => {
         <Route path="channels" element={<Channels />} />
         <Route path="channels/new" element={<ChannelForm />} />
         <Route path="channels/:id/edit" element={<ChannelForm />} />
+        <Route path="carousel" element={<Carousel />} />
+        <Route path="carousel/new" element={<NewCarousel />} />
+        <Route path="carousel/:id/edit" element={<NewCarousel />} />
+        <Route path="video/new" element={<VideoForm />} />
         <Route path="*" element={<Navigate to="/admin" replace />} />
       </Route>
     </Routes>

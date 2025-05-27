@@ -22,6 +22,7 @@ export default defineConfig({
       "@services": resolve(__dirname, "./src/services"),
       "@styles": resolve(__dirname, "./src/styles"),
       "@assets": resolve(__dirname, "./src/assets"),
+      "@ui": resolve(__dirname, "./src/components/ui"),
     },
   },
 });

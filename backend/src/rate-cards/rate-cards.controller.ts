@@ -12,26 +12,26 @@ import { RateCardsService } from "./rate-cards.service";
 import { CreateRateCardDto } from "./dto/create-rate-card.dto";
 import { UpdateRateCardDto } from "./dto/update-rate-card.dto";
 
-@Controller("rate-cards")
+@Controller("api")
 export class RateCardsController {
   constructor(private readonly rateCardsService: RateCardsService) {}
 
-  @Post()
+  @Post("rate-cards")
   create(@Body() createRateCardDto: CreateRateCardDto) {
     return this.rateCardsService.create(createRateCardDto);
   }
 
-  @Get()
+  @Get("rate-cards")
   findAll() {
     return this.rateCardsService.findAll();
   }
 
-  @Get(":id")
+  @Get("rate-cards/:id")
   findOne(@Param("id") id: string) {
     return this.rateCardsService.findOne(id);
   }
 
-  @Patch(":id")
+  @Patch("rate-cards/:id")
   update(
     @Param("id") id: string,
     @Body() updateRateCardDto: UpdateRateCardDto

@@ -99,26 +99,42 @@ const About = () => {
         </div>
 
         {/* Image Wall */}
-        <div className="relative h-[600px]">
-          {images.map((src, index) => (
-            <div
-              key={src}
-              className={`absolute w-64 h-64 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 ${
-                index % 2 === 0 ? "hover:rotate-3" : "hover:-rotate-3"
-              }`}
-              style={{
-                top: `${(index * 20) % 60}%`,
-                left: `${(index * 15) % 70}%`,
-                zIndex: index,
-              }}
-            >
-              <img
-                src={src}
-                alt={`Solar energy ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
+        <div className="relative min-h-[400px] md:h-[600px]">
+          <div className="grid grid-cols-2 md:grid-cols-none md:block gap-4 md:gap-0">
+            {images.map((src, index) => (
+              <div
+                key={src}
+                className={`md:absolute w-full md:w-64 h-48 md:h-64 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 ${
+                  index % 2 === 0 ? "hover:rotate-3" : "hover:-rotate-3"
+                }`}
+                style={{
+                  top:
+                    index === 0
+                      ? "0%"
+                      : index === 1
+                      ? "20%"
+                      : index === 2
+                      ? "40%"
+                      : "60%",
+                  left:
+                    index === 0
+                      ? "0%"
+                      : index === 1
+                      ? "30%"
+                      : index === 2
+                      ? "15%"
+                      : "45%",
+                  zIndex: index,
+                }}
+              >
+                <img
+                  src={src}
+                  alt={`Solar energy ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

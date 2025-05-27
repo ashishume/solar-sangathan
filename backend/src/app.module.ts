@@ -16,7 +16,7 @@ import { CategoriesModule } from "./modules/categories/categories.module";
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        uri: "mongodb+srv://vercel-admin-user:Ashish1997@cluster0.b9ovkbq.mongodb.net/solar_sangathan?retryWrites=true&w=majority&appName=Cluster0",
+        uri: configService.get("MONGO_DB_URI"),
       }),
       inject: [ConfigService],
     }),

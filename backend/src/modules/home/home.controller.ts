@@ -15,6 +15,10 @@ import { Video } from "./schemas/video.schema";
 import { Stat } from "./schemas/stat.schema";
 import { HeroImage } from "./schemas/hero-image.schema";
 import { MongoIdPipe } from "./pipes/mongo-id.pipe";
+import {
+  CreateImportantInfoDto,
+  UpdateImportantInfoDto,
+} from "./dto/important-info.dto";
 
 @Controller("api")
 export class HomeController {
@@ -197,5 +201,36 @@ export class HomeController {
   @Delete("carousel/:id")
   async deleteHeroImage(@Param("id", MongoIdPipe) id: string) {
     return this.homeService.deleteHeroImage(id);
+  }
+
+  // Important Info endpoints
+  @Get("important-information")
+  async getImportantInfo() {
+    return this.homeService.getImportantInfo();
+  }
+
+  @Get("important-information/:id")
+  async getImportantInfoById(@Param("id", MongoIdPipe) id: string) {
+    return this.homeService.getImportantInfoById(id);
+  }
+
+  @Post("important-information")
+  async createImportantInfo(
+    @Body() createImportantInfoDto: CreateImportantInfoDto
+  ) {
+    return this.homeService.createImportantInfo(createImportantInfoDto);
+  }
+
+  @Put("important-information/:id")
+  async updateImportantInfo(
+    @Param("id", MongoIdPipe) id: string,
+    @Body() updateImportantInfoDto: UpdateImportantInfoDto
+  ) {
+    return this.homeService.updateImportantInfo(id, updateImportantInfoDto);
+  }
+
+  @Delete("important-information/:id")
+  async deleteImportantInfo(@Param("id", MongoIdPipe) id: string) {
+    return this.homeService.deleteImportantInfo(id);
   }
 }

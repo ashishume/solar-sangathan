@@ -62,6 +62,12 @@ const Dashboard = () => {
       link: "/admin/video/new",
       color: "bg-pink-500",
     },
+    {
+      title: "Important Information",
+      description: "Manage important information",
+      link: "/admin/important-information",
+      color: "bg-pink-500",
+    },
   ];
 
   return (

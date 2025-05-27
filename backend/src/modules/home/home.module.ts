@@ -6,6 +6,10 @@ import { Brand, BrandSchema } from "./schemas/brand.schema";
 import { Video, VideoSchema } from "./schemas/video.schema";
 import { Stat, StatSchema } from "./schemas/stat.schema";
 import { HeroImage, HeroImageSchema } from "./schemas/hero-image.schema";
+import {
+  ImportantInfo,
+  ImportantInfoSchema,
+} from "./schemas/important-info.schema";
 import { HomeService } from "./home.service";
 import { HomeController } from "./home.controller";
 
@@ -18,6 +22,7 @@ import { HomeController } from "./home.controller";
       { name: Video.name, schema: VideoSchema },
       { name: Stat.name, schema: StatSchema },
       { name: HeroImage.name, schema: HeroImageSchema },
+      { name: ImportantInfo.name, schema: ImportantInfoSchema },
     ]),
   ],
   controllers: [HomeController],

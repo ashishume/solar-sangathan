@@ -16,6 +16,7 @@ const Home = () => {
     fetchVideoData,
     fetchStats,
     fetchHeroImages,
+    fetchImportantInformation,
     loading,
     error,
   } = useHomeStore();
@@ -29,6 +30,7 @@ const Home = () => {
       fetchVideoData(),
       fetchStats(),
       fetchHeroImages(),
+      fetchImportantInformation(),
     ]);
   }, [
     fetchTestimonials,
@@ -37,6 +39,7 @@ const Home = () => {
     fetchVideoData,
     fetchStats,
     fetchHeroImages,
+    fetchImportantInformation,
   ]);
 
   // Check if any section is loading

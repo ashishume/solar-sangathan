@@ -7,6 +7,7 @@ import {
   getVideoData,
   getStats,
   getCarouselImages,
+  getImportantInformation,
 } from "../api/api-calls";
 
 interface Testimonial {
@@ -36,6 +37,13 @@ interface VideoData {
   thumbnailUrl: string;
 }
 
+interface ImportantInformation {
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  _id: string;
+}
+
 interface HomeState {
   testimonials: Testimonial[];
   channels: Channel[];
@@ -59,12 +67,14 @@ interface HomeState {
     stats: string | null;
     hero: string | null;
   };
+  importantInformation: ImportantInformation;
   fetchTestimonials: () => Promise<void>;
   fetchChannels: () => Promise<void>;
   fetchBrands: () => Promise<void>;
   fetchVideoData: () => Promise<void>;
   fetchStats: () => Promise<void>;
   fetchHeroImages: () => Promise<void>;
+  fetchImportantInformation: () => Promise<void>;
 }
 
 export const useHomeStore = create<HomeState>()(
@@ -77,6 +87,12 @@ export const useHomeStore = create<HomeState>()(
         videoUrl: "",
         title: "",
         thumbnailUrl: "",
+      },
+      importantInformation: {
+        content: "",
+        createdAt: "",
+        updatedAt: "",
+        _id: "",
       },
       stats: [],
       heroImages: [],
@@ -195,6 +211,19 @@ export const useHomeStore = create<HomeState>()(
             error: { ...state.error, hero: "Failed to fetch hero images" },
           }));
         }
+      },
+      fetchImportantInformation: async () => {
+        set((state) => ({
+          loading: { ...state.loading, importantInformation: true },
+        }));
+        try {
+          const data = await getImportantInformation();
+          set((state) => ({
+            importantInformation: data,
+            loading: { ...state.loading, importantInformation: false },
+            error: { ...state.error, importantInformation: null },
+          }));
+        } catch (error) {}
       },
     }),
     {

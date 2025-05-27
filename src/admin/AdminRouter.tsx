@@ -14,6 +14,8 @@ import Testimonials from "./pages/Testimonials/Testimonials";
 import Carousel from "./pages/Carousel/Carousel";
 import NewCarousel from "./pages/Carousel/NewCarousel";
 import VideoForm from "./pages/Video/VideoForm";
+import { ImportantInfoList, ImportantInfoForm } from "./pages/Important-Info";
+
 const AdminRouter = () => {
   return (
     <Routes>
@@ -38,6 +40,15 @@ const AdminRouter = () => {
         <Route path="carousel/new" element={<NewCarousel />} />
         <Route path="carousel/:id/edit" element={<NewCarousel />} />
         <Route path="video/new" element={<VideoForm />} />
+        <Route path="important-information" element={<ImportantInfoList />} />
+        <Route
+          path="important-information/new"
+          element={<ImportantInfoForm />}
+        />
+        <Route
+          path="important-information/:id/edit"
+          element={<ImportantInfoForm />}
+        />
         <Route path="*" element={<Navigate to="/admin" replace />} />
       </Route>
     </Routes>

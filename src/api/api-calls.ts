@@ -8,53 +8,60 @@ import { mockStats } from "./mockData/stats";
 import apiService from "./axios";
 
 // Simulate API delay
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+// new Promise((resolve) => setTimeout(resolve, ms));
 
 export const getTestimonials = async () => {
-  await delay(500);
+  // await delay(500);
   // In a real application, this would be an API call
   return apiService.get("/testimonials").then((res) => res.data);
   // return mockTestimonials;
 };
 
 export const getChannels = async () => {
-  await delay(500);
+  // await delay(500);
   // In a real application, this would be an API call
   return apiService.get("/channels").then((res) => res.data);
   // return mockChannels;
 };
 
 export const getBrands = async () => {
-  await delay(500);
+  // await delay(500);
   // In a real application, this would be an API call
   return apiService.get("/brands").then((res) => res.data);
   // return mockBrands;
 };
 
 export const getVideoData = async () => {
-  await delay(500);
+  // await delay(500);
   // In a real application, this would be an API call
   return apiService.get("/video").then((res) => res.data);
   // return mockVideoData;
 };
 
 export const getStats = async () => {
-  await delay(500);
+  // await delay(500);
   // In a real application, this would be an API call
   // return fetch('/api/stats').then(res => res.json());
   return mockStats;
 };
 
 export const getCarouselImages = async () => {
-  await delay(500);
+  // await delay(500);
   // In a real application, this would be an API call
   return apiService.get("/carousel").then((res) => res.data);
   // return mockHeroImages;
 };
 
 export const getRateCards = async () => {
-  await delay(500);
+  // await delay(500);
   // In a real application, this would be an API call
   return apiService.get("/rate-cards").then((res) => res.data);
+  // return mockRateCards;
+};
+
+export const getImportantInformation = async () => {
+  // await delay(500);
+  // In a real application, this would be an API call
+  return apiService.get("/important-information").then((res) => res.data);
   // return mockRateCards;
 };

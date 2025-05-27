@@ -3,7 +3,7 @@ import RunningText from "./RunningText";
 import { useHomeStore } from "../store/homeStore";
 
 const HeroSection = () => {
-  const { heroImages } = useHomeStore();
+  const { heroImages, importantInformation } = useHomeStore();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
@@ -75,7 +75,9 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <RunningText runningText="🌟 Join our upcoming Solar Energy Summit on June 15th! Early bird registration now open. Limited spots available. 🌟" />
+      {importantInformation && (
+        <RunningText runningText={importantInformation?.content} />
+      )}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-4xl md:text-5xl font-bold text-center mb-6 leading-tight">
           Join <span className="text-[#b22222]">Solar Sangathan</span>,<br />

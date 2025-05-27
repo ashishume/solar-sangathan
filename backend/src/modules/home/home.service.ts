@@ -7,6 +7,11 @@ import { Brand } from "./schemas/brand.schema";
 import { Video } from "./schemas/video.schema";
 import { Stat } from "./schemas/stat.schema";
 import { HeroImage } from "./schemas/hero-image.schema";
+import { ImportantInfo } from "./schemas/important-info.schema";
+import {
+  CreateImportantInfoDto,
+  UpdateImportantInfoDto,
+} from "./dto/important-info.dto";
 
 @Injectable()
 export class HomeService {
@@ -16,7 +21,9 @@ export class HomeService {
     @InjectModel(Brand.name) private brandModel: Model<Brand>,
     @InjectModel(Video.name) private videoModel: Model<Video>,
     @InjectModel(Stat.name) private statModel: Model<Stat>,
-    @InjectModel(HeroImage.name) private heroImageModel: Model<HeroImage>
+    @InjectModel(HeroImage.name) private heroImageModel: Model<HeroImage>,
+    @InjectModel(ImportantInfo.name)
+    private importantInfoModel: Model<ImportantInfo>
   ) {}
 
   // Testimonials CRUD
@@ -241,5 +248,48 @@ export class HomeService {
       throw new NotFoundException(`Hero Image with ID ${id} not found`);
     }
     return deletedHeroImage;
+  }
+
+  // Important Info CRUD
+  async getImportantInfo() {
+    return (
+      this.importantInfoModel.findOne().sort({ createdAt: -1 }).exec() || ""
+    );
+  }
+
+  async getImportantInfoById(id: string) {
+    const info = await this.importantInfoModel.findById(id).exec();
+    if (!info) {
+      throw new NotFoundException(`Important Info with ID ${id} not found`);
+    }
+    return info;
+  }
+
+  async createImportantInfo(createImportantInfoDto: CreateImportantInfoDto) {
+    const newInfo = new this.importantInfoModel(createImportantInfoDto);
+    return newInfo.save();
+  }
+
+  async updateImportantInfo(
+    id: string,
+    updateImportantInfoDto: UpdateImportantInfoDto
+  ) {
+    const updatedInfo = await this.importantInfoModel
+      .findByIdAndUpdate(id, updateImportantInfoDto, { new: true })
+      .exec();
+    if (!updatedInfo) {
+      throw new NotFoundException(`Important Info with ID ${id} not found`);
+    }
+    return updatedInfo;
+  }
+
+  async deleteImportantInfo(id: string) {
+    const deletedInfo = await this.importantInfoModel
+      .findByIdAndDelete(id)
+      .exec();
+    if (!deletedInfo) {
+      throw new NotFoundException(`Important Info with ID ${id} not found`);
+    }
+    return deletedInfo;
   }
 }

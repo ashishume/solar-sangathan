@@ -1,14 +1,14 @@
+import { useTags } from "@/admin/store/tags";
+import type { Tag } from "@/admin/types/tag";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useCategories } from "../store/categories";
-import type { Category } from "../types/category";
-import Input from "../../components/ui/Input";
-import Button from "../../components/ui/Button";
 
-const CategoryForm = () => {
+const TagForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { categories, createCategory, updateCategory } = useCategories();
+  const { tags, addTag, editTag } = useTags();
   const isEditMode = Boolean(id);
 
   const [formData, setFormData] = useState({
@@ -17,37 +17,29 @@ const CategoryForm = () => {
 
   useEffect(() => {
     if (isEditMode) {
-      const existingCategory = categories.find(
-        (category) => category._id === id
-      );
-      if (existingCategory) {
+      const existingTag = tags.find((tag) => tag._id === id);
+      if (existingTag) {
         setFormData({
-          name: existingCategory.name,
+          name: existingTag.name,
         });
       }
     }
-  }, [id, isEditMode, categories]);
+  }, [id, isEditMode, tags]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const categoryData = {
-      ...formData,
-    };
-
     if (isEditMode) {
-      updateCategory(id as string, categoryData as unknown as Category);
+      editTag(id as string, formData as unknown as Tag);
     } else {
-      createCategory(categoryData as unknown as Category);
+      addTag(formData as unknown as Tag);
     }
 
-    navigate("/admin/categories");
+    navigate("/admin/tags");
   };
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -59,7 +51,7 @@ const CategoryForm = () => {
   return (
     <div className="max-w-2xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">
-        {isEditMode ? "Edit Category" : "Create New Category"}
+        {isEditMode ? "Edit Tag" : "Create New Tag"}
       </h1>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -77,7 +69,7 @@ const CategoryForm = () => {
           <Button
             type="button"
             variant="outline"
-            onClick={() => navigate("/admin/categories")}
+            onClick={() => navigate("/admin/tags")}
           >
             Cancel
           </Button>
@@ -90,4 +82,4 @@ const CategoryForm = () => {
   );
 };
 
-export default CategoryForm;
+export default TagForm;

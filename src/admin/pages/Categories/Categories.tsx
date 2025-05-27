@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import CRUDTable from "../components/CRUDTable";
-import { useCategories } from "../store/categories";
-import type { Category } from "../types/category";
+import CRUDTable from "../../components/CRUDTable";
+import { useCategories } from "../../store/categories";
+import type { Category } from "../../types/category";
 
 const Categories = () => {
   const { categories, fetchCategories, loading } = useCategories();

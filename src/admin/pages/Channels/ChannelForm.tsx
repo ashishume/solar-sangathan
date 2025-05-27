@@ -1,9 +1,9 @@
+import { getChannels } from "@/api/api-calls";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
+import Textarea from "@/components/ui/Textarea";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getChannels } from "../../api/api-calls";
-import Input from "../../components/ui/Input";
-import Textarea from "../../components/ui/Textarea";
-import Button from "../../components/ui/Button";
 
 interface Channel {
   image: string;

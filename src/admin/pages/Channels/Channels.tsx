@@ -1,6 +1,6 @@
+import { getChannels } from "@/api/api-calls";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getChannels } from "../../api/api-calls";
 
 interface Channel {
   image: string;

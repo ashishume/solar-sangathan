@@ -1,6 +1,6 @@
+import CRUDTable from "@/admin/components/CRUDTable";
+import { useTags } from "@/admin/store/tags";
 import { useEffect } from "react";
-import CRUDTable from "../components/CRUDTable";
-import { useTags } from "../store/tags";
 
 const Tags = () => {
   const { tags, fetchTags, loading } = useTags();

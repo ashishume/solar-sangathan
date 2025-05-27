@@ -1,10 +1,10 @@
+import type { Testimonial } from "@/admin/types/testimonial";
+import { getTestimonials } from "@/api/api-calls";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
+import Textarea from "@/components/ui/Textarea";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getTestimonials } from "../../api/api-calls";
-import type { Testimonial } from "../types/testimonial";
-import Input from "../../components/ui/Input";
-import Textarea from "../../components/ui/Textarea";
-import Button from "../../components/ui/Button";
 
 const TestimonialForm = () => {
   const navigate = useNavigate();

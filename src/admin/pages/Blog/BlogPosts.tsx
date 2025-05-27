@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import CRUDTable from "../components/CRUDTable";
-import { useBlogPosts } from "../store/blogPosts";
+import { useBlogPosts } from "../../store/blogPosts";
+import CRUDTable from "../../components/CRUDTable";
 
 export interface BlogPost {
   _id: string;

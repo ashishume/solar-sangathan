@@ -1,14 +1,14 @@
+import { useBlogPosts } from "@/admin/store/blogPosts";
+import { useCategories } from "@/admin/store/categories";
+import { useTags } from "@/admin/store/tags";
+import type { BlogPost } from "@/admin/types/blogPost";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
+import MultiSelect from "@/components/ui/MultiSelect";
+import RichTextEditor from "@/components/ui/RichTextEditor";
+import Textarea from "@/components/ui/Textarea";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useBlogPosts } from "../store/blogPosts";
-import { useCategories } from "../store/categories";
-import { useTags } from "../store/tags";
-import type { BlogPost } from "../types/blogPost";
-import Input from "../../components/ui/Input";
-import Textarea from "../../components/ui/Textarea";
-import Button from "../../components/ui/Button";
-import RichTextEditor from "../../components/ui/RichTextEditor";
-import MultiSelect from "../../components/ui/MultiSelect";
 
 const BlogPostForm = () => {
   const navigate = useNavigate();

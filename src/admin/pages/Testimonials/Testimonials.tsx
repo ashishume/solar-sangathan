@@ -1,6 +1,6 @@
+import { getTestimonials } from "@/api/api-calls";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getTestimonials } from "../../api/api-calls";
 
 interface Testimonial {
   quote: string;

@@ -29,6 +29,6 @@ export const videoService = {
   },
 
   delete: async (id: string): Promise<void> => {
-    await axios.delete(`/api/video/${id}`);
+    await axios.delete(`/video/${id}`);
   },
 };

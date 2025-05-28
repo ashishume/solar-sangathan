@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { Outlet, useNavigate, Link } from "react-router-dom";
+import { Outlet, useNavigate, Link, useLocation } from "react-router-dom";
 
 const AdminLayout = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const isAuthenticated = localStorage.getItem("adminAuth");
@@ -16,87 +17,94 @@ const AdminLayout = () => {
     navigate("/admin/login");
   };
 
+  const menuItems = [
+    {
+      title: "Dashboard",
+      path: "/admin",
+      icon: "📊",
+    },
+    {
+      title: "Blog Posts",
+      path: "/admin/blog-posts",
+      icon: "📝",
+    },
+    {
+      title: "Categories",
+      path: "/admin/categories",
+      icon: "📑",
+    },
+    {
+      title: "Tags",
+      path: "/admin/tags",
+      icon: "🏷️",
+    },
+    {
+      title: "Testimonials",
+      path: "/admin/testimonials",
+      icon: "💬",
+    },
+    {
+      title: "Channels",
+      path: "/admin/channels",
+      icon: "📢",
+    },
+    {
+      title: "Carousel",
+      path: "/admin/carousel",
+      icon: "🖼️",
+    },
+    {
+      title: "Videos",
+      path: "/admin/video/new",
+      icon: "🎥",
+    },
+    {
+      title: "Important Info",
+      path: "/admin/important-information",
+      icon: "ℹ️",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="flex">
         {/* Sidebar */}
-        <div className="w-64 bg-gray-800 min-h-screen">
-          <div className="p-4">
-            <h2 className="text-white text-2xl font-bold">Admin Panel</h2>
+        <div className="w-64 bg-white min-h-screen shadow-lg flex flex-col">
+          <div className="p-6 border-b border-gray-200">
+            <h2 className="text-gray-800 text-2xl font-bold">Admin Panel</h2>
           </div>
-          <nav className="mt-4">
-            <Link
-              to="/admin"
-              className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
-            >
-              Dashboard
-            </Link>
-            <Link
-              to="/admin/blog-posts"
-              className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
-            >
-              Blog Posts
-            </Link>
-            <Link
-              to="/admin/tags"
-              className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
-            >
-              Tags
-            </Link>
-            <Link
-              to="/admin/categories"
-              className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
-            >
-              Categories
-            </Link>
-            <Link
-              to="/admin/testimonials"
-              className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
-            >
-              Testimonials
-            </Link>
-            <Link
-              to="/admin/channels"
-              className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
-            >
-              Channels
-            </Link>
-            {/* <Link
-              to="/admin/home-content"
-              className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
-            >
-              Home Content
-            </Link>
-            <Link
-              to="/admin/about-content"
-              className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
-            >
-              About Content
-            </Link>
-            <Link
-              to="/admin/training"
-              className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
-            >
-              Training
-            </Link>
-            <Link
-              to="/admin/shop"
-              className="block px-4 py-2 text-gray-300 hover:bg-gray-700"
-            >
-              Shop
-            </Link> */}
+          <nav className="flex-1 py-4">
+            {menuItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`flex items-center px-6 py-3.5 text-gray-600 hover:bg-gray-50 transition-colors duration-200 ${
+                  location.pathname === item.path
+                    ? "bg-blue-50 text-blue-600 border-r-4 border-blue-600"
+                    : ""
+                }`}
+              >
+                <span className="mr-3.5 text-xl">{item.icon}</span>
+                <span className="font-medium">{item.title}</span>
+              </Link>
+            ))}
+          </nav>
+          <div className="border-t border-gray-200 mt-auto">
             <button
               onClick={handleLogout}
-              className="w-full text-left px-4 py-2 text-gray-300 hover:bg-gray-700"
+              className="w-full flex items-center px-6 py-3.5 text-gray-600 hover:bg-gray-50 transition-colors duration-200"
             >
-              Logout
+              <span className="mr-3.5 text-xl">🚪</span>
+              <span className="font-medium">Logout</span>
             </button>
-          </nav>
+          </div>
         </div>
 
         {/* Main Content */}
         <div className="flex-1 p-8">
-          <Outlet />
+          <div className="max-w-7xl mx-auto">
+            <Outlet />
+          </div>
         </div>
       </div>
     </div>

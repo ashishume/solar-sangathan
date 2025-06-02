@@ -2,7 +2,7 @@ import type { BlogPost } from "./blogService";
 
 export const mockBlogs: BlogPost[] = [
   {
-    id: "1",
+    _id: "1",
     title: "The Future of Solar Energy in India: 2024 Outlook",
     content: `
       <p>The solar energy sector in India is experiencing unprecedented growth, with the government's ambitious target of 500 GW renewable energy capacity by 2030. This article explores the key trends and opportunities in the Indian solar market.</p>
@@ -26,17 +26,31 @@ export const mockBlogs: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80",
     author: {
+      _id: "1",
       name: "Rajesh Kumar",
       avatar:
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80",
     },
-    category: "Industry News",
-    tags: ["Solar Energy", "India", "Market Trends", "Renewable Energy"],
+    category: {
+      _id: "1",
+      name: "Industry News",
+      createdAt: "2024-01-01T00:00:00Z",
+      updatedAt: "2024-01-01T00:00:00Z",
+    },
+    tags: [
+      {
+        _id: "1",
+        name: "Solar Energy",
+        usageCount: 10,
+        createdAt: "2024-01-01T00:00:00Z",
+        updatedAt: "2024-01-01T00:00:00Z",
+      },
+    ],
     publishedAt: "2024-03-15T10:00:00Z",
     readTime: 8,
   },
   {
-    id: "2",
+    _id: "2",
     title: "Complete Guide to Solar Panel Installation",
     content: `
       <p>Installing solar panels requires careful planning and execution. This comprehensive guide walks you through the entire process, from site assessment to system commissioning.</p>
@@ -60,17 +74,23 @@ export const mockBlogs: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&w=1200&q=80",
     author: {
+      _id: "2",
       name: "Priya Sharma",
       avatar:
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80",
     },
-    category: "Installation Guide",
-    tags: ["Solar Installation", "DIY", "Technical Guide", "Maintenance"],
+    category: {
+      _id: "2",
+      name: "Installation Guide",
+      createdAt: "2024-01-01T00:00:00Z",
+      updatedAt: "2024-01-01T00:00:00Z",
+    },
+    tags: [],
     publishedAt: "2024-03-10T14:30:00Z",
     readTime: 12,
   },
   {
-    id: "3",
+    _id: "3",
     title: "Latest Innovations in Solar Technology",
     content: `
       <p>The solar industry is witnessing rapid technological advancements. This article explores the latest innovations that are shaping the future of solar energy.</p>
@@ -89,17 +109,23 @@ export const mockBlogs: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1638734254932-657721b67e38?auto=format&fit=crop&w=1200&q=80",
     author: {
+      _id: "3",
       name: "Amit Patel",
       avatar:
         "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80",
     },
-    category: "Solar Technology",
-    tags: ["Innovation", "Technology", "Research", "Future Tech"],
+    category: {
+      _id: "3",
+      name: "Solar Technology",
+      createdAt: "2024-01-01T00:00:00Z",
+      updatedAt: "2024-01-01T00:00:00Z",
+    },
+    tags: [],
     publishedAt: "2024-03-05T09:15:00Z",
     readTime: 6,
   },
   {
-    id: "4",
+    _id: "4",
     title: "Sustainable Living: Solar Power for Homes",
     content: `
       <p>Transitioning to solar power is a significant step towards sustainable living. This article provides practical insights for homeowners considering solar adoption.</p>
@@ -118,12 +144,18 @@ export const mockBlogs: BlogPost[] = [
     coverImage:
       "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
     author: {
+      _id: "4",
       name: "Neha Gupta",
       avatar:
         "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80",
     },
-    category: "Sustainability",
-    tags: ["Residential", "Green Living", "Energy Savings", "Home Improvement"],
+    category: {
+      _id: "4",
+      name: "Sustainability",
+      createdAt: "2024-01-01T00:00:00Z",
+      updatedAt: "2024-01-01T00:00:00Z",
+    },
+    tags: [],
     publishedAt: "2024-03-01T11:45:00Z",
     readTime: 7,
   },
@@ -147,35 +179,35 @@ const mockBlogService = {
 
   getBlogById: async (id: string) => {
     await delay(400);
-    const blog = mockBlogs.find((b) => b.id === id);
+    const blog = mockBlogs.find((b) => b._id === id);
     if (!blog) throw new Error("Blog not found");
     return blog;
   },
 
-  getBlogsByCategory: async (
-    category: string,
-    page: number = 1,
-    limit: number = 10
-  ) => {
-    await delay(500);
-    const filteredBlogs = mockBlogs.filter((b) => b.category === category);
-    const start = (page - 1) * limit;
-    const end = start + limit;
-    return filteredBlogs.slice(start, end);
-  },
+  // getBlogsByCategory: async (
+  //   category: string,
+  //   page: number = 1,
+  //   limit: number = 10
+  // ) => {
+  //   await delay(500);
+  //   const filteredBlogs = mockBlogs.filter((b) => b.category === category);
+  //   const start = (page - 1) * limit;
+  //   const end = start + limit;
+  //   return filteredBlogs.slice(start, end);
+  // },
 
-  searchBlogs: async (query: string, page: number = 1, limit: number = 10) => {
-    await delay(600);
-    const searchResults = mockBlogs.filter(
-      (blog) =>
-        blog.title.toLowerCase().includes(query.toLowerCase()) ||
-        blog.content.toLowerCase().includes(query.toLowerCase()) ||
-        blog.tags.some((tag) => tag.toLowerCase().includes(query.toLowerCase()))
-    );
-    const start = (page - 1) * limit;
-    const end = start + limit;
-    return searchResults.slice(start, end);
-  },
+  // searchBlogs: async (query: string, page: number = 1, limit: number = 10) => {
+  //   await delay(600);
+  //   const searchResults = mockBlogs.filter(
+  //     (blog) =>
+  //       blog.title.toLowerCase().includes(query.toLowerCase()) ||
+  //       blog.content.toLowerCase().includes(query.toLowerCase()) ||
+  //       blog.tags.some((tag) => tag.toLowerCase().includes(query.toLowerCase()))
+  //   );
+  //   const start = (page - 1) * limit;
+  //   const end = start + limit;
+  //   return searchResults.slice(start, end);
+  // },
 };
 
 export { mockBlogService };

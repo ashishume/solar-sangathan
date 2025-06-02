@@ -10,10 +10,10 @@ const Blog = () => {
   const [allBlogs, setAllBlogs] = useState<BlogPost[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [totalPages, setTotalPages] = useState(1);
+  const [, setTotalPages] = useState(1);
   const [categories, setCategories] = useState<Category[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   useEffect(() => {
@@ -115,10 +115,10 @@ const Blog = () => {
 
   // Mock data for sidebar (this should also come from API in a real implementation)
   const popularPosts = recentBlogs;
-  const categoryCounts = categories.map((category) => ({
-    name: category.name,
-    count: 0, // This should come from API
-  }));
+  // const categoryCounts = categories.map((category) => ({
+  //   name: category.name,
+  //   count: 0, // This should come from API
+  // }));
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

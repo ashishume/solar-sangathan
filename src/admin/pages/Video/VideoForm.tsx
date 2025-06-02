@@ -4,13 +4,6 @@ import { videoService } from "../../../admin/services/videoService";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 
-interface Video {
-  _id?: string;
-  title: string;
-  videoUrl: string;
-  thumbnailUrl: string;
-}
-
 const VideoForm: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();

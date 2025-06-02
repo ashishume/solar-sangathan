@@ -3,15 +3,15 @@ import { useTags } from "@/admin/store/tags";
 import { useEffect } from "react";
 
 const Tags = () => {
-  const { tags, fetchTags, loading } = useTags();
+  const { tags, fetchTags, loading, deleteTag } = useTags();
 
   useEffect(() => {
     fetchTags();
   }, [fetchTags]);
 
-  const handleDelete = () => {
+  const handleDelete = (id: string) => {
     if (window.confirm("Are you sure you want to delete this tag?")) {
-      // deleteTag(Number(id));
+      deleteTag(id);
     }
   };
 

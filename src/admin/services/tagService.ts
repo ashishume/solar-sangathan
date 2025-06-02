@@ -21,9 +21,13 @@ class TagService {
   }
 
   async updateTag(id: string, tag: Tag): Promise<Tag> {
-    const response = await axiosInstance.put(`/tags/${id}`, tag);
+    const response = await axiosInstance.patch(`/tags/${id}`, tag);
 
     return response.data;
+  }
+
+  async deleteTag(id: string): Promise<void> {
+    await axiosInstance.delete(`/tags/${id}`);
   }
 }
 

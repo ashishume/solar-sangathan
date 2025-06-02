@@ -9,6 +9,7 @@ interface TagsStore {
   fetchTags: () => Promise<void>;
   addTag: (tag: Tag) => Promise<void>;
   editTag: (id: string, tag: Tag) => Promise<void>;
+  deleteTag: (id: string) => Promise<void>;
 }
 
 export const useTags = create<TagsStore>((set) => ({
@@ -33,6 +34,12 @@ export const useTags = create<TagsStore>((set) => ({
     const updatedTag = await tagService.updateTag(id, tag);
     set((state) => ({
       tags: state.tags.map((t) => (t._id === id ? updatedTag : t)),
+    }));
+  },
+  deleteTag: async (id: string) => {
+    await tagService.deleteTag(id);
+    set((state) => ({
+      tags: state.tags.filter((t) => t._id !== id),
     }));
   },
 }));

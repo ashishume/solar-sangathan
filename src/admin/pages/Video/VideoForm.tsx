@@ -1,14 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { videoService } from "../../../admin/services/videoService";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 
+interface Video {
+  _id?: string;
+  title: string;
+  videoUrl: string;
+  thumbnailUrl: string;
+}
+
 const VideoForm: React.FC = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const isEditMode = Boolean(id);
+
   const [videoUrl, setVideoUrl] = useState("");
   const [embedUrl, setEmbedUrl] = useState("");
   const [title, setTitle] = useState("");
   const [thumbnailUrl, setThumbnailUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (isEditMode && id) {
+      const fetchVideo = async () => {
+        try {
+          const video = await videoService.getById(id);
+          setTitle(video.title);
+          setVideoUrl(`https://www.youtube.com/watch?v=${video.videoUrl}`);
+          setThumbnailUrl(video.thumbnailUrl);
+          setEmbedUrl(`https://www.youtube.com/embed/${video.videoUrl}`);
+        } catch (error) {
+          console.error("Error fetching video:", error);
+        }
+      };
+      fetchVideo();
+    }
+  }, [id, isEditMode]);
 
   const extractVideoId = (url: string): string | null => {
     // Handle youtu.be links
@@ -51,11 +80,14 @@ const VideoForm: React.FC = () => {
       };
 
       // Save video using the service
-      await videoService.create(videoData);
+      if (isEditMode && id) {
+        await videoService.update(id, videoData);
+      } else {
+        await videoService.create(videoData);
+      }
 
-      // Reset form
-      setVideoUrl("");
-      setTitle("");
+      // Reset form and navigate
+      navigate("/admin/video");
     } catch (error) {
       console.error("Error saving video:", error);
     } finally {
@@ -65,7 +97,9 @@ const VideoForm: React.FC = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">Add YouTube Video</h1>
+      <h1 className="text-2xl font-bold mb-6">
+        {isEditMode ? "Edit YouTube Video" : "Add YouTube Video"}
+      </h1>
 
       <form onSubmit={handleSubmit} className="mb-6">
         <div className="mb-4">
@@ -83,7 +117,7 @@ const VideoForm: React.FC = () => {
             label="Thumbnail URL"
             value={thumbnailUrl}
             onChange={(e) => setThumbnailUrl(e.target.value)}
-            placeholder="Enter video title"
+            placeholder="Enter thumbnail URL"
           />
         </div>
         <div className="mb-4">
@@ -96,9 +130,22 @@ const VideoForm: React.FC = () => {
             required
           />
         </div>
-        <Button type="submit" variant="primary" disabled={isLoading}>
-          {isLoading ? "Saving..." : "Save Video"}
-        </Button>
+        <div className="flex justify-end space-x-4">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => navigate("/admin/video")}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" variant="primary" disabled={isLoading}>
+            {isLoading
+              ? "Saving..."
+              : isEditMode
+              ? "Update Video"
+              : "Save Video"}
+          </Button>
+        </div>
       </form>
 
       {embedUrl && (

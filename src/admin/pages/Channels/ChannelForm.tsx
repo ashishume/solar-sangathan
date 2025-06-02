@@ -1,17 +1,10 @@
-import { getChannels } from "@/api/api-calls";
+import type { Channel } from "@/admin/types/channel";
+import { getChannels, updateChannel, createChannel } from "@/api/api-calls";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Textarea from "@/components/ui/Textarea";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
-interface Channel {
-  image: string;
-  title: string;
-  description: string;
-  color: string;
-  icon: string;
-}
 
 const ChannelForm = () => {
   const navigate = useNavigate();
@@ -19,19 +12,19 @@ const ChannelForm = () => {
   const isEditMode = Boolean(id);
 
   const [formData, setFormData] = useState<Channel>({
-    image: "",
     title: "",
     description: "",
+    image: "",
     color: "",
     icon: "",
   });
 
   useEffect(() => {
-    if (isEditMode) {
+    if (isEditMode && id) {
       const fetchChannel = async () => {
         try {
           const channels = await getChannels();
-          const channel = channels[Number(id)];
+          const channel = channels.find((c: Channel) => c._id === id);
           if (channel) {
             setFormData(channel);
           }
@@ -46,8 +39,11 @@ const ChannelForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // TODO: Implement API call to save channel
-      console.log("Saving channel:", formData);
+      if (isEditMode && id) {
+        await updateChannel(id, formData);
+      } else {
+        await createChannel(formData);
+      }
       navigate("/admin/channels");
     } catch (error) {
       console.error("Error saving channel:", error);

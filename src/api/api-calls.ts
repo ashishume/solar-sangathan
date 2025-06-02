@@ -186,11 +186,31 @@ export const getTestimonials = async () => {
   // return mockTestimonials;
 };
 
+export const updateTestimonial = async (id: string, data: any) => {
+  return api.put(`/testimonials/${id}`, data).then((res) => res.data);
+};
+
+export const deleteTestimonial = async (id: string) => {
+  return api.delete(`/testimonials/${id}`).then((res) => res.data);
+};
+
 export const getChannels = async () => {
   // await delay(500);
   // In a real application, this would be an API call
   return api.get("/channels").then((res) => res.data);
   // return mockChannels;
+};
+
+export const createChannel = async (data: any) => {
+  return api.post("/channels", data).then((res) => res.data);
+};
+
+export const updateChannel = async (id: string, data: any) => {
+  return api.put(`/channels/${id}`, data).then((res) => res.data);
+};
+
+export const deleteChannel = async (id: string) => {
+  return api.delete(`/channels/${id}`).then((res) => res.data);
 };
 
 export const getBrands = async () => {
@@ -205,6 +225,14 @@ export const getVideoData = async () => {
   // In a real application, this would be an API call
   return api.get("/video").then((res) => res.data);
   // return mockVideoData;
+};
+
+export const updateVideo = async (id: string, data: any) => {
+  return api.put(`/video/${id}`, data).then((res) => res.data);
+};
+
+export const deleteVideo = async (id: string) => {
+  return api.delete(`/video/${id}`).then((res) => res.data);
 };
 
 export const getStats = async () => {
@@ -233,4 +261,12 @@ export const getImportantInformation = async () => {
   // In a real application, this would be an API call
   return api.get("/important-information").then((res) => res.data);
   // return mockRateCards;
+};
+
+export const updateImportantInformation = async (id: string, data: any) => {
+  return api.put(`/important-information/${id}`, data).then((res) => res.data);
+};
+
+export const deleteImportantInformation = async (id: string) => {
+  return api.delete(`/important-information/${id}`).then((res) => res.data);
 };

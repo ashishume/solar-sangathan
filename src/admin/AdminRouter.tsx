@@ -14,41 +14,53 @@ import Testimonials from "./pages/Testimonials/Testimonials";
 import Carousel from "./pages/Carousel/Carousel";
 import NewCarousel from "./pages/Carousel/NewCarousel";
 import VideoForm from "./pages/Video/VideoForm";
+import VideoList from "./pages/Video/VideoList";
 import { ImportantInfoList, ImportantInfoForm } from "./pages/Important-Info";
 
 const AdminRouter = () => {
   return (
     <Routes>
-      <Route element={<AdminLayout />}>
+      <Route path="/" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
-        <Route path="blog-posts" element={<BlogPosts />} />
-        <Route path="blog-posts/new" element={<BlogPostForm />} />
-        <Route path="blog-posts/:id/edit" element={<BlogPostForm />} />
-        <Route path="tags" element={<Tags />} />
-        <Route path="tags/new" element={<TagForm />} />
-        <Route path="tags/:id/edit" element={<TagForm />} />
-        <Route path="categories" element={<Categories />} />
-        <Route path="categories/new" element={<CategoryForm />} />
-        <Route path="categories/:id/edit" element={<CategoryForm />} />
-        <Route path="testimonials" element={<Testimonials />} />
-        <Route path="testimonials/new" element={<TestimonialForm />} />
-        <Route path="testimonials/:id/edit" element={<TestimonialForm />} />
-        <Route path="channels" element={<Channels />} />
-        <Route path="channels/new" element={<ChannelForm />} />
-        <Route path="channels/:id/edit" element={<ChannelForm />} />
-        <Route path="carousel" element={<Carousel />} />
-        <Route path="carousel/new" element={<NewCarousel />} />
-        <Route path="carousel/:id/edit" element={<NewCarousel />} />
-        <Route path="video/new" element={<VideoForm />} />
-        <Route path="important-information" element={<ImportantInfoList />} />
-        <Route
-          path="important-information/new"
-          element={<ImportantInfoForm />}
-        />
-        <Route
-          path="important-information/:id/edit"
-          element={<ImportantInfoForm />}
-        />
+        <Route path="blog">
+          <Route index element={<BlogPosts />} />
+          <Route path="new" element={<BlogPostForm />} />
+          <Route path=":id/edit" element={<BlogPostForm />} />
+        </Route>
+        <Route path="categories">
+          <Route index element={<Categories />} />
+          <Route path="new" element={<CategoryForm />} />
+          <Route path=":id/edit" element={<CategoryForm />} />
+        </Route>
+        <Route path="channels">
+          <Route index element={<Channels />} />
+          <Route path="new" element={<ChannelForm />} />
+          <Route path=":id/edit" element={<ChannelForm />} />
+        </Route>
+        <Route path="tags">
+          <Route index element={<Tags />} />
+          <Route path="new" element={<TagForm />} />
+          <Route path=":id/edit" element={<TagForm />} />
+        </Route>
+        <Route path="testimonials">
+          <Route index element={<Testimonials />} />
+          <Route path="new" element={<TestimonialForm />} />
+          <Route path=":id/edit" element={<TestimonialForm />} />
+        </Route>
+        <Route path="carousel">
+          <Route index element={<Carousel />} />
+          <Route path="new" element={<NewCarousel />} />
+        </Route>
+        <Route path="video">
+          <Route index element={<VideoList />} />
+          <Route path="new" element={<VideoForm />} />
+          <Route path=":id/edit" element={<VideoForm />} />
+        </Route>
+        <Route path="important-information">
+          <Route index element={<ImportantInfoList />} />
+          <Route path="new" element={<ImportantInfoForm />} />
+          <Route path=":id/edit" element={<ImportantInfoForm />} />
+        </Route>
         <Route path="*" element={<Navigate to="/admin" replace />} />
       </Route>
     </Routes>

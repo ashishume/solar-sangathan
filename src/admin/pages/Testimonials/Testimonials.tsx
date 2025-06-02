@@ -1,33 +1,37 @@
-import { getTestimonials } from "@/api/api-calls";
+import { getTestimonials, deleteTestimonial } from "@/api/api-calls";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-interface Testimonial {
-  quote: string;
-  author: string;
-  role: string;
-  location: string;
-  image: string;
-}
+import type { Testimonial } from "@/admin/types/testimonial";
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchTestimonials = async () => {
-      try {
-        const data = await getTestimonials();
-        setTestimonials(data);
-      } catch (error) {
-        console.error("Error fetching testimonials:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchTestimonials = async () => {
+    try {
+      const data = await getTestimonials();
+      setTestimonials(data);
+    } catch (error) {
+      console.error("Error fetching testimonials:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchTestimonials();
   }, []);
+
+  const handleDelete = async (id: string) => {
+    if (window.confirm("Are you sure you want to delete this testimonial?")) {
+      try {
+        await deleteTestimonial(id);
+        await fetchTestimonials(); // Refresh the list after deletion
+      } catch (error) {
+        console.error("Error deleting testimonial:", error);
+      }
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -68,7 +72,7 @@ const Testimonials = () => {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {testimonials.map((testimonial, index) => (
-              <tr key={index}>
+              <tr key={testimonial._id || index}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="h-10 w-10 flex-shrink-0">
@@ -102,16 +106,13 @@ const Testimonials = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <Link
-                    to={`/admin/testimonials/${index}/edit`}
+                    to={`/admin/testimonials/${testimonial._id}/edit`}
                     className="text-indigo-600 hover:text-indigo-900 mr-4"
                   >
                     Edit
                   </Link>
                   <button
-                    onClick={() => {
-                      // TODO: Implement delete functionality
-                      console.log("Delete testimonial:", index);
-                    }}
+                    onClick={() => handleDelete(testimonial._id || "")}
                     className="text-red-600 hover:text-red-900"
                   >
                     Delete

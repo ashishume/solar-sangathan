@@ -1,5 +1,5 @@
 import type { Testimonial } from "@/admin/types/testimonial";
-import { getTestimonials } from "@/api/api-calls";
+import { getTestimonials, updateTestimonial } from "@/api/api-calls";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Textarea from "@/components/ui/Textarea";
@@ -17,14 +17,18 @@ const TestimonialForm = () => {
     role: "",
     location: "",
     image: "",
+    createdAt: "",
+    updatedAt: "",
   });
 
   useEffect(() => {
-    if (isEditMode) {
+    if (isEditMode && id) {
       const fetchTestimonial = async () => {
         try {
           const testimonials = await getTestimonials();
-          const testimonial = testimonials[Number(id)];
+          const testimonial = testimonials.find(
+            (t: Testimonial) => t._id === id
+          );
           if (testimonial) {
             setFormData(testimonial);
           }
@@ -39,8 +43,9 @@ const TestimonialForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // TODO: Implement API call to save testimonial
-      console.log("Saving testimonial:", formData);
+      if (isEditMode && id) {
+        await updateTestimonial(id, formData);
+      }
       navigate("/admin/testimonials");
     } catch (error) {
       console.error("Error saving testimonial:", error);

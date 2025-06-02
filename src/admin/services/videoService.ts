@@ -8,7 +8,7 @@ export interface Video {
 }
 
 export const videoService = {
-  getAll: async (): Promise<Video[]> => {
+  getAll: async (): Promise<Video> => {
     const response = await axios.get("/video");
     return response.data;
   },
@@ -29,6 +29,7 @@ export const videoService = {
   },
 
   delete: async (id: string): Promise<void> => {
-    await axios.delete(`/video/${id}`);
+    const response = await axios.delete(`/video/${id}`);
+    return response.data;
   },
 };

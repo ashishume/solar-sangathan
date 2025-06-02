@@ -1,33 +1,37 @@
-import { getChannels } from "@/api/api-calls";
+import { getChannels, deleteChannel } from "@/api/api-calls";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-interface Channel {
-  image: string;
-  title: string;
-  description: string;
-  color: string;
-  icon: string;
-}
+import type { Channel } from "@/admin/types/channel";
 
 const Channels = () => {
   const [channels, setChannels] = useState<Channel[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchChannels = async () => {
-      try {
-        const data = await getChannels();
-        setChannels(data);
-      } catch (error) {
-        console.error("Error fetching channels:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchChannels = async () => {
+    try {
+      const data = await getChannels();
+      setChannels(data);
+    } catch (error) {
+      console.error("Error fetching channels:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchChannels();
   }, []);
+
+  const handleDelete = async (id: string) => {
+    if (window.confirm("Are you sure you want to delete this channel?")) {
+      try {
+        await deleteChannel(id);
+        await fetchChannels(); // Refresh the list after deletion
+      } catch (error) {
+        console.error("Error deleting channel:", error);
+      }
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -64,8 +68,8 @@ const Channels = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {channels.map((channel, index) => (
-              <tr key={index}>
+            {channels.map((channel) => (
+              <tr key={channel._id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     <div className="h-10 w-10 flex-shrink-0">
@@ -92,16 +96,13 @@ const Channels = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <Link
-                    to={`/admin/channels/${index}/edit`}
+                    to={`/admin/channels/${channel._id}/edit`}
                     className="text-indigo-600 hover:text-indigo-900 mr-4"
                   >
                     Edit
                   </Link>
                   <button
-                    onClick={() => {
-                      // TODO: Implement delete functionality
-                      console.log("Delete channel:", index);
-                    }}
+                    onClick={() => handleDelete(channel._id || "")}
                     className="text-red-600 hover:text-red-900"
                   >
                     Delete

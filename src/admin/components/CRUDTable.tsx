@@ -11,7 +11,7 @@ interface CRUDTableProps {
   title: string;
   columns: Column[];
   data: any[];
-  onDelete: (id: string | number) => void;
+  onDelete: (id: string) => void;
   createLink: string;
   loading?: boolean;
 }
@@ -104,7 +104,7 @@ const CRUDTable = ({
                       Edit
                     </Link>
                     <button
-                      onClick={() => onDelete(item._id)}
+                      onClick={() => onDelete(item._id.toString())}
                       className="text-red-600 hover:text-red-900"
                     >
                       Delete

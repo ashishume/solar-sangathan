@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { carouselService } from "../../services/carouselService";
+import type { CarouselImage } from "@/admin/types/carousel";
 
 const Carousel = () => {
-  const [carouselImages, setCarouselImages] = useState<string[]>([]);
+  const [carouselImages, setCarouselImages] = useState<CarouselImage[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCarouselImages = async () => {
       try {
         const images = await carouselService.getAllImages();
-        setCarouselImages(images);
+
+        setCarouselImages(images as unknown as CarouselImage[]);
       } catch (error) {
         console.error("Error fetching carousel images:", error);
       } finally {
@@ -21,10 +23,12 @@ const Carousel = () => {
     fetchCarouselImages();
   }, []);
 
-  const handleDelete = async (index: number) => {
+  const handleDelete = async (id: string) => {
     try {
-      const updatedImages = await carouselService.deleteImage(index);
-      setCarouselImages(updatedImages.map((image) => image));
+      await carouselService.deleteImage(id);
+      setCarouselImages(
+        carouselImages.filter((image) => image._id.toString() !== id)
+      );
     } catch (error) {
       console.error("Error deleting carousel image:", error);
     }
@@ -62,25 +66,27 @@ const Carousel = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {carouselImages.map((image, index) => (
-              <tr key={index}>
+            {carouselImages.map((image) => (
+              <tr key={image._id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="h-20 w-32">
                     <img
                       className="h-full w-full object-cover rounded"
-                      src={image}
-                      alt={`Carousel image ${index + 1}`}
+                      src={image.url}
+                      alt={`Carousel image ${image._id}`}
                     />
                   </div>
                 </td>
                 <td className="px-6 py-4">
                   <div className="text-sm text-gray-900 truncate max-w-md">
-                    {image.length > 50 ? `${image.substring(0, 20)}...` : image}
+                    {image.url.length > 50
+                      ? `${image.url.substring(0, 20)}...`
+                      : image.url}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <button
-                    onClick={() => handleDelete(index)}
+                    onClick={() => handleDelete(image._id)}
                     className="text-red-600 hover:text-red-900"
                   >
                     Delete

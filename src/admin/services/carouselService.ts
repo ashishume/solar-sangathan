@@ -3,6 +3,7 @@ import axiosInstance from "./axios";
 class CarouselService {
   async getAllImages(): Promise<string[]> {
     const response = await axiosInstance.get(`/carousel`);
+
     return response.data;
   }
 
@@ -19,10 +20,9 @@ class CarouselService {
     return this.updateImages(updatedImages);
   }
 
-  async deleteImage(index: number): Promise<string[]> {
-    const currentImages = await this.getAllImages();
-    const updatedImages = currentImages.filter((_, i) => i !== index);
-    return this.updateImages(updatedImages);
+  async deleteImage(id: string): Promise<string[]> {
+    const response = await axiosInstance.delete(`/carousel/${id}`);
+    return response.data;
   }
 }
 

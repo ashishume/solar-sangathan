@@ -33,8 +33,8 @@ const HeroSection = () => {
       <div className="relative w-[95%] h-[420px] rounded-3xl overflow-hidden mb-8 mx-auto">
         {heroImages.map((src, index) => (
           <img
-            key={src}
-            src={src}
+            key={src._id.toString()}
+            src={src.url}
             alt={`hero ${index + 1}`}
             className={`absolute w-full h-full object-cover transition-opacity duration-500 ${
               index === currentImageIndex ? "opacity-100" : "opacity-0"

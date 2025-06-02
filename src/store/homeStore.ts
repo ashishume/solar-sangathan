@@ -9,6 +9,7 @@ import {
   getCarouselImages,
   getImportantInformation,
 } from "../api/api-calls";
+import type { CarouselImage } from "@/admin/types/carousel";
 
 interface Testimonial {
   quote: string;
@@ -50,7 +51,7 @@ interface HomeState {
   brands: Brand[];
   videoData: VideoData;
   stats: { label: string }[];
-  heroImages: string[];
+  heroImages: CarouselImage[];
   loading: {
     testimonials: boolean;
     channels: boolean;

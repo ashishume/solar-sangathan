@@ -7,54 +7,49 @@ interface BlogCardProps {
 
 const BlogCard = ({ blog }: BlogCardProps) => {
   return (
-    <article className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-      <Link to={`/blog/${blog.id}`}>
-        <div className="relative h-48 overflow-hidden">
-          <img
-            src={blog.coverImage}
-            alt={blog.title}
-            className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
-          />
-          <div className="absolute top-4 left-4">
-            <span className="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-              {blog.category}
-            </span>
-          </div>
+    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <Link to={`/blog/${blog._id}`}>
+        <img
+          src={blog.coverImage}
+          alt={blog.title}
+          className="w-full h-48 object-cover"
+        />
+      </Link>
+      <div className="p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="px-3 py-1 text-sm bg-red-100 text-red-600 rounded-full">
+            {blog.category.name}
+          </span>
+          <span className="text-sm text-gray-500">
+            {new Date(blog.createdAt || "").toLocaleDateString()}
+          </span>
         </div>
-        <div className="p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <img
-              src={blog.author.avatar}
-              alt={blog.author.name}
-              className="w-10 h-10 rounded-full"
-            />
-            <div>
-              <p className="text-sm font-medium text-gray-900">
-                {blog.author.name}
-              </p>
-              <p className="text-sm text-gray-500">
-                {new Date(blog.publishedAt).toLocaleDateString()} •{" "}
-                {blog.readTime} min read
-              </p>
-            </div>
-          </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+        <Link to={`/blog/${blog._id}`}>
+          <h3 className="text-xl font-semibold text-gray-900 mb-2 hover:text-red-600">
             {blog.title}
           </h3>
-          <p className="text-gray-600 mb-4 line-clamp-3">{blog.excerpt}</p>
-          <div className="flex flex-wrap gap-2">
-            {blog.tags.map((tag, index) => (
-              <span
-                key={index}
-                className="bg-gray-100 text-gray-600 px-2 py-1 rounded-md text-sm"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
+        </Link>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {blog.tags?.map((tag) => (
+            <span
+              key={tag._id}
+              className="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full"
+            >
+              {tag.name}
+            </span>
+          ))}
         </div>
-      </Link>
-    </article>
+        <p className="text-gray-600 line-clamp-3">
+          {blog.content.replace(/<[^>]*>/g, "").slice(0, 150)}...
+        </p>
+        <Link
+          to={`/blog/${blog._id}`}
+          className="inline-block mt-4 text-red-600 hover:text-red-700 font-medium"
+        >
+          Read More →
+        </Link>
+      </div>
+    </div>
   );
 };
 

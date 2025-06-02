@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import type { BlogPost } from "../services/blogService";
+import type { Category, Tag } from "@/pages/BlogPost";
 
 interface BlogSidebarProps {
   popularPosts: BlogPost[];
-  categories: { name: string; count: number }[];
-  tags: { name: string; count: number }[];
+  categories: Category[];
+  tags: Tag[];
 }
 
 const BlogSidebar = ({ popularPosts, categories, tags }: BlogSidebarProps) => {
@@ -15,7 +16,11 @@ const BlogSidebar = ({ popularPosts, categories, tags }: BlogSidebarProps) => {
         <h3 className="text-xl font-bold text-gray-900 mb-4">Popular Posts</h3>
         <div className="space-y-4">
           {popularPosts.map((post) => (
-            <Link key={post.id} to={`/blog/${post.id}`} className="group block">
+            <Link
+              key={post._id}
+              to={`/blog/${post._id}`}
+              className="group block"
+            >
               <div className="flex gap-4">
                 <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden">
                   <img
@@ -29,7 +34,7 @@ const BlogSidebar = ({ popularPosts, categories, tags }: BlogSidebarProps) => {
                     {post.title}
                   </h4>
                   <p className="text-sm text-gray-500 mt-1">
-                    {new Date(post.publishedAt).toLocaleDateString()}
+                    {new Date(post.publishedAt || "").toLocaleDateString()}
                   </p>
                 </div>
               </div>
@@ -49,9 +54,9 @@ const BlogSidebar = ({ popularPosts, categories, tags }: BlogSidebarProps) => {
               className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors"
             >
               <span className="text-gray-700">{category.name}</span>
-              <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-sm">
-                {category.count}
-              </span>
+              {/* <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-sm">
+                {category?.count || 0}
+              </span> */}
             </Link>
           ))}
         </div>
@@ -67,7 +72,7 @@ const BlogSidebar = ({ popularPosts, categories, tags }: BlogSidebarProps) => {
               to={`/blog?tag=${tag.name}`}
               className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm hover:bg-red-100 hover:text-red-600 transition-colors"
             >
-              #{tag.name} ({tag.count})
+              #{tag.name} ({tag.usageCount})
             </Link>
           ))}
         </div>

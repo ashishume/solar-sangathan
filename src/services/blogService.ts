@@ -1,73 +1,89 @@
-import { mockBlogService } from "./mockBlogData";
+import { blogApi, tagApi, categoryApi } from "../api/api-calls";
 
 export interface BlogPost {
-  id: string;
+  _id: string;
   title: string;
   content: string;
-  excerpt: string;
-  coverImage: string;
-  author: {
+  excerpt?: string;
+  coverImage?: string;
+  author?: {
+    _id: string;
     name: string;
     avatar: string;
   };
-  category: string;
-  tags: string[];
-  publishedAt: string;
-  readTime: number;
+  publishedAt?: string;
+  readTime?: number;
+  isPublished?: boolean;
+  viewCount?: number;
+  category: {
+    _id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+  tags?: Array<{
+    _id: string;
+    name: string;
+    usageCount: number;
+    createdAt: string;
+    updatedAt: string;
+  }>;
+  createdAt?: string;
+  updatedAt?: string;
+  status?: string;
+}
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    pages: number;
+  };
 }
 
 export const blogService = {
-  // Get all blog posts with pagination
-  getAllBlogs: async (page: number = 1, limit: number = 10) => {
-    try {
-      return await mockBlogService.getAllBlogs(page, limit);
-    } catch (error) {
-      console.error("Error fetching blogs:", error);
-      throw error;
-    }
-  },
-
-  // Get recent blog posts
-  getRecentBlogs: async (limit: number = 3) => {
-    try {
-      return await mockBlogService.getRecentBlogs(limit);
-    } catch (error) {
-      console.error("Error fetching recent blogs:", error);
-      throw error;
-    }
-  },
-
-  // Get blog post by ID
-  getBlogById: async (id: string) => {
-    try {
-      return await mockBlogService.getBlogById(id);
-    } catch (error) {
-      console.error("Error fetching blog:", error);
-      throw error;
-    }
-  },
-
-  // Get blogs by category
-  getBlogsByCategory: async (
-    category: string,
+  getAllBlogs: async (
     page: number = 1,
     limit: number = 10
-  ) => {
-    try {
-      return await mockBlogService.getBlogsByCategory(category, page, limit);
-    } catch (error) {
-      console.error("Error fetching blogs by category:", error);
-      throw error;
-    }
+  ): Promise<BlogPost[]> => {
+    const response = await blogApi.getAllPosts(page, limit);
+    return response;
   },
 
-  // Search blogs
-  searchBlogs: async (query: string, page: number = 1, limit: number = 10) => {
-    try {
-      return await mockBlogService.searchBlogs(query, page, limit);
-    } catch (error) {
-      console.error("Error searching blogs:", error);
-      throw error;
-    }
+  getRecentBlogs: async (limit: number = 3): Promise<BlogPost[]> => {
+    const response = await blogApi.getAllPosts(1, limit);
+    return response;
+  },
+
+  getBlogById: async (id: string): Promise<BlogPost> => {
+    return blogApi.getPostById(id);
+  },
+
+  getBlogsByCategory: async (
+    categoryId: string,
+    page: number = 1,
+    limit: number = 10
+  ): Promise<PaginatedResponse<BlogPost>> => {
+    return blogApi.getPostsByCategory(categoryId, page, limit);
+  },
+
+  searchBlogs: async (
+    query: string,
+    page: number = 1,
+    limit: number = 10
+  ): Promise<PaginatedResponse<BlogPost>> => {
+    return blogApi.searchPosts(query, page, limit);
+  },
+
+  getCategories: async () => {
+    const response = await categoryApi.getAllCategories();
+    return response;
+  },
+
+  getTags: async () => {
+    const response = await tagApi.getAllTags();
+    return response;
   },
 };

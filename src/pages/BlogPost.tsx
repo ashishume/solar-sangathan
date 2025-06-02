@@ -4,99 +4,71 @@ import BlogSidebar from "../components/BlogSidebar";
 import { blogService } from "../services/blogService";
 import type { BlogPost } from "../services/blogService";
 
+export interface CategoryCount {
+  name: string;
+  count: number;
+}
+
+export interface Category {
+  _id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Tag {
+  _id: string;
+  name: string;
+  usageCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 const BlogPostPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [blog, setBlog] = useState<BlogPost | null>(null);
+  const [popularPosts, setPopularPosts] = useState<BlogPost[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [popularTags, setPopularTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Mock data for sidebar
-  const popularPosts = [
-    {
-      id: "1",
-      title: "The Future of Solar Energy in India",
-      excerpt:
-        "Exploring the potential of solar energy in India's growing economy...",
-      coverImage: "/images/blog/solar-future.jpg",
-      author: {
-        name: "Dr. Rajesh Kumar",
-        avatar: "/images/team/rajesh.jpg",
-      },
-      publishedAt: "2024-03-15",
-      readTime: 5,
-      content: "Full content here...",
-      category: "Solar Technology",
-      tags: ["Solar Energy", "India", "Future"],
-    },
-    {
-      id: "2",
-      title: "Understanding Solar Panel Efficiency",
-      excerpt:
-        "A comprehensive guide to solar panel efficiency and performance...",
-      coverImage: "/images/blog/panel-efficiency.jpg",
-      author: {
-        name: "Priya Sharma",
-        avatar: "/images/team/priya.jpg",
-      },
-      publishedAt: "2024-03-10",
-      readTime: 4,
-      content: "Full content here...",
-      category: "Solar Technology",
-      tags: ["Efficiency", "Technology", "Guide"],
-    },
-    {
-      id: "3",
-      title: "Solar Installation Best Practices",
-      excerpt: "Learn about the best practices for solar panel installation...",
-      coverImage: "/images/blog/installation.jpg",
-      author: {
-        name: "Amit Patel",
-        avatar: "/images/team/amit.jpg",
-      },
-      publishedAt: "2024-03-05",
-      readTime: 6,
-      content: "Full content here...",
-      category: "Installation Guide",
-      tags: ["Installation", "Best Practices", "Guide"],
-    },
-  ] as BlogPost[];
-
-  const categoryCounts = [
-    { name: "Solar Technology", count: 12 },
-    { name: "Industry News", count: 8 },
-    { name: "Installation Guide", count: 15 },
-    { name: "Market Trends", count: 10 },
-    { name: "Sustainability", count: 7 },
-  ];
-
-  const popularTags = [
-    { name: "Solar Energy", count: 25 },
-    { name: "Renewable Energy", count: 20 },
-    { name: "Technology", count: 18 },
-    { name: "Sustainability", count: 15 },
-    { name: "Green Living", count: 12 },
-    { name: "Innovation", count: 10 },
-    { name: "India", count: 8 },
-    { name: "Market Trends", count: 7 },
-  ];
-
   useEffect(() => {
-    const fetchBlog = async () => {
+    const fetchData = async () => {
       if (!id) return;
       try {
         setLoading(true);
-        const data = await blogService.getBlogById(id);
-        setBlog(data);
+        // Fetch blog post
+        const blogData = await blogService.getBlogById(id);
+        setBlog(blogData);
+
+        // Fetch recent posts for sidebar
+        const recentPosts = await blogService.getRecentBlogs(3);
+        setPopularPosts(recentPosts);
+
+        // Fetch categories
+        const categories = await blogService.getCategories();
+        setCategories(categories);
+
+        // Fetch tags
+        const tags = await blogService.getTags();
+        setPopularTags(
+          tags.map((tag: Tag) => ({
+            name: tag.name,
+            count: tag.usageCount,
+          }))
+        );
+
         setError(null);
       } catch (err) {
-        setError("Failed to fetch blog post. Please try again later.");
+        setError("Failed to fetch data. Please try again later.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchBlog();
+    fetchData();
   }, [id]);
 
   if (loading) {
@@ -134,13 +106,15 @@ const BlogPostPage = () => {
         <div className="lg:col-span-3">
           <article className="bg-white rounded-xl shadow-lg overflow-hidden">
             {/* Cover Image */}
-            <div className="relative h-[400px]">
-              <img
-                src={blog.coverImage}
-                alt={blog.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
+            {blog.coverImage && (
+              <div className="relative h-[400px]">
+                <img
+                  src={blog.coverImage}
+                  alt={blog.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
 
             {/* Content */}
             <div className="p-8">
@@ -150,18 +124,28 @@ const BlogPostPage = () => {
                   {blog.title}
                 </h1>
                 <div className="flex items-center gap-4 text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <img
-                      src={blog.author.avatar}
-                      alt={blog.author.name}
-                      className="w-10 h-10 rounded-full"
-                    />
-                    <span>{blog.author.name}</span>
-                  </div>
-                  <span>•</span>
-                  <span>{new Date(blog.publishedAt).toLocaleDateString()}</span>
-                  <span>•</span>
-                  <span>{blog.readTime} min read</span>
+                  {blog.author && (
+                    <>
+                      <div className="flex items-center gap-2">
+                        <img
+                          src={blog.author.avatar}
+                          alt={blog.author.name}
+                          className="w-10 h-10 rounded-full"
+                        />
+                        <span>{blog.author.name}</span>
+                      </div>
+                      <span>•</span>
+                    </>
+                  )}
+                  {blog.publishedAt && (
+                    <>
+                      <span>
+                        {new Date(blog.publishedAt).toLocaleDateString()}
+                      </span>
+                      <span>•</span>
+                    </>
+                  )}
+                  {blog.readTime && <span>{blog.readTime} min read</span>}
                 </div>
               </div>
 
@@ -175,22 +159,24 @@ const BlogPostPage = () => {
               <div className="mt-8 pt-8 border-t border-gray-200">
                 <div className="flex flex-wrap gap-2">
                   <span
-                    key={blog.category}
+                    key={blog.category._id}
                     className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm"
                   >
-                    {blog.category}
+                    {blog.category.name}
                   </span>
                 </div>
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {blog.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
+                {blog.tags && blog.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {blog.tags.map((tag) => (
+                      <span
+                        key={tag._id}
+                        className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm"
+                      >
+                        #{tag.name}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </article>
@@ -200,7 +186,7 @@ const BlogPostPage = () => {
         <div className="lg:col-span-1">
           <BlogSidebar
             popularPosts={popularPosts}
-            categories={categoryCounts}
+            categories={categories}
             tags={popularTags}
           />
         </div>

@@ -38,17 +38,76 @@ const OtherMembers = () => {
       header: "Social Links",
       accessor: (item: any) => (
         <div className="flex space-x-2">
-          {item.socialLinks?.map((link: any, index: number) => (
+          {item.social.linkedin && (
             <a
-              key={index}
-              href={link.url}
+              href={item.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 hover:text-blue-800"
             >
-              {link.platform}
+              LinkedIn
             </a>
-          ))}
+          )}
+          {item.social.twitter && (
+            <a
+              href={item.social.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800"
+            >
+              Twitter
+            </a>
+          )}
+          {item.social.facebook && (
+            <a
+              href={item.social.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800"
+            >
+              Facebook
+            </a>
+          )}
+          {item.social.youtube && (
+            <a
+              href={item.social.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800"
+            >
+              YouTube
+            </a>
+          )}
+          {item.social.whatsapp && (
+            <a
+              href={item.social.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800"
+            >
+              WhatsApp
+            </a>
+          )}
+          {item.social.instagram && (
+            <a
+              href={item.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800"
+            >
+              Instagram
+            </a>
+          )}
+          {item.social.telegram && (
+            <a
+              href={item.social.telegram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800"
+            >
+              Telegram
+            </a>
+          )}
         </div>
       ),
     },

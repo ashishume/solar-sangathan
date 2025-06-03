@@ -18,6 +18,9 @@ import VideoList from "./pages/Video/VideoList";
 import ImportantInfoList from "./pages/Important-Info/ImportantInfoList";
 import About from "./pages/About";
 import { ImportantInfoForm } from "./pages/Important-Info/ImportantInfoForm";
+import OtherMembers from "./pages/About/OtherMembers";
+import WorkingCommittee from "./pages/About/WorkingCommittee";
+import MemberForm from "./pages/About/MemberForm";
 
 const AdminRouter = () => {
   return (
@@ -63,7 +66,23 @@ const AdminRouter = () => {
           <Route path="new" element={<ImportantInfoForm />} />
           <Route path=":id/edit" element={<ImportantInfoForm />} />
         </Route>
-        <Route path="about" element={<About />} />
+        <Route path="about">
+          <Route index element={<About />} />
+          <Route path="other-members" element={<OtherMembers />} />
+          <Route path="working-committee" element={<WorkingCommittee />} />
+          <Route
+            path="other-members/new"
+            element={<MemberForm isWorkingCommittee={false} />}
+          />
+          <Route
+            path="working-committee/new"
+            element={<MemberForm isWorkingCommittee={true} />}
+          />
+          <Route
+            path=":id/edit"
+            element={<MemberForm isWorkingCommittee={false} />}
+          />
+        </Route>
         <Route path="*" element={<Navigate to="/admin" replace />} />
       </Route>
     </Routes>

@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Input from "@/components/ui/Input";
+import Button from "@/components/ui/Button";
+import axiosInstance from "@/admin/services/axios";
 
 interface Member {
   _id: string;
@@ -16,15 +19,20 @@ interface Member {
     telegram?: string;
   };
   isWorkingCommittee: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
 }
 
-interface MemberFormProps {
-  member: Member | null;
-  onSubmit: (data: Partial<Member>) => void;
-  onClose: () => void;
-}
+const MemberForm = ({
+  isWorkingCommittee,
+}: {
+  isWorkingCommittee: boolean;
+}) => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const isEditMode = Boolean(id);
 
-const MemberForm = ({ member, onSubmit, onClose }: MemberFormProps) => {
   const [formData, setFormData] = useState<Partial<Member>>({
     name: "",
     role: "",
@@ -38,30 +46,54 @@ const MemberForm = ({ member, onSubmit, onClose }: MemberFormProps) => {
       instagram: "",
       telegram: "",
     },
+    isWorkingCommittee: isWorkingCommittee,
   });
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
-    if (member) {
-      setFormData({
-        name: member.name,
-        role: member.role,
-        image: member.image,
-        social: {
-          linkedin: member.social.linkedin || "",
-          twitter: member.social.twitter || "",
-          facebook: member.social.facebook || "",
-          youtube: member.social.youtube || "",
-          whatsapp: member.social.whatsapp || "",
-          instagram: member.social.instagram || "",
-          telegram: member.social.telegram || "",
+    if (isEditMode && id) {
+      fetchMember();
+    }
+  }, [id, isEditMode]);
+
+  const fetchMember = async () => {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.get(`/about/members/${id}`);
+      const data = response.data;
+      console.log(data);
+      setFormData(data);
+      setError(null);
+    } catch (err) {
+      setError("Failed to fetch member details");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const url = isEditMode ? `/about/members/${id}` : "/about/members";
+      const method = isEditMode ? "patch" : "post";
+
+      await axiosInstance[method](url, formData, {
+        headers: {
+          "Content-Type": "application/json",
         },
       });
-    }
-  }, [member]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
+      navigate(-1);
+    } catch (err) {
+      setError("Failed to save member");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (
@@ -85,23 +117,24 @@ const MemberForm = ({ member, onSubmit, onClose }: MemberFormProps) => {
     }
   };
 
-  return (
-    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="px-4 py-5 sm:px-6 flex justify-between items-center border-b border-gray-200">
-          <h3 className="text-lg font-medium leading-6 text-gray-900">
-            {member ? "Edit Member" : "Add New Member"}
-          </h3>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-500"
-          >
-            {/* <XMarkIcon className="h-6 w-6" /> */}X
-          </button>
-        </div>
+  if (loading && isEditMode) {
+    return <div className="p-4">Loading...</div>;
+  }
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+  return (
+    <div className="p-6">
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-2xl font-bold mb-6">
+          {isEditMode ? "Edit Member" : "Add New Member"}
+        </h1>
+
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <Input
               label="Name"
@@ -142,7 +175,7 @@ const MemberForm = ({ member, onSubmit, onClose }: MemberFormProps) => {
                   name="social.linkedin"
                   id="social.linkedin"
                   type="url"
-                  value={formData.social?.linkedin}
+                  value={formData.social?.linkedin || ""}
                   onChange={handleChange}
                 />
 
@@ -151,7 +184,7 @@ const MemberForm = ({ member, onSubmit, onClose }: MemberFormProps) => {
                   name="social.twitter"
                   id="social.twitter"
                   type="url"
-                  value={formData.social?.twitter}
+                  value={formData.social?.twitter || ""}
                   onChange={handleChange}
                 />
 
@@ -160,7 +193,7 @@ const MemberForm = ({ member, onSubmit, onClose }: MemberFormProps) => {
                   name="social.facebook"
                   id="social.facebook"
                   type="url"
-                  value={formData.social?.facebook}
+                  value={formData.social?.facebook || ""}
                   onChange={handleChange}
                 />
 
@@ -169,7 +202,7 @@ const MemberForm = ({ member, onSubmit, onClose }: MemberFormProps) => {
                   name="social.youtube"
                   id="social.youtube"
                   type="url"
-                  value={formData.social?.youtube}
+                  value={formData.social?.youtube || ""}
                   onChange={handleChange}
                 />
 
@@ -178,7 +211,7 @@ const MemberForm = ({ member, onSubmit, onClose }: MemberFormProps) => {
                   name="social.whatsapp"
                   id="social.whatsapp"
                   type="url"
-                  value={formData.social?.whatsapp}
+                  value={formData.social?.whatsapp || ""}
                   onChange={handleChange}
                 />
 
@@ -187,7 +220,7 @@ const MemberForm = ({ member, onSubmit, onClose }: MemberFormProps) => {
                   name="social.instagram"
                   id="social.instagram"
                   type="url"
-                  value={formData.social?.instagram}
+                  value={formData.social?.instagram || ""}
                   onChange={handleChange}
                 />
 
@@ -196,27 +229,25 @@ const MemberForm = ({ member, onSubmit, onClose }: MemberFormProps) => {
                   name="social.telegram"
                   id="social.telegram"
                   type="url"
-                  value={formData.social?.telegram}
+                  value={formData.social?.telegram || ""}
                   onChange={handleChange}
                 />
               </div>
             </div>
           </div>
 
-          <div className="mt-6 flex justify-end space-x-3">
-            <button
+          <div className="flex justify-end space-x-3">
+            <Button
               type="button"
-              onClick={onClose}
-              className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              variant="outline"
+              onClick={() => navigate(-1)}
+              disabled={loading}
             >
               Cancel
-            </button>
-            <button
-              type="submit"
-              className="rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
-              {member ? "Update" : "Create"}
-            </button>
+            </Button>
+            <Button type="submit" variant="primary" disabled={loading}>
+              {loading ? "Saving..." : isEditMode ? "Update" : "Create"}
+            </Button>
           </div>
         </form>
       </div>

@@ -36,9 +36,10 @@ const Categories = () => {
       title="Categories"
       columns={columns}
       data={categories}
-      onDelete={handleDelete}
+      onDelete={() => {}}
       createLink="/admin/categories/new"
       loading={loading}
+      isDeletable={false}
     />
   );
 };

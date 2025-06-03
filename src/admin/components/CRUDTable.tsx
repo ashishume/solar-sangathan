@@ -1,3 +1,4 @@
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
@@ -14,6 +15,7 @@ interface CRUDTableProps {
   onDelete: (id: string) => void;
   createLink: string;
   loading?: boolean;
+  isDeletable?: boolean;
 }
 
 const formatDate = (value: any): string | any => {
@@ -39,6 +41,7 @@ const CRUDTable = ({
   onDelete,
   createLink,
   loading,
+  isDeletable = true,
 }: CRUDTableProps) => {
   // Extract the base path from createLink (e.g., "/admin/blog-posts/new" -> "/admin/blog-posts")
   const basePath = createLink.replace("/new", "");
@@ -101,14 +104,16 @@ const CRUDTable = ({
                       to={`${basePath}/${item._id}/edit`}
                       className="text-indigo-600 hover:text-indigo-900 mr-4"
                     >
-                      Edit
+                      <PencilIcon className="w-4 h-4" />
                     </Link>
-                    <button
-                      onClick={() => onDelete(item._id.toString())}
-                      className="text-red-600 hover:text-red-900"
-                    >
-                      Delete
-                    </button>
+                    {isDeletable && (
+                      <button
+                        onClick={() => onDelete(item._id.toString())}
+                        className="text-red-600 hover:text-red-900"
+                      >
+                        <TrashIcon className="w-4 h-4" />
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}

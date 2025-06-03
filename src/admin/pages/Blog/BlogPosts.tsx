@@ -132,7 +132,7 @@ const BlogPosts = () => {
       columns={columns}
       data={posts}
       onDelete={handleDelete}
-      createLink="/admin/blog-posts/new"
+      createLink="/admin/blog/new"
     />
   );
 };

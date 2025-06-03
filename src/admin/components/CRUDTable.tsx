@@ -16,6 +16,7 @@ interface CRUDTableProps {
   createLink: string;
   loading?: boolean;
   isDeletable?: boolean;
+  isEditable?: boolean;
 }
 
 const formatDate = (value: any): string | any => {
@@ -42,6 +43,7 @@ const CRUDTable = ({
   createLink,
   loading,
   isDeletable = true,
+  isEditable = true,
 }: CRUDTableProps) => {
   // Extract the base path from createLink (e.g., "/admin/blog-posts/new" -> "/admin/blog-posts")
   const basePath = createLink.replace("/new", "");
@@ -101,12 +103,14 @@ const CRUDTable = ({
                   ))}
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex justify-end space-x-4">
-                      <Link
-                        to={`${basePath}/${item._id}/edit`}
-                        className="text-indigo-600 hover:text-indigo-900 p-2"
-                      >
-                        <PencilIcon className="w-4 h-4" />
-                      </Link>
+                      {isEditable && (
+                        <Link
+                          to={`${basePath}/${item._id}/edit`}
+                          className="text-indigo-600 hover:text-indigo-900 p-2"
+                        >
+                          <PencilIcon className="w-4 h-4" />
+                        </Link>
+                      )}
                       {isDeletable && (
                         <button
                           onClick={() => onDelete(item._id.toString())}

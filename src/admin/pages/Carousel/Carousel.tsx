@@ -45,6 +45,7 @@ const Carousel = () => {
       columns={columns}
       data={carouselImages}
       onDelete={handleDelete}
+      isEditable={false}
       createLink="/admin/carousel/new"
     />
   );

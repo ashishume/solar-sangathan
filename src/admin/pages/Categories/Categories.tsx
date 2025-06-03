@@ -4,7 +4,8 @@ import { useCategories } from "../../store/categories";
 import type { Category } from "../../types/category";
 
 const Categories = () => {
-  const { categories, fetchCategories, loading } = useCategories();
+  const { categories, fetchCategories, loading, deleteCategory } =
+    useCategories();
 
   useEffect(() => {
     fetchCategories();
@@ -12,9 +13,7 @@ const Categories = () => {
 
   const handleDelete = (id: string | number) => {
     if (window.confirm("Are you sure you want to delete this category?")) {
-      fetch(`/api/categories/${id}`, { method: "DELETE" })
-        .then(() => fetchCategories())
-        .catch((error) => console.error("Failed to delete category:", error));
+      deleteCategory(id as string);
     }
   };
 

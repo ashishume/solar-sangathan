@@ -21,9 +21,13 @@ class CategoryService {
   }
 
   async updateCategory(id: string, category: Category): Promise<Category> {
-    const response = await axiosInstance.put(`categories/${id}`, category);
+    const response = await axiosInstance.patch(`categories/${id}`, category);
 
     return response.data;
+  }
+
+  async deleteCategory(id: string): Promise<void> {
+    await axiosInstance.delete(`categories/${id}`);
   }
 }
 

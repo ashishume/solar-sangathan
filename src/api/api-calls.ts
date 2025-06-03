@@ -112,44 +112,6 @@ export const blogApi = {
   },
 };
 
-// Category API calls
-export const categoryApi = {
-  getAllCategories: async () => {
-    const response = await api.get("/categories");
-    return response.data;
-  },
-
-  getCategoryById: async (id: string) => {
-    const response = await api.get(`/categories/${id}`);
-    return response.data;
-  },
-
-  createCategory: async (data: {
-    name: string;
-    description: string;
-    slug: string;
-  }) => {
-    const response = await api.post("/categories", data);
-    return response.data;
-  },
-
-  updateCategory: async (
-    id: string,
-    data: {
-      name?: string;
-      description?: string;
-      slug?: string;
-    }
-  ) => {
-    const response = await api.put(`/categories/${id}`, data);
-    return response.data;
-  },
-
-  deleteCategory: async (id: string) => {
-    await api.delete(`/categories/${id}`);
-  },
-};
-
 // Tag API calls
 export const tagApi = {
   getAllTags: async () => {

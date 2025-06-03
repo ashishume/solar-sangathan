@@ -1,4 +1,5 @@
-import { blogApi, tagApi, categoryApi } from "../api/api-calls";
+import { categoryService } from "@/admin/services/categoryService";
+import { blogApi, tagApi } from "../api/api-calls";
 
 export interface BlogPost {
   _id: string;
@@ -78,7 +79,7 @@ export const blogService = {
   },
 
   getCategories: async () => {
-    const response = await categoryApi.getAllCategories();
+    const response = await categoryService.getAllCategories();
     return response;
   },
 

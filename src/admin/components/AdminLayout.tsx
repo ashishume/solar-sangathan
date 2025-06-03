@@ -55,7 +55,7 @@ const AdminLayout = () => {
     },
     {
       title: "Videos",
-      path: "/admin/video/new",
+      path: "/admin/video",
       icon: "🎥",
     },
     {
@@ -78,7 +78,7 @@ const AdminLayout = () => {
           <div className="p-6 border-b border-gray-200">
             <h2 className="text-gray-800 text-2xl font-bold">Admin Panel</h2>
           </div>
-          <nav className="flex-1 py-4">
+          <nav className="flex-1 py-4 overflow-y-auto max-h-[calc(100vh-10rem)]">
             {menuItems.map((item) => (
               <Link
                 key={item.path}

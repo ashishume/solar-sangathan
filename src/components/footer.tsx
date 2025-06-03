@@ -1,6 +1,7 @@
 import FacebookIcon from "../assets/icons/facebook";
 import TwitterIcon from "../assets/icons/twitter";
 import LinkedInIcon from "../assets/icons/linkedin";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -32,41 +33,60 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/about"
                   className="text-gray-400 hover:text-white transition"
                 >
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition"
-                >
-                  Services
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition"
-                >
-                  Contact
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
+                <Link
+                  to="/blog"
                   className="text-gray-400 hover:text-white transition"
                 >
                   Blog
-                </a>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/contact"
+                  className="text-gray-400 hover:text-white transition"
+                >
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/join"
+                  className="text-gray-400 hover:text-white transition"
+                >
+                  Join Us
+                </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h4 className="text-lg font-semibold mb-4">Contact Us</h4>
+            <h4 className="text-lg font-semibold mb-4">Services</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  to="/training"
+                  className="text-gray-400 hover:text-white transition"
+                >
+                  Training
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/shop"
+                  className="text-gray-400 hover:text-white transition"
+                >
+                  Shop
+                </Link>
+              </li>
+            </ul>
+            <h4 className="text-lg font-semibold mt-6 mb-4">Contact Us</h4>
             <ul className="space-y-2 text-gray-400">
               <li>123 Solar Street</li>
               <li>New Delhi, India</li>

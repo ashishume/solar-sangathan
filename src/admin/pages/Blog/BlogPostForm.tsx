@@ -29,9 +29,7 @@ const BlogPostForm = () => {
   } = useCategories();
   const { tags, loading: tagsLoading, error: tagsError, fetchTags } = useTags();
 
-  const [post, setPost] = useState<
-    Omit<BlogPost, "id" | "createdAt" | "updatedAt">
-  >({
+  const [post, setPost] = useState<BlogPost>({
     title: "",
     excerpt: "",
     coverImage: "",
@@ -50,42 +48,86 @@ const BlogPostForm = () => {
     },
     tags: [],
     status: "Draft",
+    createdAt: new Date(),
+    updatedAt: new Date(),
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await Promise.all([fetchCategories(), fetchTags()]);
-    };
-    fetchData();
-  }, [fetchCategories, fetchTags]);
+  const [isLoading, setIsLoading] = useState(true);
 
+  // First effect to fetch categories and tags
   useEffect(() => {
-    const loadPost = async () => {
-      if (isEditing && id) {
-        const existingPost = await getPost(id);
-        if (existingPost) {
-          const {
-            id: _,
-            createdAt: __,
-            updatedAt: ___,
-            ...postData
-          } = existingPost;
-          setPost(postData);
-        }
+    const fetchInitialData = async () => {
+      try {
+        await Promise.all([fetchCategories(), fetchTags()]);
+      } catch (error) {
+        console.error("Error fetching initial data:", error);
       }
     };
+    fetchInitialData();
+  }, [fetchCategories, fetchTags]);
+
+  // Second effect to handle post data
+  useEffect(() => {
+    const loadPost = async () => {
+      if (!isEditing || !id) {
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        setIsLoading(true);
+        const existingPost = await getPost(id);
+
+        if (existingPost) {
+          const category = categories.find(
+            (cat) => cat._id === existingPost.category._id
+          );
+
+          const newPost: BlogPost = {
+            _id: existingPost._id || existingPost.id,
+            id: existingPost.id || existingPost._id,
+            publishedAt: existingPost.publishedAt,
+            readTime: existingPost.readTime,
+            status: existingPost.status,
+            content: existingPost.content,
+            excerpt: existingPost.excerpt,
+            coverImage: existingPost.coverImage,
+            title: existingPost.title,
+            author: {
+              name: existingPost.author.name,
+              avatar: existingPost.author.avatar,
+            },
+            category: category || {
+              _id: existingPost.category._id,
+              name: existingPost.category.name,
+              createdAt: new Date(existingPost.category.createdAt),
+              updatedAt: new Date(existingPost.category.updatedAt),
+            },
+            tags: existingPost.tags.map((tag) => ({
+              _id: tag._id,
+              name: tag.name,
+              usageCount: tag.usageCount || 0,
+              createdAt: new Date(tag.createdAt),
+              updatedAt: new Date(tag.updatedAt),
+            })),
+            createdAt: new Date(existingPost.createdAt),
+            updatedAt: new Date(existingPost.updatedAt),
+          };
+          setPost(newPost);
+        }
+      } catch (error) {
+        console.error("Error loading post:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     loadPost();
   }, [isEditing, id, getPost]);
 
-  // Update category when categories are loaded
-  useEffect(() => {
-    if (post.category._id && categories.length > 0) {
-      const category = categories.find((cat) => cat._id === post.category._id);
-      if (category) {
-        setPost((prev) => ({ ...prev, category }));
-      }
-    }
-  }, [categories]);
+  if (isLoading) {
+    return <div className="text-center py-8">Loading...</div>;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

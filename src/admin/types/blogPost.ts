@@ -7,7 +7,8 @@ export interface Author {
 }
 
 export interface BlogPost {
-  id: string;
+  _id?: string;
+  id?: string;
   title: string;
   excerpt: string;
   coverImage: string;

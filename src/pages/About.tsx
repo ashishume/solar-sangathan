@@ -217,73 +217,75 @@ const About = () => {
       </div>
 
       {/* Other Members Section */}
-      <div className="mt-20">
-        <h3 className="text-3xl font-bold text-center text-gray-900 mb-10">
-          Other Members
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {otherMembers.map((member) => (
-            <div
-              key={member.id}
-              className="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center transition-transform duration-300 hover:scale-105"
-            >
-              <img
-                src={member.image}
-                alt={member.name}
-                className="w-32 h-32 object-cover rounded-full border-4 border-red-600 mb-4 shadow-md"
-              />
-              <h4 className="text-lg font-semibold text-gray-900 mb-1">
-                {member.name}
-              </h4>
-              <p className="text-red-600 font-medium mb-2 text-center">
-                {member.role}
-              </p>
-              <div className="flex gap-4 mt-2">
-                {member.social.linkedin && (
-                  <a
-                    href={member.social.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="LinkedIn"
-                  >
-                    <LinkedInIcon className="w-6 h-6 text-blue-700 hover:text-blue-800 transition-colors" />
-                  </a>
-                )}
-                {member.social.twitter && (
-                  <a
-                    href={member.social.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Twitter"
-                  >
-                    <TwitterIcon className="w-6 h-6 text-blue-400 hover:text-blue-500 transition-colors" />
-                  </a>
-                )}
-                {member.social.facebook && (
-                  <a
-                    href={member.social.facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Facebook"
-                  >
-                    <FacebookIcon className="w-6 h-6 text-blue-600 hover:text-blue-700 transition-colors" />
-                  </a>
-                )}
-                {member.social.youtube && (
-                  <a
-                    href={member.social.youtube}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="YouTube"
-                  >
-                    <YouTubeIcon className="w-6 h-6 text-red-600 hover:text-red-700 transition-colors" />
-                  </a>
-                )}
+      {otherMembers.length > 0 && (
+        <div className="mt-20">
+          <h3 className="text-3xl font-bold text-center text-gray-900 mb-10">
+            Other Members
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {otherMembers.map((member) => (
+              <div
+                key={member.id}
+                className="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center transition-transform duration-300 hover:scale-105"
+              >
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="w-32 h-32 object-cover rounded-full border-4 border-red-600 mb-4 shadow-md"
+                />
+                <h4 className="text-lg font-semibold text-gray-900 mb-1">
+                  {member.name}
+                </h4>
+                <p className="text-red-600 font-medium mb-2 text-center">
+                  {member.role}
+                </p>
+                <div className="flex gap-4 mt-2">
+                  {member.social.linkedin && (
+                    <a
+                      href={member.social.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="LinkedIn"
+                    >
+                      <LinkedInIcon className="w-6 h-6 text-blue-700 hover:text-blue-800 transition-colors" />
+                    </a>
+                  )}
+                  {member.social.twitter && (
+                    <a
+                      href={member.social.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Twitter"
+                    >
+                      <TwitterIcon className="w-6 h-6 text-blue-400 hover:text-blue-500 transition-colors" />
+                    </a>
+                  )}
+                  {member.social.facebook && (
+                    <a
+                      href={member.social.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Facebook"
+                    >
+                      <FacebookIcon className="w-6 h-6 text-blue-600 hover:text-blue-700 transition-colors" />
+                    </a>
+                  )}
+                  {member.social.youtube && (
+                    <a
+                      href={member.social.youtube}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="YouTube"
+                    >
+                      <YouTubeIcon className="w-6 h-6 text-red-600 hover:text-red-700 transition-colors" />
+                    </a>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

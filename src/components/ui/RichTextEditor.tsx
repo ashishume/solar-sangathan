@@ -16,7 +16,8 @@ const modules = {
     [{ list: "ordered" }, { list: "bullet" }],
     [{ color: [] }, { background: [] }],
     ["link", "image"],
-    ["clean"],
+    ["blockquote"],
+    ["code-block"],
   ],
 };
 
@@ -32,6 +33,8 @@ const formats = [
   "image",
   "color",
   "background",
+  "blockquote",
+  "code-block",
 ];
 
 const RichTextEditor: React.FC<RichTextEditorProps> = ({

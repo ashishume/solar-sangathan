@@ -138,7 +138,7 @@ const BlogPostPage = () => {
 
               {/* Blog Content */}
               <div
-                className="prose prose-lg max-w-none"
+                className="blog-content"
                 dangerouslySetInnerHTML={{ __html: blog.content }}
               />
 

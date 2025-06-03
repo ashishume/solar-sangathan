@@ -15,8 +15,9 @@ import Carousel from "./pages/Carousel/Carousel";
 import NewCarousel from "./pages/Carousel/NewCarousel";
 import VideoForm from "./pages/Video/VideoForm";
 import VideoList from "./pages/Video/VideoList";
-import { ImportantInfoList, ImportantInfoForm } from "./pages/Important-Info";
+import ImportantInfoList from "./pages/Important-Info/ImportantInfoList";
 import About from "./pages/About";
+import { ImportantInfoForm } from "./pages/Important-Info/ImportantInfoForm";
 
 const AdminRouter = () => {
   return (

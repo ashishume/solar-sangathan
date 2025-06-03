@@ -25,7 +25,7 @@ const AdminLayout = () => {
     },
     {
       title: "Blog Posts",
-      path: "/admin/blog-posts",
+      path: "/admin/blog",
       icon: "📝",
     },
     {

@@ -100,20 +100,22 @@ const CRUDTable = ({
                     </td>
                   ))}
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <Link
-                      to={`${basePath}/${item._id}/edit`}
-                      className="text-indigo-600 hover:text-indigo-900 mr-4"
-                    >
-                      <PencilIcon className="w-4 h-4" />
-                    </Link>
-                    {isDeletable && (
-                      <button
-                        onClick={() => onDelete(item._id.toString())}
-                        className="text-red-600 hover:text-red-900"
+                    <div className="flex justify-end space-x-4">
+                      <Link
+                        to={`${basePath}/${item._id}/edit`}
+                        className="text-indigo-600 hover:text-indigo-900 p-2"
                       >
-                        <TrashIcon className="w-4 h-4" />
-                      </button>
-                    )}
+                        <PencilIcon className="w-4 h-4" />
+                      </Link>
+                      {isDeletable && (
+                        <button
+                          onClick={() => onDelete(item._id.toString())}
+                          className="text-red-600 hover:text-red-900 p-2"
+                        >
+                          <TrashIcon className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}

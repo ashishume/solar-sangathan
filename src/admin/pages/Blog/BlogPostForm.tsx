@@ -95,7 +95,7 @@ const BlogPostForm = () => {
       } else {
         await addPost(post);
       }
-      navigate("/admin/blog-posts");
+      navigate("/admin/blog");
     } catch (err) {
       console.error("Failed to save post:", err);
     }

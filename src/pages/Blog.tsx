@@ -3,7 +3,8 @@ import BlogCard from "../components/BlogCard";
 import BlogSidebar from "../components/BlogSidebar";
 import { blogService } from "../services/blogService";
 import type { BlogPost } from "../services/blogService";
-import type { Category, Tag } from "./BlogPost";
+import type { Category } from "@/admin/types/category";
+import type { Tag } from "@/admin/types/tag";
 
 const Blog = () => {
   const [recentBlogs, setRecentBlogs] = useState<BlogPost[]>([]);

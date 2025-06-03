@@ -3,25 +3,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import BlogSidebar from "../components/BlogSidebar";
 import { blogService } from "../services/blogService";
 import type { BlogPost } from "../services/blogService";
+import type { Category } from "@/admin/types/category";
+import type { Tag } from "@/admin/types/tag";
 
 export interface CategoryCount {
   name: string;
   count: number;
-}
-
-export interface Category {
-  _id: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface Tag {
-  _id: string;
-  name: string;
-  usageCount: number;
-  createdAt: string;
-  updatedAt: string;
 }
 
 const BlogPostPage = () => {

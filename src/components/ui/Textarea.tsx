@@ -26,7 +26,7 @@ const Textarea: React.FC<TextareaProps> = ({
       )}
       <textarea
         {...props}
-        className={`block w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200 px-4 py-3 ${className}`}
+        className={`block w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 transition-colors duration-200 px-4 py-3 bg-white ${className}`}
       />
       {error && <p className="text-sm text-red-600">{error}</p>}
     </div>

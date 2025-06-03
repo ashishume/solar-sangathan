@@ -63,6 +63,11 @@ const AdminLayout = () => {
       path: "/admin/important-information",
       icon: "ℹ️",
     },
+    {
+      title: "About",
+      path: "/admin/about",
+      icon: "👥",
+    },
   ];
 
   return (

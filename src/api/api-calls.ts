@@ -177,6 +177,65 @@ export const tagApi = {
   },
 };
 
+// Member API calls
+export const memberApi = {
+  // Working Committee Members
+  getWorkingCommitteeMembers: async () => {
+    return api.get("/about/members/working-committee").then((res) => res.data);
+  },
+
+  // Other Members
+  getOtherMembers: async () => {
+    return api.get("/about/members/other").then((res) => res.data);
+  },
+
+  // Create a new member
+  createMember: async (data: {
+    name: string;
+    role: string;
+    image: string;
+    social: {
+      linkedin?: string;
+      twitter?: string;
+      facebook?: string;
+      youtube?: string;
+      whatsapp?: string;
+      instagram?: string;
+      telegram?: string;
+    };
+    isWorkingCommittee: boolean;
+  }) => {
+    return api.post("/about/members", data).then((res) => res.data);
+  },
+
+  // Update a member
+  updateMember: async (
+    id: string,
+    data: {
+      name?: string;
+      role?: string;
+      image?: string;
+      social?: {
+        linkedin?: string;
+        twitter?: string;
+        facebook?: string;
+        youtube?: string;
+        whatsapp?: string;
+        instagram?: string;
+        telegram?: string;
+      };
+      isWorkingCommittee?: boolean;
+    }
+  ) => {
+    return api.patch(`/about/members/${id}`, data).then((res) => res.data);
+  },
+
+  // Delete a member
+  deleteMember: async (id: string) => {
+    return api.delete(`/about/members/${id}`).then((res) => res.data);
+  },
+};
+
 // Export the api instance for custom calls
 
 export const getTestimonials = async () => {

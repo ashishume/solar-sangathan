@@ -7,6 +7,7 @@ import { HomeModule } from "./modules/home/home.module";
 import { RateCardsModule } from "./rate-cards/rate-cards.module";
 import { TagsModule } from "./tags/tags.module";
 import { CategoriesModule } from "./modules/categories/categories.module";
+import { AboutModule } from "./modules/about/about.module";
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { CategoriesModule } from "./modules/categories/categories.module";
     RateCardsModule,
     TagsModule,
     CategoriesModule,
+    AboutModule,
   ],
 })
 export class AppModule {}

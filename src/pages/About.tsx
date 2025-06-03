@@ -1,12 +1,51 @@
+import { useEffect, useState } from "react";
 import LinkedInIcon from "../assets/icons/linkedin";
 import TwitterIcon from "../assets/icons/twitter";
 import FacebookIcon from "../assets/icons/facebook";
 import YouTubeIcon from "../assets/icons/youtube";
-import team3 from "../assets/team-3.png";
-import team1 from "../assets/team-1.png";
-import team2 from "../assets/team-2.png";
+import axiosInstance from "@/admin/services/axios";
+interface Member {
+  id: number;
+  name: string;
+  role: string;
+  image: string;
+  social: {
+    linkedin?: string;
+    twitter?: string;
+    facebook?: string;
+    youtube?: string;
+  };
+  isWorkingCommittee: boolean;
+}
 
 const About = () => {
+  const [workingCommittee, setWorkingCommittee] = useState<Member[]>([]);
+  const [otherMembers, setOtherMembers] = useState<Member[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        const [workingCommitteeRes, otherMembersRes] = await Promise.all([
+          axiosInstance.get("/about/members/working-committee"),
+          axiosInstance.get("/about/members/other"),
+        ]);
+
+        const workingCommitteeData = workingCommitteeRes.data;
+        const otherMembersData = otherMembersRes.data;
+
+        setWorkingCommittee(workingCommitteeData);
+        setOtherMembers(otherMembersData);
+      } catch (error) {
+        console.error("Error fetching members:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMembers();
+  }, []);
+
   const images = [
     "https://plus.unsplash.com/premium_photo-1683718217153-cb57b088b178?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "https://plus.unsplash.com/premium_photo-1684017834450-21747b64d666?q=80&w=3271&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -14,41 +53,13 @@ const About = () => {
     "https://plus.unsplash.com/premium_photo-1684435911226-e4ae6b7979af?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   ];
 
-  const members = [
-    {
-      img: team3,
-      name: "Er Ashish Sahu",
-      role: "Tech & Marketing Head",
-      social: {
-        linkedin: "https://example.com/",
-        twitter: "https://example.com/",
-        facebook: "https://example.com/",
-        youtube: "https://example.com/",
-      },
-    },
-    {
-      img: team1,
-      name: "Arvind Sindhawa Chairman",
-      role: "Chairman",
-      social: {
-        linkedin: "https://example.com/",
-        twitter: "https://example.com/",
-        facebook: "https://example.com/",
-        youtube: "https://example.com/",
-      },
-    },
-    {
-      img: team2,
-      name: "Dr. Sharad Dutt Acharya",
-      role: "National General Secretary",
-      social: {
-        linkedin: "https://example.com/",
-        twitter: "https://example.com/",
-        facebook: "https://example.com/",
-        youtube: "https://example.com/",
-      },
-    },
-  ];
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-red-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -144,13 +155,13 @@ const About = () => {
           Working Committee
         </h3>
         <div className="flex flex-col md:flex-row justify-center gap-8">
-          {members.map((member) => (
+          {workingCommittee.map((member) => (
             <div
-              key={member.name}
+              key={member.id}
               className="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center w-full md:w-1/3 transition-transform duration-300 hover:scale-105"
             >
               <img
-                src={member.img}
+                src={member.image}
                 alt={member.name}
                 className="w-40 h-40 object-cover rounded-full border-4 border-red-600 mb-4 shadow-md"
               />
@@ -197,6 +208,75 @@ const About = () => {
                     aria-label="YouTube"
                   >
                     <YouTubeIcon className="w-7 h-7 text-red-600 hover:text-red-700 transition-colors" />
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Other Members Section */}
+      <div className="mt-20">
+        <h3 className="text-3xl font-bold text-center text-gray-900 mb-10">
+          Other Members
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {otherMembers.map((member) => (
+            <div
+              key={member.id}
+              className="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center transition-transform duration-300 hover:scale-105"
+            >
+              <img
+                src={member.image}
+                alt={member.name}
+                className="w-32 h-32 object-cover rounded-full border-4 border-red-600 mb-4 shadow-md"
+              />
+              <h4 className="text-lg font-semibold text-gray-900 mb-1">
+                {member.name}
+              </h4>
+              <p className="text-red-600 font-medium mb-2 text-center">
+                {member.role}
+              </p>
+              <div className="flex gap-4 mt-2">
+                {member.social.linkedin && (
+                  <a
+                    href={member.social.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                  >
+                    <LinkedInIcon className="w-6 h-6 text-blue-700 hover:text-blue-800 transition-colors" />
+                  </a>
+                )}
+                {member.social.twitter && (
+                  <a
+                    href={member.social.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Twitter"
+                  >
+                    <TwitterIcon className="w-6 h-6 text-blue-400 hover:text-blue-500 transition-colors" />
+                  </a>
+                )}
+                {member.social.facebook && (
+                  <a
+                    href={member.social.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook"
+                  >
+                    <FacebookIcon className="w-6 h-6 text-blue-600 hover:text-blue-700 transition-colors" />
+                  </a>
+                )}
+                {member.social.youtube && (
+                  <a
+                    href={member.social.youtube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="YouTube"
+                  >
+                    <YouTubeIcon className="w-6 h-6 text-red-600 hover:text-red-700 transition-colors" />
                   </a>
                 )}
               </div>

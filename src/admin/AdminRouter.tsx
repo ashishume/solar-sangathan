@@ -16,6 +16,7 @@ import NewCarousel from "./pages/Carousel/NewCarousel";
 import VideoForm from "./pages/Video/VideoForm";
 import VideoList from "./pages/Video/VideoList";
 import { ImportantInfoList, ImportantInfoForm } from "./pages/Important-Info";
+import About from "./pages/About";
 
 const AdminRouter = () => {
   return (
@@ -61,6 +62,7 @@ const AdminRouter = () => {
           <Route path="new" element={<ImportantInfoForm />} />
           <Route path=":id/edit" element={<ImportantInfoForm />} />
         </Route>
+        <Route path="about" element={<About />} />
         <Route path="*" element={<Navigate to="/admin" replace />} />
       </Route>
     </Routes>

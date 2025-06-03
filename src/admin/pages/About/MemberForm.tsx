@@ -63,7 +63,6 @@ const MemberForm = ({
       setLoading(true);
       const response = await axiosInstance.get(`/about/members/${id}`);
       const data = response.data;
-      console.log(data);
       setFormData(data);
       setError(null);
     } catch (err) {

@@ -28,7 +28,7 @@ const NewCarousel = () => {
     try {
       // Update all images at once using updateImages
       await carouselService.updateImages(urls);
-      navigate("/admin/carousel");
+      await navigate("/admin/carousel");
     } catch (error) {
       console.error("Error adding carousel images:", error);
     } finally {

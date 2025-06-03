@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import type { BlogPost } from "../services/blogService";
-import type { Category, Tag } from "@/pages/BlogPost";
+import type { Category } from "@/admin/types/category";
+import type { Tag } from "@/admin/types/tag";
 
 interface BlogSidebarProps {
   popularPosts: BlogPost[];

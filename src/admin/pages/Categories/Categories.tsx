@@ -4,18 +4,17 @@ import { useCategories } from "../../store/categories";
 import type { Category } from "../../types/category";
 
 const Categories = () => {
-  const { categories, fetchCategories, loading, deleteCategory } =
-    useCategories();
+  const { categories, fetchCategories, loading } = useCategories();
 
   useEffect(() => {
     fetchCategories();
   }, [fetchCategories]);
 
-  const handleDelete = (id: string | number) => {
-    if (window.confirm("Are you sure you want to delete this category?")) {
-      deleteCategory(id as string);
-    }
-  };
+  // const handleDelete = (id: string | number) => {
+  //   if (window.confirm("Are you sure you want to delete this category?")) {
+  //     deleteCategory(id as string);
+  //   }
+  // };
 
   const columns = [
     { header: "Name", accessor: "name" },

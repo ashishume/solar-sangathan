@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { importantInfoService } from "../../services/importantInfoService";
 import Button from "@/components/ui/Button";
 import Textarea from "@/components/ui/Textarea";
+import { toast } from "react-hot-toast";
 
 export const ImportantInfoForm = () => {
   const { id } = useParams<{ id: string }>();
@@ -37,13 +38,16 @@ export const ImportantInfoForm = () => {
       setLoading(true);
       if (id && id !== "new") {
         await importantInfoService.update(id, { content });
+        toast.success("Important information updated successfully!");
       } else {
         await importantInfoService.create({ content });
+        toast.success("Important information created successfully!");
       }
       navigate("/admin/important-information");
     } catch (err) {
       setError("Failed to save important information");
       console.error(err);
+      toast.error("Failed to save important information. Please try again.");
     } finally {
       setLoading(false);
     }

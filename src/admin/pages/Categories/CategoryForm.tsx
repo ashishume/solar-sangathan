@@ -4,6 +4,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const CategoryForm = () => {
   const navigate = useNavigate();
@@ -35,13 +36,19 @@ const CategoryForm = () => {
       ...formData,
     };
 
-    if (isEditMode) {
-      updateCategory(id as string, categoryData as unknown as Category);
-    } else {
-      createCategory(categoryData as unknown as Category);
+    try {
+      if (isEditMode) {
+        updateCategory(id as string, categoryData as unknown as Category);
+        toast.success("Category updated successfully!");
+      } else {
+        createCategory(categoryData as unknown as Category);
+        toast.success("Category created successfully!");
+      }
+      navigate("/admin/categories");
+    } catch (error) {
+      console.error("Error saving category:", error);
+      toast.error("Failed to save category. Please try again.");
     }
-
-    navigate("/admin/categories");
   };
 
   const handleChange = (

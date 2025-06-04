@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import axiosInstance from "@/admin/services/axios";
+import { toast } from "react-hot-toast";
 
 interface Member {
   _id: string;
@@ -86,10 +87,16 @@ const MemberForm = ({
         },
       });
 
+      if (isEditMode) {
+        toast.success("Member updated successfully!");
+      } else {
+        toast.success("Member added successfully!");
+      }
       navigate(-1);
     } catch (err) {
       setError("Failed to save member");
       console.error(err);
+      toast.error("Failed to save member. Please try again.");
     } finally {
       setLoading(false);
     }

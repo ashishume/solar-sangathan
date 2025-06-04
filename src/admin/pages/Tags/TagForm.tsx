@@ -4,6 +4,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const TagForm = () => {
   const navigate = useNavigate();
@@ -29,13 +30,19 @@ const TagForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (isEditMode) {
-      editTag(id as string, formData as unknown as Tag);
-    } else {
-      addTag(formData as unknown as Tag);
+    try {
+      if (isEditMode) {
+        editTag(id as string, formData as unknown as Tag);
+        toast.success("Tag updated successfully!");
+      } else {
+        addTag(formData as unknown as Tag);
+        toast.success("Tag created successfully!");
+      }
+      navigate("/admin/tags");
+    } catch (error) {
+      console.error("Error saving tag:", error);
+      toast.error("Failed to save tag. Please try again.");
     }
-
-    navigate("/admin/tags");
   };
 
   const handleChange = (

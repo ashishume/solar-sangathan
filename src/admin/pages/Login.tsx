@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
+import { toast } from "react-hot-toast";
 
 const ADMIN_CREDENTIALS = {
   username: "admin",
@@ -23,9 +24,11 @@ const Login = () => {
       credentials.password === ADMIN_CREDENTIALS.password
     ) {
       localStorage.setItem("adminAuth", "true");
+      toast.success("Login successful!");
       navigate("/admin/dashboard");
     } else {
       setError("Invalid credentials");
+      toast.error("Invalid username or password");
     }
   };
 

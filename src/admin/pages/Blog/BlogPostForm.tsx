@@ -9,6 +9,7 @@ import RichTextEditor from "@/components/ui/RichTextEditor";
 import Textarea from "@/components/ui/Textarea";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const BlogPostForm = () => {
   const navigate = useNavigate();
@@ -134,12 +135,15 @@ const BlogPostForm = () => {
     try {
       if (isEditing && id) {
         await updatePost(id, post);
+        toast.success("Blog post updated successfully!");
       } else {
         await addPost(post);
+        toast.success("Blog post created successfully!");
       }
       navigate("/admin/blog");
     } catch (err) {
       console.error("Failed to save post:", err);
+      toast.error("Failed to save blog post. Please try again.");
     }
   };
 

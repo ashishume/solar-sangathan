@@ -5,6 +5,7 @@ import Input from "@/components/ui/Input";
 import Textarea from "@/components/ui/Textarea";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const TestimonialForm = () => {
   const navigate = useNavigate();
@@ -45,10 +46,12 @@ const TestimonialForm = () => {
     try {
       if (isEditMode && id) {
         await updateTestimonial(id, formData);
+        toast.success("Testimonial updated successfully!");
       }
       navigate("/admin/testimonials");
     } catch (error) {
       console.error("Error saving testimonial:", error);
+      toast.error("Failed to save testimonial. Please try again.");
     }
   };
 

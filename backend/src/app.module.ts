@@ -8,6 +8,8 @@ import { RateCardsModule } from "./rate-cards/rate-cards.module";
 import { TagsModule } from "./tags/tags.module";
 import { CategoriesModule } from "./modules/categories/categories.module";
 import { AboutModule } from "./modules/about/about.module";
+import { JoinModule } from "./modules/join/join.module";
+import { ContactModule } from "./modules/contact/contact.module";
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { AboutModule } from "./modules/about/about.module";
     TagsModule,
     CategoriesModule,
     AboutModule,
+    ContactModule,
+    JoinModule,
   ],
 })
 export class AppModule {}

@@ -68,6 +68,16 @@ const AdminLayout = () => {
       path: "/admin/about",
       icon: "👥",
     },
+    {
+      title: "Contact",
+      path: "/admin/contact",
+      icon: "📞",
+    },
+    {
+      title: "Join",
+      path: "/admin/join",
+      icon: "👥",
+    },
   ];
 
   return (
@@ -107,7 +117,7 @@ const AdminLayout = () => {
 
         {/* Main Content */}
         <div className="flex-1 p-8">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <Outlet />
           </div>
         </div>

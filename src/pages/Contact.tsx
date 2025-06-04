@@ -3,6 +3,8 @@ import type { FormEvent } from "react";
 import Input from "../components/ui/Input";
 import Textarea from "../components/ui/Textarea";
 import Button from "../components/ui/Button";
+import { submitContactForm } from "../api/api-calls";
+import { toast } from "react-hot-toast";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -12,10 +14,26 @@ const Contact = () => {
     message: "",
   });
 
-  const handleSubmit = (e: FormEvent) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // TODO: Add form submission logic
-    console.log("Form submitted:", formData);
+    try {
+      setLoading(true);
+      await submitContactForm(formData);
+      toast.success("Message sent successfully!");
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (
@@ -86,8 +104,8 @@ const Contact = () => {
                 placeholder="How can we help you?"
               />
 
-              <Button type="submit" fullWidth>
-                Send Message
+              <Button type="submit" fullWidth disabled={loading}>
+                {loading ? "Sending..." : "Send Message"}
               </Button>
             </form>
           </div>

@@ -21,6 +21,8 @@ import { ImportantInfoForm } from "./pages/Important-Info/ImportantInfoForm";
 import OtherMembers from "./pages/About/OtherMembers";
 import WorkingCommittee from "./pages/About/WorkingCommittee";
 import MemberForm from "./pages/About/MemberForm";
+import ContactSubmissions from "./pages/Contact/ContactSubmissions";
+import JoinSubmissions from "./pages/Join/JoinSubmissions";
 
 const AdminRouter = () => {
   return (
@@ -66,6 +68,8 @@ const AdminRouter = () => {
           <Route path="new" element={<ImportantInfoForm />} />
           <Route path=":id/edit" element={<ImportantInfoForm />} />
         </Route>
+        <Route path="contact" element={<ContactSubmissions />} />
+        <Route path="join" element={<JoinSubmissions />} />
         <Route path="about">
           <Route index element={<About />} />
           <Route path="other-members" element={<OtherMembers />} />

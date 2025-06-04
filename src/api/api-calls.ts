@@ -291,3 +291,38 @@ export const updateImportantInformation = async (id: string, data: any) => {
 export const deleteImportantInformation = async (id: string) => {
   return api.delete(`/important-information/${id}`).then((res) => res.data);
 };
+
+export const submitContactForm = async (data: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  message: string;
+}) => {
+  const response = await fetch(`${API_BASE_URL}/contact`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+};
+
+export const submitJoinForm = async (data: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  occupation: string;
+  interests: string;
+}) => {
+  const response = await fetch(`${API_BASE_URL}/join`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+};

@@ -4,7 +4,8 @@ import Input from "../components/ui/Input";
 import Textarea from "../components/ui/Textarea";
 import Button from "../components/ui/Button";
 import { type RateCard } from "../api/mockData/rateCards";
-import { getRateCards } from "../api/api-calls";
+import { getRateCards, submitJoinForm } from "../api/api-calls";
+import { toast } from "react-hot-toast";
 
 const Join = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ const Join = () => {
 
   const [rateCards, setRateCards] = useState<RateCard[]>([]);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -35,10 +37,27 @@ const Join = () => {
     fetchRateCards();
   }, []);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // TODO: Add form submission logic
-    console.log("Form submitted:", formData);
+    try {
+      setSubmitting(true);
+      await submitJoinForm(formData);
+      toast.success("Application submitted successfully!");
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        address: "",
+        occupation: "",
+        interests: "",
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Failed to submit application. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -142,8 +161,8 @@ const Join = () => {
                 placeholder="Tell us about your interests and why you want to join"
               />
 
-              <Button type="submit" fullWidth>
-                Submit Application
+              <Button type="submit" fullWidth disabled={submitting}>
+                {submitting ? "Submitting..." : "Submit Application"}
               </Button>
             </form>
           </div>
@@ -181,53 +200,51 @@ const Join = () => {
                     </div>
                   </div>
                 )}
-                <div className="text-center flex-grow">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                <div className="flex-grow">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
                     {card.title}
                   </h3>
-                  <div className="mb-8">
-                    <span className="text-2xl font-bold text-gray-900">
-                      {card.price}
+                  <p className="text-gray-600 mb-6">{card.description}</p>
+                  <div className="text-3xl font-bold text-gray-900 mb-6">
+                    ₹{card.price}
+                    <span className="text-base font-normal text-gray-500">
+                      /{card.period}
                     </span>
-                    {/* <span className="text-gray-600 text-xl">
-                      /{card.duration}
-                    </span> */}
                   </div>
-                  <ul className="space-y-5 mb-10 text-left">
+                  <ul className="space-y-4 mb-8">
                     {card.features.map((feature, index) => (
-                      <li
-                        key={index}
-                        className="text-gray-600 flex items-start text-lg"
-                      >
+                      <li key={index} className="flex items-start">
                         <svg
-                          className="w-6 h-6 text-red-500 mr-3 mt-1 flex-shrink-0"
+                          className="h-6 w-6 text-green-500 mr-2"
                           fill="none"
-                          stroke="currentColor"
                           viewBox="0 0 24 24"
+                          stroke="currentColor"
                         >
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            strokeWidth="2"
+                            strokeWidth={2}
                             d="M5 13l4 4L19 7"
-                          ></path>
+                          />
                         </svg>
-                        {feature}
+                        <span className="text-gray-600">{feature}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="mt-auto pt-6">
-                  <Button
-                    fullWidth
-                    variant={card.isPopular ? "primary" : "secondary"}
-                    className={`text-lg py-4 ${
-                      card.isPopular ? "bg-red-500 hover:bg-red-600" : ""
-                    } rounded-xl`}
-                  >
-                    Get Started
-                  </Button>
-                </div>
+                <Button
+                  variant="outline"
+                  fullWidth
+                  className="mt-auto"
+                  onClick={() => {
+                    // Scroll to form
+                    document
+                      .querySelector("form")
+                      ?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >
+                  Select Plan
+                </Button>
               </div>
             ))}
           </div>

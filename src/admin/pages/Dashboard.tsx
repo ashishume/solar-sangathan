@@ -1,5 +1,13 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import {
+  DocumentTextIcon,
+  VideoCameraIcon,
+  InformationCircleIcon,
+  ChatBubbleLeftRightIcon,
+  UserPlusIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/outline";
 
 interface SubSection {
   title: string;
@@ -143,6 +151,45 @@ const Dashboard = () => {
     ],
   };
 
+  const quickLinks = [
+    {
+      title: "Blog Posts",
+      description: "Manage blog posts and articles",
+      icon: DocumentTextIcon,
+      path: "/admin/blog",
+    },
+    {
+      title: "Channels",
+      description: "Manage video channels",
+      icon: VideoCameraIcon,
+      path: "/admin/channels",
+    },
+    {
+      title: "Important Info",
+      description: "Manage important information",
+      icon: InformationCircleIcon,
+      path: "/admin/important-information",
+    },
+    {
+      title: "Contact Submissions",
+      description: "View contact form submissions",
+      icon: ChatBubbleLeftRightIcon,
+      path: "/admin/contact",
+    },
+    {
+      title: "Join Submissions",
+      description: "View join form submissions",
+      icon: UserPlusIcon,
+      path: "/admin/join",
+    },
+    {
+      title: "About",
+      description: "Manage team members",
+      icon: UserGroupIcon,
+      path: "/admin/about",
+    },
+  ];
+
   return (
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-8 text-gray-800">Admin Dashboard</h1>
@@ -241,6 +288,31 @@ const Dashboard = () => {
             )}
           </div>
         ))}
+      </div>
+
+      <div className="mt-8">
+        <h2 className="text-2xl font-bold mb-6">Quick Links</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {quickLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow duration-300"
+            >
+              <div className="flex items-center space-x-4">
+                <div className="p-3 bg-red-100 rounded-lg">
+                  <link.icon className="h-6 w-6 text-red-600" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-gray-900">
+                    {link.title}
+                  </h2>
+                  <p className="text-sm text-gray-500">{link.description}</p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

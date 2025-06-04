@@ -1,13 +1,5 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import {
-  DocumentTextIcon,
-  VideoCameraIcon,
-  InformationCircleIcon,
-  ChatBubbleLeftRightIcon,
-  UserPlusIcon,
-  UserGroupIcon,
-} from "@heroicons/react/24/outline";
 
 interface SubSection {
   title: string;

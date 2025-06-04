@@ -5,6 +5,7 @@ export interface Channel {
   image: string;
   color: string;
   icon: string;
+  link: string;
   createdAt?: string;
   updatedAt?: string;
 }

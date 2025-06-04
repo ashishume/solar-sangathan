@@ -25,6 +25,7 @@ interface Channel {
   description: string;
   color?: string;
   icon: string;
+  link: string;
 }
 
 interface Brand {

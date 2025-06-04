@@ -48,6 +48,11 @@ const OurPresence = () => {
                 </p>
 
                 <button
+                  onClick={() => {
+                    if (ch.link) {
+                      window.open(ch.link, "_blank");
+                    }
+                  }}
                   className={`w-full py-3 px-6 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold 
                   transform hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg`}
                 >

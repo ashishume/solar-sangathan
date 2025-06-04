@@ -17,6 +17,7 @@ const ChannelForm = () => {
     image: "",
     color: "",
     icon: "",
+    link: "",
   });
 
   useEffect(() => {
@@ -84,6 +85,15 @@ const ChannelForm = () => {
           value={formData.description}
           onChange={handleChange}
           rows={4}
+          required
+        />
+        <Input
+          label="Link"
+          type="text"
+          id="link"
+          name="link"
+          value={formData.link}
+          onChange={handleChange}
           required
         />
 

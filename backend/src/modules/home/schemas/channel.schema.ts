@@ -12,6 +12,9 @@ export class Channel extends Document {
   @Prop({ required: true })
   description: string;
 
+  @Prop({ required: true })
+  link: string;
+
   @Prop({ required: false })
   color: string;
 

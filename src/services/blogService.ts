@@ -70,12 +70,8 @@ export const blogService = {
     return blogApi.getPostsByCategory(categoryId, page, limit);
   },
 
-  searchBlogs: async (
-    query: string,
-    page: number = 1,
-    limit: number = 10
-  ): Promise<PaginatedResponse<BlogPost>> => {
-    return blogApi.searchPosts(query, page, limit);
+  searchBlogs: async (query: string): Promise<BlogPost[]> => {
+    return blogApi.searchPosts(query);
   },
 
   getCategories: async () => {

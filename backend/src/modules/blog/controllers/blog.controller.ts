@@ -31,6 +31,11 @@ export class BlogController {
     return this.blogService.findAllPosts();
   }
 
+  @Get("posts/search")
+  searchPosts(@Query("q") query: string) {
+    return this.blogService.searchPosts(query);
+  }
+
   @Get("posts/:id")
   findPostById(@Param("id") id: string) {
     return this.blogService.findPostById(id);
@@ -46,61 +51,6 @@ export class BlogController {
     return this.blogService.deletePost(id);
   }
 
-  // Category endpoints
-  // @Post("categories")
-  // createCategory(@Body() createCategoryDto: CreateCategoryDto) {
-  //   return this.blogService.createCategory(createCategoryDto);
-  // }
-
-  // @Get("categories")
-  // findAllCategories() {
-  //   return this.blogService.findAllCategories();
-  // }
-
-  // @Get("categories/:id")
-  // findCategoryById(@Param("id") id: string) {
-  //   return this.blogService.findCategoryById(id);
-  // }
-
-  // @Put("categories/:id")
-  // updateCategory(
-  //   @Param("id") id: string,
-  //   @Body() updateCategoryDto: UpdateCategoryDto
-  // ) {
-  //   return this.blogService.updateCategory(id, updateCategoryDto);
-  // }
-
-  // @Delete("categories/:id")
-  // deleteCategory(@Param("id") id: string) {
-  //   return this.blogService.deleteCategory(id);
-  // }
-
-  // Tag endpoints
-  // @Post("tags")
-  // createTag(@Body() createTagDto: CreateTagDto) {
-  //   return this.blogService.createTag(createTagDto);
-  // }
-
-  // @Get("tags")
-  // findAllTags() {
-  //   return this.blogService.findAllTags();
-  // }
-
-  // @Get("tags/:id")
-  // findTagById(@Param("id") id: string) {
-  //   return this.blogService.findTagById(id);
-  // }
-
-  // @Put("tags/:id")
-  // updateTag(@Param("id") id: string, @Body() updateTagDto: UpdateTagDto) {
-  //   return this.blogService.updateTag(id, updateTagDto);
-  // }
-
-  // @Delete("tags/:id")
-  // deleteTag(@Param("id") id: string) {
-  //   return this.blogService.deleteTag(id);
-  // }
-
   // Popular content endpoints
   @Get("popular/posts")
   getPopularPosts(@Query("limit") limit?: number) {
@@ -110,5 +60,10 @@ export class BlogController {
   @Get("popular/tags")
   getPopularTags(@Query("limit") limit?: number) {
     return this.blogService.getPopularTags(limit);
+  }
+
+  @Get("categories/:categoryId/posts")
+  findPostsByCategory(@Param("categoryId") categoryId: string) {
+    return this.blogService.findPostsByCategory(categoryId);
   }
 }

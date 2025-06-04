@@ -134,7 +134,29 @@ export class BlogService {
       .exec();
   }
 
+  async findPostsByCategory(categoryId: string): Promise<Post[]> {
+    return this.postModel
+      .find({ category: categoryId })
+      .populate("category")
+      .populate("tags")
+      .exec();
+  }
+
   async getPopularTags(limit: number = 10): Promise<Tag[]> {
     return this.tagModel.find().sort({ usageCount: -1 }).limit(limit).exec();
+  }
+
+  async searchPosts(query: string): Promise<Post[]> {
+    return this.postModel
+      .find({
+        $or: [
+          { title: { $regex: query, $options: "i" } },
+          { content: { $regex: query, $options: "i" } },
+          { excerpt: { $regex: query, $options: "i" } },
+        ],
+      })
+      .populate("category")
+      .populate("tags")
+      .exec();
   }
 }

@@ -14,7 +14,7 @@ const Blog = () => {
   const [currentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [, setTotalPages] = useState(1);
+  // const [, setTotalPages] = useState(1);
   const [categories, setCategories] = useState<Category[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   useEffect(() => {
@@ -64,23 +64,30 @@ const Blog = () => {
 
   useEffect(() => {
     const fetchBlogsByCategory = async () => {
-      if (selectedCategory === "All") return;
-
       try {
         setLoading(true);
-        const category = categories.find((c) => c.name === selectedCategory);
-        if (!category) return;
+        if (selectedCategory === "All") {
+          const [recentData, allData] = await Promise.all([
+            blogService.getRecentBlogs(4),
+            blogService.getAllBlogs(currentPage, 10),
+          ]);
+          setRecentBlogs(recentData);
+          setAllBlogs(allData);
+        } else {
+          const category = categories.find((c) => c.name === selectedCategory);
+          if (!category) return;
 
-        const response = await blogService.getBlogsByCategory(
-          category._id,
-          currentPage,
-          10
-        );
-        setAllBlogs(response.data);
-        setTotalPages(response.pagination.pages);
+          const response = await blogService.getBlogsByCategory(
+            category._id,
+            currentPage,
+            10
+          );
+          setAllBlogs(response.data);
+          // setTotalPages(response.pagination.pages);
+        }
         setError(null);
       } catch (err) {
-        setError("Failed to fetch blogs by category. Please try again later.");
+        setError("Failed to fetch blogs. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -91,17 +98,21 @@ const Blog = () => {
 
   useEffect(() => {
     const searchBlogs = async () => {
-      if (!searchQuery.trim()) return;
+      if (!searchQuery.trim()) {
+        // If search query is empty, fetch all blogs
+        const [recentData, allData] = await Promise.all([
+          blogService.getRecentBlogs(4),
+          blogService.getAllBlogs(currentPage, 10),
+        ]);
+        setRecentBlogs(recentData);
+        setAllBlogs(allData);
+        return;
+      }
 
       try {
         setLoading(true);
-        const response = await blogService.searchBlogs(
-          searchQuery,
-          currentPage,
-          10
-        );
-        setAllBlogs(response.data);
-        setTotalPages(response.pagination.pages);
+        const response = await blogService.searchBlogs(searchQuery);
+        setAllBlogs(response);
         setError(null);
       } catch (err) {
         setError("Failed to search blogs. Please try again later.");

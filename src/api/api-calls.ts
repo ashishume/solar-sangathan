@@ -93,9 +93,9 @@ export const blogApi = {
     await api.delete(`/blog/posts/${id}`);
   },
 
-  searchPosts: async (query: string, page: number = 1, limit: number = 10) => {
+  searchPosts: async (query: string) => {
     const response = await api.get("/blog/posts/search", {
-      params: { q: query, page, limit },
+      params: { q: query },
     });
     return response.data;
   },
@@ -105,8 +105,8 @@ export const blogApi = {
     page: number = 1,
     limit: number = 10
   ) => {
-    const response = await api.get("/blog/posts", {
-      params: { category: categoryId, page, limit },
+    const response = await api.get(`/blog/categories/${categoryId}/posts`, {
+      params: { page, limit },
     });
     return response.data;
   },

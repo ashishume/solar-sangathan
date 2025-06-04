@@ -66,7 +66,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div>
+          {/* <div>
             <h4 className="text-lg font-semibold mb-4">Services</h4>
             <ul className="space-y-2">
               <li>
@@ -93,7 +93,7 @@ const Footer = () => {
               <li>contact@solarsangathan.com</li>
               <li>+91 123 456 7890</li>
             </ul>
-          </div>
+          </div> */}
         </div>
         <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
           <p>

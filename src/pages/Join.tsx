@@ -204,12 +204,8 @@ const Join = () => {
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">
                     {card.title}
                   </h3>
-                  <p className="text-gray-600 mb-6">{card.description}</p>
                   <div className="text-3xl font-bold text-gray-900 mb-6">
-                    ₹{card.price}
-                    <span className="text-base font-normal text-gray-500">
-                      /{card.period}
-                    </span>
+                    {card.price}
                   </div>
                   <ul className="space-y-4 mb-8">
                     {card.features.map((feature, index) => (

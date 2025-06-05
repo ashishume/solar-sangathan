@@ -1,5 +1,9 @@
 import { create } from "zustand";
-import { getTestimonials, deleteTestimonial } from "@/api/api-calls";
+import {
+  getTestimonials,
+  deleteTestimonial,
+  createTestimonial,
+} from "@/api/api-calls";
 import type { Testimonial } from "../types/testimonial";
 
 interface TestimonialsStore {
@@ -8,6 +12,7 @@ interface TestimonialsStore {
   error: string | null;
   fetchTestimonials: () => Promise<void>;
   deleteTestimonial: (id: string) => Promise<void>;
+  addTestimonial: (testimonial: Testimonial) => Promise<void>;
 }
 
 export const useTestimonials = create<TestimonialsStore>((set) => ({
@@ -31,6 +36,16 @@ export const useTestimonials = create<TestimonialsStore>((set) => ({
       set({ testimonials: data, loading: false });
     } catch (error) {
       set({ error: "Failed to delete testimonial", loading: false });
+    }
+  },
+  addTestimonial: async (testimonial: Testimonial) => {
+    set({ loading: true, error: null });
+    try {
+      await createTestimonial(testimonial);
+      const data = await getTestimonials();
+      set({ testimonials: data, loading: false });
+    } catch (error) {
+      set({ error: "Failed to add testimonial", loading: false });
     }
   },
 }));

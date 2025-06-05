@@ -1,5 +1,9 @@
 import type { Testimonial } from "@/admin/types/testimonial";
-import { getTestimonials, updateTestimonial } from "@/api/api-calls";
+import {
+  getTestimonials,
+  updateTestimonial,
+  createTestimonial,
+} from "@/api/api-calls";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Textarea from "@/components/ui/Textarea";
@@ -47,6 +51,9 @@ const TestimonialForm = () => {
       if (isEditMode && id) {
         await updateTestimonial(id, formData);
         toast.success("Testimonial updated successfully!");
+      } else {
+        await createTestimonial(formData);
+        toast.success("Testimonial created successfully!");
       }
       navigate("/admin/testimonials");
     } catch (error) {

@@ -222,6 +222,10 @@ export const getChannels = async () => {
   // return mockChannels;
 };
 
+export const createTestimonial = async (data: any) => {
+  return api.post("/testimonials", data).then((res) => res.data);
+};
+
 export const createChannel = async (data: any) => {
   return api.post("/channels", data).then((res) => res.data);
 };

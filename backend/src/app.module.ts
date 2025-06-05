@@ -10,6 +10,8 @@ import { CategoriesModule } from "./modules/categories/categories.module";
 import { AboutModule } from "./modules/about/about.module";
 import { JoinModule } from "./modules/join/join.module";
 import { ContactModule } from "./modules/contact/contact.module";
+import { AdminModule } from "./modules/admin/admin.module";
+import { AuthModule } from "./modules/auth/auth.module";
 
 @Module({
   imports: [
@@ -31,6 +33,8 @@ import { ContactModule } from "./modules/contact/contact.module";
     AboutModule,
     ContactModule,
     JoinModule,
+    AdminModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

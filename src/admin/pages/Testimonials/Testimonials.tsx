@@ -3,7 +3,7 @@ import CRUDTable from "../../components/CRUDTable";
 import { useTestimonials } from "@/admin/store/testimonials";
 
 const Testimonials = () => {
-  const { testimonials, fetchTestimonials, deleteTestimonial, addTestimonial } =
+  const { testimonials, fetchTestimonials, deleteTestimonial } =
     useTestimonials();
 
   useEffect(() => {

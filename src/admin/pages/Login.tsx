@@ -5,8 +5,8 @@ import Button from "../../components/ui/Button";
 import { toast } from "react-hot-toast";
 
 const ADMIN_CREDENTIALS = {
-  username: "admin",
-  password: "admin123",
+  username: "admin19352",
+  password: "admin@162436",
 };
 
 const Login = () => {

@@ -10,6 +10,7 @@ import {
   getImportantInformation,
 } from "../api/api-calls";
 import type { CarouselImage } from "@/admin/types/carousel";
+import type { ImportantInfo } from "@/admin/services/importantInfoService";
 
 interface Testimonial {
   quote: string;
@@ -39,13 +40,6 @@ interface VideoData {
   thumbnailUrl: string;
 }
 
-interface ImportantInformation {
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-  _id: string;
-}
-
 interface HomeState {
   testimonials: Testimonial[];
   channels: Channel[];
@@ -69,7 +63,7 @@ interface HomeState {
     stats: string | null;
     hero: string | null;
   };
-  importantInformation: ImportantInformation;
+  importantInformation: ImportantInfo;
   fetchTestimonials: () => Promise<void>;
   fetchChannels: () => Promise<void>;
   fetchBrands: () => Promise<void>;

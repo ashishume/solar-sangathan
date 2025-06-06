@@ -76,7 +76,9 @@ const HeroSection = () => {
       </div>
 
       {importantInformation && (
-        <RunningText runningText={importantInformation?.content} />
+        <RunningText
+          runningText={importantInformation?.header?.content || ""}
+        />
       )}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-4xl md:text-5xl font-bold text-center mb-6 leading-tight">

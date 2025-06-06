@@ -19,6 +19,9 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {footerInfo && (
           <div className="mb-8 p-4 bg-gray-800 rounded-lg">
+            <h3 className="text-xl font-semibold mb-3 text-white">
+              Important Information
+            </h3>
             <p className="text-gray-300">{footerInfo.content}</p>
             {footerInfo.documentLink && (
               <a

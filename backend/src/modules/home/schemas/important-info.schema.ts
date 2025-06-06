@@ -5,6 +5,9 @@ import { Document } from "mongoose";
 export class ImportantInfo extends Document {
   @Prop({ required: true })
   content: string;
+
+  @Prop({ required: true })
+  noticeType: string;
 }
 
 export const ImportantInfoSchema = SchemaFactory.createForClass(ImportantInfo);

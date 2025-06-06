@@ -21,21 +21,31 @@ const ImportantInfoList = () => {
       header: "Content",
       accessor: (item: any) => (
         <div className="text-sm text-gray-900 whitespace-pre-wrap">
-          {item.content}
+          {item?.content || "No content"}
         </div>
       ),
     },
     {
       header: "Created At",
-      accessor: (item: any) => new Date(item.createdAt).toLocaleDateString(),
+      accessor: (item: any) =>
+        item?.createdAt ? new Date(item.createdAt).toLocaleDateString() : "N/A",
+    },
+    {
+      header: "Notice Type",
+      accessor: (item: any) => item?.noticeType || "N/A",
     },
   ];
+
+  // Filter out null values and create a flat array of items
+  const tableData = importantInfo
+    ? [importantInfo.header, importantInfo.footer].filter(Boolean)
+    : [];
 
   return (
     <CRUDTable
       title="Important Information"
       columns={columns}
-      data={importantInfo ? [importantInfo] : []}
+      data={tableData}
       onDelete={handleDelete}
       createLink="/admin/important-information/new"
     />

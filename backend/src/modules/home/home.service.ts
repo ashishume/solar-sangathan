@@ -252,9 +252,21 @@ export class HomeService {
 
   // Important Info CRUD
   async getImportantInfo() {
-    return (
-      this.importantInfoModel.findOne().sort({ createdAt: -1 }).exec() || ""
-    );
+    const [headerNotice, footerNotice] = await Promise.all([
+      this.importantInfoModel
+        .findOne({ noticeType: "header" })
+        .sort({ createdAt: -1 })
+        .exec(),
+      this.importantInfoModel
+        .findOne({ noticeType: "footer" })
+        .sort({ createdAt: -1 })
+        .exec(),
+    ]);
+
+    return {
+      header: headerNotice,
+      footer: footerNotice,
+    };
   }
 
   async getImportantInfoById(id: string) {

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import CRUDTable from "../../components/CRUDTable";
 import { useImportantInfo } from "@/admin/store/importantInfo";
+import { ArrowDownCircleIcon } from "@heroicons/react/24/outline";
 
 const ImportantInfoList = () => {
   const { importantInfo, fetchImportantInfo, deleteImportantInfo } =
@@ -33,6 +34,14 @@ const ImportantInfoList = () => {
     {
       header: "Notice Type",
       accessor: (item: any) => item?.noticeType || "N/A",
+    },
+    {
+      header: "Document Link",
+      accessor: (item: any) => (
+        <a href={item?.documentLink} target="_blank" rel="noopener noreferrer">
+          <ArrowDownCircleIcon className="w-8 h-8" />
+        </a>
+      ),
     },
   ];
 

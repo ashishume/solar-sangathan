@@ -7,6 +7,7 @@ export interface ImportantInfo {
     createdAt: string;
     updatedAt: string;
     noticeType: string;
+    documentLink?: string | null;
   };
   footer?: {
     _id: string;
@@ -14,6 +15,7 @@ export interface ImportantInfo {
     createdAt: string;
     updatedAt: string;
     noticeType: string;
+    documentLink?: string | null;
   };
 }
 
@@ -23,16 +25,19 @@ export interface ImportantInfoEditResponse {
   createdAt: string;
   updatedAt: string;
   noticeType: string;
+  documentLink?: string | null;
 }
 
 export interface CreateImportantInfoDto {
   content: string;
   noticeType: string;
+  documentLink?: string | null;
 }
 
 export interface UpdateImportantInfoDto {
   content: string;
   noticeType: string;
+  documentLink?: string | null;
 }
 
 export const importantInfoService = {

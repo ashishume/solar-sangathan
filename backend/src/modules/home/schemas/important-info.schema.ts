@@ -8,6 +8,9 @@ export class ImportantInfo extends Document {
 
   @Prop({ required: true })
   noticeType: string;
+
+  @Prop({ required: false, default: null })
+  documentLink: string | null;
 }
 
 export const ImportantInfoSchema = SchemaFactory.createForClass(ImportantInfo);

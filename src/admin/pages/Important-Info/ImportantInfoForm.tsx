@@ -5,11 +5,20 @@ import Button from "@/components/ui/Button";
 import Textarea from "@/components/ui/Textarea";
 import { toast } from "react-hot-toast";
 
+interface FormData {
+  content: string;
+  noticeType: string;
+  documentLink: string;
+}
+
 export const ImportantInfoForm = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [content, setContent] = useState("");
-  const [noticeType, setNoticeType] = useState("notice");
+  const [formData, setFormData] = useState<FormData>({
+    content: "",
+    noticeType: "header",
+    documentLink: "",
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -23,8 +32,11 @@ export const ImportantInfoForm = () => {
     try {
       setLoading(true);
       const data = await importantInfoService.getById(id!);
-      setContent(data?.content || "");
-      setNoticeType(data?.noticeType || "");
+      setFormData({
+        content: data?.content || "",
+        noticeType: data?.noticeType || "",
+        documentLink: data?.documentLink || "",
+      });
       setError(null);
     } catch (err) {
       setError("Failed to fetch important information");
@@ -34,15 +46,27 @@ export const ImportantInfoForm = () => {
     }
   };
 
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       setLoading(true);
       if (id && id !== "new") {
-        await importantInfoService.update(id, { content, noticeType });
+        await importantInfoService.update(id, formData);
         toast.success("Important information updated successfully!");
       } else {
-        await importantInfoService.create({ content, noticeType });
+        await importantInfoService.create(formData);
         toast.success("Important information created successfully!");
       }
       navigate("/admin/important-information");
@@ -84,8 +108,9 @@ export const ImportantInfoForm = () => {
             </label>
             <Textarea
               id="content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+              name="content"
+              value={formData.content}
+              onChange={handleChange}
               required
               className="w-full"
               rows={5}
@@ -101,8 +126,8 @@ export const ImportantInfoForm = () => {
               <select
                 id="noticeType"
                 name="noticeType"
-                value={noticeType}
-                onChange={(e) => setNoticeType(e.target.value)}
+                value={formData.noticeType}
+                onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
               >
@@ -111,6 +136,24 @@ export const ImportantInfoForm = () => {
                 <option value="footer">Footer</option>
                 <option value="other">Other</option>
               </select>
+            </div>
+
+            <div className="mt-4">
+              <label
+                htmlFor="documentLink"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Document Link
+              </label>
+              <input
+                type="url"
+                id="documentLink"
+                name="documentLink"
+                value={formData.documentLink}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+                placeholder="https://example.com/document"
+              />
             </div>
           </div>
 

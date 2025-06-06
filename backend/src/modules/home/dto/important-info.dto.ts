@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty } from "class-validator";
+import { IsString, IsNotEmpty, IsOptional } from "class-validator";
 
 export class CreateImportantInfoDto {
   @IsString()
@@ -8,6 +8,10 @@ export class CreateImportantInfoDto {
   @IsString()
   @IsNotEmpty()
   noticeType: string;
+
+  @IsString()
+  @IsOptional()
+  documentLink: string | null;
 }
 
 export class UpdateImportantInfoDto {
@@ -18,4 +22,8 @@ export class UpdateImportantInfoDto {
   @IsString()
   @IsNotEmpty()
   noticeType: string;
+
+  @IsString()
+  @IsOptional()
+  documentLink: string | null;
 }

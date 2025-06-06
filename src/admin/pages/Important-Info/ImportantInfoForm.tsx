@@ -23,8 +23,8 @@ export const ImportantInfoForm = () => {
     try {
       setLoading(true);
       const data = await importantInfoService.getById(id!);
-      setContent(data.header?.content || data.footer?.content || "");
-      setNoticeType(data.header?.noticeType || data.footer?.noticeType || "");
+      setContent(data?.content || "");
+      setNoticeType(data?.noticeType || "");
       setError(null);
     } catch (err) {
       setError("Failed to fetch important information");

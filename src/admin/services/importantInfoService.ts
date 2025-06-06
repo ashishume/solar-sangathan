@@ -17,6 +17,14 @@ export interface ImportantInfo {
   };
 }
 
+export interface ImportantInfoEditResponse {
+  _id: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  noticeType: string;
+}
+
 export interface CreateImportantInfoDto {
   content: string;
   noticeType: string;
@@ -33,7 +41,7 @@ export const importantInfoService = {
     return response.data;
   },
 
-  getById: async (id: string): Promise<ImportantInfo> => {
+  getById: async (id: string): Promise<ImportantInfoEditResponse> => {
     const response = await axiosInstance.get(`/important-information/${id}`);
     return response.data;
   },

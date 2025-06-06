@@ -1,7 +1,21 @@
 import { useHomeStore } from "../store/homeStore";
+import { useState, useEffect, useRef } from "react";
 
 const BrandBanner = () => {
   const { brands } = useHomeStore();
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setScrollPosition((prev) => {
+        if (prev <= -100) return 0;
+        return prev - 0.5;
+      });
+    }, 50);
+
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section className="py-12 bg-white">
@@ -10,8 +24,13 @@ const BrandBanner = () => {
           Our Trusted Partners
         </h2>
         <div className="relative">
-          <div className="overflow-x-auto pb-4 hide-scrollbar">
-            <div className="flex space-x-8 min-w-max px-4">
+          <div className="overflow-hidden pb-4" ref={containerRef}>
+            <div
+              className="flex space-x-8 min-w-max px-4 transition-transform duration-1000"
+              style={{
+                transform: `translateX(${scrollPosition}%)`,
+              }}
+            >
               {brands.map((brand, index) => (
                 <div
                   key={index}

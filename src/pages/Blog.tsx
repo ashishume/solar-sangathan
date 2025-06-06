@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import BlogCard from "../components/BlogCard";
 import BlogSidebar from "../components/BlogSidebar";
 import { blogService } from "../services/blogService";
@@ -14,116 +14,69 @@ const Blog = () => {
   const [currentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  // const [, setTotalPages] = useState(1);
   const [categories, setCategories] = useState<Category[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
+
+  // Fetch categories and tags only once on component mount
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchInitialData = async () => {
       try {
-        const categoriesData = await blogService.getCategories();
+        const [categoriesData, tagsData] = await Promise.all([
+          blogService.getCategories(),
+          blogService.getTags(),
+        ]);
         setCategories(categoriesData);
-      } catch (err) {
-        console.error("Error fetching categories:", err);
-      }
-    };
-    const fetchTags = async () => {
-      try {
-        const tagsData = await blogService.getTags();
         setTags(tagsData);
       } catch (err) {
-        console.error("Error fetching categories:", err);
+        console.error("Error fetching initial data:", err);
       }
     };
 
-    fetchCategories();
-    fetchTags();
+    fetchInitialData();
   }, []);
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        setLoading(true);
-        const [recentData, allData] = await Promise.all([
-          blogService.getRecentBlogs(4),
-          blogService.getAllBlogs(currentPage, 10),
-        ]);
+  // Consolidated fetch function for blogs
+  const fetchBlogs = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
-        setRecentBlogs(recentData);
-        setAllBlogs(allData);
-        // setTotalPages(allData.pagination.pages);
-        setError(null);
-      } catch (err) {
-        setError("Failed to fetch blogs. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBlogs();
-  }, [currentPage]);
-
-  useEffect(() => {
-    const fetchBlogsByCategory = async () => {
-      try {
-        setLoading(true);
-        if (selectedCategory === "All") {
-          const [recentData, allData] = await Promise.all([
-            blogService.getRecentBlogs(4),
-            blogService.getAllBlogs(currentPage, 10),
-          ]);
-          setRecentBlogs(recentData);
-          setAllBlogs(allData);
-        } else {
-          const category = categories.find((c) => c.name === selectedCategory);
-          if (!category) return;
-
-          const response = await blogService.getBlogsByCategory(
-            category._id,
-            currentPage,
-            10
-          );
-          setAllBlogs(response.data);
-          // setTotalPages(response.pagination.pages);
-        }
-        setError(null);
-      } catch (err) {
-        setError("Failed to fetch blogs. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBlogsByCategory();
-  }, [selectedCategory, currentPage, categories]);
-
-  useEffect(() => {
-    const searchBlogs = async () => {
-      if (!searchQuery.trim()) {
-        // If search query is empty, fetch all blogs
-        const [recentData, allData] = await Promise.all([
-          blogService.getRecentBlogs(4),
-          blogService.getAllBlogs(currentPage, 10),
-        ]);
-        setRecentBlogs(recentData);
-        setAllBlogs(allData);
+      if (searchQuery.trim()) {
+        const searchResults = await blogService.searchBlogs(searchQuery);
+        setAllBlogs(searchResults);
         return;
       }
 
-      try {
-        setLoading(true);
-        const response = await blogService.searchBlogs(searchQuery);
-        setAllBlogs(response);
-        setError(null);
-      } catch (err) {
-        setError("Failed to search blogs. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
+      if (selectedCategory === "All") {
+        const [recentData, allData] = await Promise.all([
+          blogService.getRecentBlogs(4),
+          blogService.getAllBlogs(currentPage, 10),
+        ]);
+        setRecentBlogs(recentData);
+        setAllBlogs(allData);
+      } else {
+        const category = categories.find((c) => c.name === selectedCategory);
+        if (!category) return;
 
-    const debounceTimer = setTimeout(searchBlogs, 500);
+        const response = await blogService.getBlogsByCategory(
+          category._id,
+          currentPage,
+          10
+        );
+        setAllBlogs(response.data);
+      }
+    } catch (err) {
+      setError("Failed to fetch blogs. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  }, [searchQuery, selectedCategory, currentPage, categories]);
+
+  // Single useEffect to handle all blog fetching scenarios
+  useEffect(() => {
+    const debounceTimer = setTimeout(fetchBlogs, searchQuery ? 500 : 0);
     return () => clearTimeout(debounceTimer);
-  }, [searchQuery, currentPage]);
+  }, [fetchBlogs]);
 
   // Mock data for sidebar (this should also come from API in a real implementation)
   const popularPosts = recentBlogs;

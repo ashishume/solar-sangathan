@@ -20,6 +20,16 @@ const Footer = () => {
         {footerInfo && (
           <div className="mb-8 p-4 bg-gray-800 rounded-lg">
             <p className="text-gray-300">{footerInfo.content}</p>
+            {footerInfo.documentLink && (
+              <a
+                href={footerInfo.documentLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-4 px-4 py-2 text-gray-300 border border-gray-600 rounded hover:bg-gray-700 hover:text-white transition"
+              >
+                Download
+              </a>
+            )}
           </div>
         )}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">

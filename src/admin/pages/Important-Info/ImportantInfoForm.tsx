@@ -9,6 +9,7 @@ export const ImportantInfoForm = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [content, setContent] = useState("");
+  const [noticeType, setNoticeType] = useState("notice");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,7 +23,8 @@ export const ImportantInfoForm = () => {
     try {
       setLoading(true);
       const data = await importantInfoService.getById(id!);
-      setContent(data.content);
+      setContent(data.header?.content || data.footer?.content || "");
+      setNoticeType(data.header?.noticeType || data.footer?.noticeType || "");
       setError(null);
     } catch (err) {
       setError("Failed to fetch important information");
@@ -37,10 +39,10 @@ export const ImportantInfoForm = () => {
     try {
       setLoading(true);
       if (id && id !== "new") {
-        await importantInfoService.update(id, { content });
+        await importantInfoService.update(id, { content, noticeType });
         toast.success("Important information updated successfully!");
       } else {
-        await importantInfoService.create({ content });
+        await importantInfoService.create({ content, noticeType });
         toast.success("Important information created successfully!");
       }
       navigate("/admin/important-information");
@@ -88,6 +90,28 @@ export const ImportantInfoForm = () => {
               className="w-full"
               rows={5}
             />
+
+            <div className="mt-4">
+              <label
+                htmlFor="noticeType"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Notice Type
+              </label>
+              <select
+                id="noticeType"
+                name="noticeType"
+                value={noticeType}
+                onChange={(e) => setNoticeType(e.target.value)}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+              >
+                <option value="">Select a notice type</option>
+                <option value="header">Header</option>
+                <option value="footer">Footer</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
           </div>
 
           <div className="flex justify-end space-x-2">

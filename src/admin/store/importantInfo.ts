@@ -3,7 +3,7 @@ import { importantInfoService } from "../services/importantInfoService";
 import type { ImportantInfo } from "../services/importantInfoService";
 
 interface ImportantInfoStore {
-  importantInfo: ImportantInfo | null;
+  importantInfo: ImportantInfo;
   loading: boolean;
   error: string | null;
   fetchImportantInfo: () => Promise<void>;
@@ -11,14 +11,20 @@ interface ImportantInfoStore {
 }
 
 export const useImportantInfo = create<ImportantInfoStore>((set) => ({
-  importantInfo: null,
+  importantInfo: {
+    header: undefined,
+    footer: undefined,
+  },
   loading: false,
   error: null,
   fetchImportantInfo: async () => {
     set({ loading: true, error: null });
     try {
       const data = await importantInfoService.getAll();
-      set({ importantInfo: data, loading: false });
+      set({
+        importantInfo: data,
+        loading: false,
+      });
     } catch (error) {
       set({ error: "Failed to fetch important information", loading: false });
     }
@@ -28,7 +34,10 @@ export const useImportantInfo = create<ImportantInfoStore>((set) => ({
     try {
       await importantInfoService.delete(id);
       const data = await importantInfoService.getAll();
-      set({ importantInfo: data, loading: false });
+      set({
+        importantInfo: data,
+        loading: false,
+      });
     } catch (error) {
       set({ error: "Failed to delete important information", loading: false });
     }

@@ -1,18 +1,30 @@
 import axiosInstance from "./axios";
 
 export interface ImportantInfo {
-  _id: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
+  header?: {
+    _id: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    noticeType: string;
+  };
+  footer?: {
+    _id: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    noticeType: string;
+  };
 }
 
 export interface CreateImportantInfoDto {
   content: string;
+  noticeType: string;
 }
 
 export interface UpdateImportantInfoDto {
   content: string;
+  noticeType: string;
 }
 
 export const importantInfoService = {
@@ -42,8 +54,7 @@ export const importantInfoService = {
     return response.data;
   },
 
-  delete: async (id: string): Promise<ImportantInfo> => {
-    const response = await axiosInstance.delete(`/important-information/${id}`);
-    return response.data;
+  delete: async (id: string): Promise<void> => {
+    await axiosInstance.delete(`/important-information/${id}`);
   },
 };

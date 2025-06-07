@@ -8,6 +8,7 @@ import Training from "./pages/Training";
 import Contact from "./pages/Contact";
 import Join from "./pages/Join";
 import BlogPost from "./pages/BlogPost";
+import Resources from "./pages/Resources";
 import Layout from "./components/Layout";
 import AdminRouter from "./admin/AdminRouter";
 import Login from "./admin/pages/Login";
@@ -30,6 +31,7 @@ function App() {
           <Route path="training" element={<Training />} />
           <Route path="contact" element={<Contact />} />
           <Route path="join" element={<Join />} />
+          <Route path="resources" element={<Resources />} />
         </Route>
       </Routes>
     </Router>

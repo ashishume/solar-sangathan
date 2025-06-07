@@ -72,6 +72,13 @@ const Dashboard = () => {
             color: "bg-yellow-500",
             icon: "ℹ️",
           },
+          {
+            title: "Resources",
+            description: "Manage downloadable resources and links",
+            link: "/admin/resources",
+            color: "bg-green-500",
+            icon: "📚",
+          },
         ],
       },
     ],

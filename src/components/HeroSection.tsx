@@ -30,7 +30,7 @@ const HeroSection = () => {
 
   return (
     <section className="py-8">
-      <div className="relative w-[95%] h-[420px] rounded-3xl overflow-hidden mb-8 mx-auto">
+      <div className="relative w-[95%] h-[250px] sm:h-[320px] md:h-[380px] lg:h-[420px] rounded-3xl overflow-hidden mb-8 mx-auto">
         {heroImages.map((src, index) => (
           <img
             key={src._id.toString()}

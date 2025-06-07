@@ -25,6 +25,8 @@ import ContactSubmissions from "./pages/Contact/ContactSubmissions";
 import JoinSubmissions from "./pages/Join/JoinSubmissions";
 import Brands from "./pages/Brands/Brands";
 import BrandForm from "./pages/Brands/BrandForm";
+import Resources from "../pages/Resources";
+import ResourceForm from "./pages/Resources/ResourceForm";
 
 const AdminRouter = () => {
   return (
@@ -93,6 +95,11 @@ const AdminRouter = () => {
           <Route index element={<Brands />} />
           <Route path="new" element={<BrandForm />} />
           <Route path=":id/edit" element={<BrandForm />} />
+        </Route>
+        <Route path="resources">
+          <Route index element={<Resources />} />
+          <Route path="new" element={<ResourceForm />} />
+          <Route path=":id/edit" element={<ResourceForm />} />
         </Route>
         <Route path="*" element={<Navigate to="/admin" replace />} />
       </Route>

@@ -10,6 +10,7 @@ import { CategoriesModule } from "./modules/categories/categories.module";
 import { AboutModule } from "./modules/about/about.module";
 import { JoinModule } from "./modules/join/join.module";
 import { ContactModule } from "./modules/contact/contact.module";
+import { ResourcesModule } from "./modules/resources/resources.module";
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { ContactModule } from "./modules/contact/contact.module";
     AboutModule,
     ContactModule,
     JoinModule,
+    ResourcesModule,
   ],
 })
 export class AppModule {}

@@ -1,6 +1,7 @@
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 interface Column {
   header: string;
@@ -13,7 +14,7 @@ interface CRUDTableProps {
   columns: Column[];
   data: any[];
   onDelete: (id: string) => void;
-  createLink?: string;
+  createLink: string;
   loading?: boolean;
   isDeletable?: boolean;
   isEditable?: boolean;
@@ -46,7 +47,7 @@ const CRUDTable = ({
   isEditable = true,
 }: CRUDTableProps) => {
   // Extract the base path from createLink (e.g., "/admin/blog-posts/new" -> "/admin/blog-posts")
-  const basePath = createLink?.replace("/new", "");
+  const basePath = createLink.replace("/new", "");
 
   const getCellValue = (item: any, column: Column) => {
     if (typeof column.accessor === "function") {
@@ -56,18 +57,25 @@ const CRUDTable = ({
     return column.render ? column.render(value) : formatDate(value);
   };
 
+  const handleCellClick = (value: any) => {
+    if (typeof value === "string" && value.length > 50) {
+      toast(value, {
+        duration: 4000,
+        position: "top-center",
+      });
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">{title}</h1>
-        {createLink && (
-          <Link
-            to={createLink}
-            className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-          >
-            Create New
-          </Link>
-        )}
+        <Link
+          to={createLink || ""}
+          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+        >
+          Create New
+        </Link>
       </div>
 
       <div className="bg-white shadow-md rounded-lg overflow-x-auto">
@@ -98,7 +106,10 @@ const CRUDTable = ({
                   {columns.map((column) => (
                     <td
                       key={column.header}
-                      className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 max-w-xs truncate"
+                      className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 max-w-xs truncate cursor-pointer hover:bg-gray-50"
+                      onClick={() =>
+                        handleCellClick(getCellValue(item, column))
+                      }
                     >
                       {getCellValue(item, column)}
                     </td>

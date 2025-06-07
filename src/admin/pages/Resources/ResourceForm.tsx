@@ -4,11 +4,18 @@ import { useResourcesStore } from "../../../store/resourcesStore";
 import Button from "../../../components/ui/Button";
 import Input from "../../../components/ui/Input";
 import { toast } from "react-hot-toast";
+
 const ResourceForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { resources, loading, error, fetchResources, addResource } =
-    useResourcesStore();
+  const {
+    loading,
+    error,
+    fetchResourceById,
+    addResource,
+    updateResource,
+    resources,
+  } = useResourcesStore();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -17,29 +24,35 @@ const ResourceForm = () => {
   });
 
   useEffect(() => {
-    fetchResources();
     if (id) {
-      const resource = resources.find((r) => r.id === id);
-      if (resource) {
-        setFormData({
-          title: resource.title,
-          link: resource.link,
-          documentUrl: resource.documentUrl,
-        });
-      }
+      fetchResourceById(id);
     }
-  }, [id, fetchResources, resources]);
+  }, [id, fetchResourceById]);
+
+  useEffect(() => {
+    if (id && resources.length > 0) {
+      const resource = resources[0];
+      setFormData({
+        title: resource.title,
+        link: resource.link,
+        documentUrl: resource.documentUrl,
+      });
+    }
+  }, [id, resources]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await addResource(formData);
-      toast.success(
-        id ? "Resource updated successfully" : "Resource added successfully"
-      );
+      if (id) {
+        await updateResource(id, formData);
+        toast.success("Resource updated successfully");
+      } else {
+        await addResource(formData);
+        toast.success("Resource added successfully");
+      }
       navigate("/admin/resources");
     } catch (error) {
-      toast.error("Failed to save resource");
+      toast.error(id ? "Failed to update resource" : "Failed to add resource");
     }
   };
 
@@ -98,6 +111,7 @@ const ResourceForm = () => {
               id="documentUrl"
               value={formData.documentUrl}
               onChange={handleInputChange}
+              required
             />
           </div>
 
@@ -107,6 +121,7 @@ const ResourceForm = () => {
             </Button>
             <Button
               type="button"
+              variant="outline"
               onClick={() => navigate("/admin/resources")}
               className="bg-gray-600 hover:bg-gray-700"
             >

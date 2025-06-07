@@ -2,7 +2,7 @@ import { create } from "zustand";
 import axiosInstance from "../services/axios";
 
 export interface Resource {
-  id: string;
+  _id: string;
   title: string;
   link: string;
   documentUrl: string;
@@ -56,7 +56,7 @@ export const useResourcesStore = create<ResourcesState>((set) => ({
     try {
       await axiosInstance.delete(`/resources/${id}`);
       set((state) => ({
-        resources: state.resources.filter((resource) => resource.id !== id),
+        resources: state.resources.filter((resource) => resource._id !== id),
         loading: false,
       }));
     } catch (error) {

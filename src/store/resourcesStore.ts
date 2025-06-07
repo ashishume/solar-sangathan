@@ -14,7 +14,9 @@ interface ResourcesState {
   error: string | null;
   fetchResources: () => Promise<void>;
   addResource: (resource: Omit<Resource, "id">) => Promise<void>;
+  updateResource: (id: string, resource: Omit<Resource, "id">) => Promise<void>;
   deleteResource: (id: string) => Promise<void>;
+  fetchResourceById: (id: string) => Promise<void>;
 }
 
 export const useResourcesStore = create<ResourcesState>((set) => ({
@@ -51,6 +53,24 @@ export const useResourcesStore = create<ResourcesState>((set) => ({
     }
   },
 
+  updateResource: async (id, resource) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axiosInstance.put(`/resources/${id}`, resource);
+      set((state) => ({
+        resources: state.resources.map((r) =>
+          r.id === id ? response.data : r
+        ),
+        loading: false,
+      }));
+    } catch (error) {
+      set({
+        error: "Failed to update resource",
+        loading: false,
+      });
+    }
+  },
+
   deleteResource: async (id) => {
     set({ loading: true, error: null });
     try {
@@ -62,6 +82,19 @@ export const useResourcesStore = create<ResourcesState>((set) => ({
     } catch (error) {
       set({
         error: "Failed to delete resource",
+        loading: false,
+      });
+    }
+  },
+
+  fetchResourceById: async (id: string) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axiosInstance.get(`/resources/${id}`);
+      set({ resources: [response.data], loading: false });
+    } catch (error) {
+      set({
+        error: "Failed to fetch resource",
         loading: false,
       });
     }

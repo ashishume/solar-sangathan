@@ -1,8 +1,6 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useResourcesStore } from "../../../store/resourcesStore";
-import Button from "../../../components/ui/Button";
-import CRUDTable from "../../components/CRUDTable";
+import { useResourcesStore } from "@/admin/store/resourcesStore";
+import CRUDTable from "@/admin/components/CRUDTable";
 
 const Resources = () => {
   const { resources, loading, error, fetchResources, deleteResource } =
@@ -10,7 +8,7 @@ const Resources = () => {
 
   useEffect(() => {
     fetchResources();
-  }, [fetchResources]);
+  }, []);
 
   if (error) {
     return (
@@ -23,7 +21,7 @@ const Resources = () => {
   const columns = [
     {
       header: "Title",
-      accessor: "title",
+      accessor: (item: any) => item.title,
     },
     {
       header: "Link",
@@ -56,13 +54,6 @@ const Resources = () => {
 
   return (
     <div className="container mx-auto py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Resources</h1>
-        <Link to="/admin/resources/new">
-          <Button>Add New Resource</Button>
-        </Link>
-      </div>
-
       <CRUDTable
         title="Resources"
         columns={columns}

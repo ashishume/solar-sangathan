@@ -25,7 +25,7 @@ import ContactSubmissions from "./pages/Contact/ContactSubmissions";
 import JoinSubmissions from "./pages/Join/JoinSubmissions";
 import Brands from "./pages/Brands/Brands";
 import BrandForm from "./pages/Brands/BrandForm";
-import Resources from "../pages/Resources";
+import Resources from "./pages/Resources/Resources";
 import ResourceForm from "./pages/Resources/ResourceForm";
 
 const AdminRouter = () => {

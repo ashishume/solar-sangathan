@@ -88,7 +88,7 @@ const ContactSubmissions = () => {
         columns={columns}
         data={submissions}
         onDelete={handleDelete}
-        createLink={undefined}
+        createLink={""}
         loading={loading}
         isEditable={false}
       />

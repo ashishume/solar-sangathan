@@ -118,7 +118,7 @@ const JoinSubmissions = () => {
         columns={columns}
         data={submissions}
         onDelete={handleDelete}
-        createLink={undefined}
+        createLink={""}
         loading={loading}
         isEditable={false}
       />

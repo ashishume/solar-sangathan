@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useResourcesStore } from "@/store/resourcesStore";
 import toast from "react-hot-toast";
+import {
+  ArrowTopRightOnSquareIcon,
+  DocumentArrowDownIcon,
+} from "@heroicons/react/24/outline";
 
 const Resources = () => {
   const { resources, loading, error, fetchResources } = useResourcesStore();
@@ -83,9 +87,10 @@ const Resources = () => {
                       href={resource.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-800 hover:underline transition-colors duration-200"
+                      className="text-blue-600 hover:text-blue-800 transition-colors duration-200 inline-flex items-center gap-1"
+                      title="Open Link"
                     >
-                      Open Link
+                      <ArrowTopRightOnSquareIcon className="h-5 w-5" />
                     </a>
                   </td>
                   <td className="px-8 py-6 whitespace-nowrap">
@@ -94,9 +99,10 @@ const Resources = () => {
                         href={resource.documentUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-green-600 hover:text-green-800 hover:underline transition-colors duration-200"
+                        className="text-green-600 hover:text-green-800 transition-colors duration-200 inline-flex items-center gap-1"
+                        title="Download Document"
                       >
-                        Download Document
+                        <DocumentArrowDownIcon className="h-5 w-5" />
                       </a>
                     ) : (
                       <span className="text-gray-400">No document</span>

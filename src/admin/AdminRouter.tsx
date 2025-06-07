@@ -23,6 +23,8 @@ import WorkingCommittee from "./pages/About/WorkingCommittee";
 import MemberForm from "./pages/About/MemberForm";
 import ContactSubmissions from "./pages/Contact/ContactSubmissions";
 import JoinSubmissions from "./pages/Join/JoinSubmissions";
+import Brands from "./pages/Brands/Brands";
+import BrandForm from "./pages/Brands/BrandForm";
 
 const AdminRouter = () => {
   return (
@@ -86,6 +88,11 @@ const AdminRouter = () => {
             path=":id/edit"
             element={<MemberForm isWorkingCommittee={false} />}
           />
+        </Route>
+        <Route path="brands">
+          <Route index element={<Brands />} />
+          <Route path="new" element={<BrandForm />} />
+          <Route path=":id/edit" element={<BrandForm />} />
         </Route>
         <Route path="*" element={<Navigate to="/admin" replace />} />
       </Route>

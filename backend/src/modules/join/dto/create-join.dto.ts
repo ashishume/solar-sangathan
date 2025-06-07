@@ -21,4 +21,7 @@ export class CreateJoinDto {
 
   @IsString()
   interests: string;
+
+  @IsString()
+  selectedRateCard: string;
 }

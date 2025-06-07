@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "@/admin/services/axios";
-import Button from "@/components/ui/Button";
 import { toast } from "react-hot-toast";
+import CRUDTable from "@/admin/components/CRUDTable";
 
 interface ContactSubmission {
   _id: string;
@@ -50,13 +50,26 @@ const ContactSubmissions = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="p-6">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
-      </div>
-    );
-  }
+  const columns = [
+    {
+      header: "Name",
+      accessor: (item: ContactSubmission) =>
+        `${item.firstName} ${item.lastName}`,
+    },
+    {
+      header: "Email",
+      accessor: "email",
+    },
+    {
+      header: "Message",
+      accessor: "message",
+    },
+    {
+      header: "Date",
+      accessor: (item: ContactSubmission) =>
+        new Date(item.createdAt).toLocaleDateString(),
+    },
+  ];
 
   if (error) {
     return (
@@ -70,69 +83,15 @@ const ContactSubmissions = () => {
 
   return (
     <div className="p-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">Contact Form Submissions</h1>
-      </div>
-
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Name
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Email
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Message
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Date
-                </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {submissions.map((submission) => (
-                <tr key={submission._id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">
-                      {submission.firstName} {submission.lastName}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {submission.email}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm text-gray-900 max-w-md truncate">
-                      {submission.message}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {new Date(submission.createdAt).toLocaleDateString()}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <Button
-                      variant="outline"
-                      onClick={() => handleDelete(submission._id)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <CRUDTable
+        title="Contact Form Submissions"
+        columns={columns}
+        data={submissions}
+        onDelete={handleDelete}
+        createLink={undefined}
+        loading={loading}
+        isEditable={false}
+      />
     </div>
   );
 };

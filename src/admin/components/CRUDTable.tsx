@@ -13,7 +13,7 @@ interface CRUDTableProps {
   columns: Column[];
   data: any[];
   onDelete: (id: string) => void;
-  createLink: string;
+  createLink?: string;
   loading?: boolean;
   isDeletable?: boolean;
   isEditable?: boolean;
@@ -46,7 +46,7 @@ const CRUDTable = ({
   isEditable = true,
 }: CRUDTableProps) => {
   // Extract the base path from createLink (e.g., "/admin/blog-posts/new" -> "/admin/blog-posts")
-  const basePath = createLink.replace("/new", "");
+  const basePath = createLink?.replace("/new", "");
 
   const getCellValue = (item: any, column: Column) => {
     if (typeof column.accessor === "function") {
@@ -60,12 +60,14 @@ const CRUDTable = ({
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">{title}</h1>
-        <Link
-          to={createLink}
-          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-        >
-          Create New
-        </Link>
+        {createLink && (
+          <Link
+            to={createLink}
+            className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+          >
+            Create New
+          </Link>
+        )}
       </div>
 
       <div className="bg-white shadow-md rounded-lg overflow-x-auto">
@@ -96,7 +98,7 @@ const CRUDTable = ({
                   {columns.map((column) => (
                     <td
                       key={column.header}
-                      className="px-6 py-4 whitespace-nowrap"
+                      className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 max-w-xs truncate"
                     >
                       {getCellValue(item, column)}
                     </td>

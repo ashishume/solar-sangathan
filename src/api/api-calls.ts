@@ -2,6 +2,7 @@
 // import { mockChannels } from "./mockData/channels";
 // import { mockBrands } from "./mockData/brands";
 // import { mockVideoData } from "./mockData/video";
+import axiosInstance from "@/admin/services/axios";
 import { mockStats } from "./mockData/stats";
 // import { mockHeroImages } from "./mockData/hero";
 // import { mockRateCards } from "./mockData/rateCards";
@@ -320,13 +321,8 @@ export const submitJoinForm = async (data: {
   address: string;
   occupation: string;
   interests: string;
+  selectedRateCard: string;
 }) => {
-  const response = await fetch(`${API_BASE_URL}/join`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  return response.json();
+  const response = await axiosInstance.post(`/join`, data);
+  return response.data;
 };

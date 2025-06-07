@@ -16,6 +16,7 @@ const Join = () => {
     address: "",
     occupation: "",
     interests: "",
+    selectedRateCard: "",
   });
 
   const [rateCards, setRateCards] = useState<RateCard[]>([]);
@@ -39,6 +40,10 @@ const Join = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (!formData.selectedRateCard) {
+      toast.error("Please select a plan before submitting");
+      return;
+    }
     try {
       setSubmitting(true);
       await submitJoinForm(formData);
@@ -51,6 +56,7 @@ const Join = () => {
         address: "",
         occupation: "",
         interests: "",
+        selectedRateCard: "",
       });
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -73,6 +79,103 @@ const Join = () => {
   return (
     <div className="bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Rate Cards Section */}
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Choose Your Plan
+          </h2>
+          <p className="text-lg text-gray-600">
+            Select the perfect plan for your needs
+          </p>
+        </div>
+
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+            {rateCards.map((card) => (
+              <div
+                key={card._id}
+                className={`bg-white rounded-3xl shadow-xl p-6 md:p-10 relative transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 flex flex-col h-full border-2 ${
+                  card.isPopular
+                    ? "border-red-500 md:scale-105"
+                    : formData.selectedRateCard === card._id
+                    ? "!border-blue-500"
+                    : "border-gray-100"
+                }`}
+              >
+                {card.isPopular && (
+                  <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
+                    <div className="bg-gradient-to-r from-red-500 to-red-600 text-white px-8 py-3 rounded-full text-sm font-semibold shadow-lg">
+                      Most Popular
+                    </div>
+                  </div>
+                )}
+                {formData.selectedRateCard === card._id && (
+                  <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
+                    <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-full text-sm font-semibold shadow-lg">
+                      Selected Plan
+                    </div>
+                  </div>
+                )}
+                <div className="flex-grow">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                    {card.title}
+                  </h3>
+                  <div className="text-3xl font-bold text-gray-900 mb-6">
+                    {card.price}
+                  </div>
+                  <ul className="space-y-4 mb-8">
+                    {card.features.map((feature, index) => (
+                      <li key={index} className="flex items-start">
+                        <svg
+                          className="h-6 w-6 text-green-500 mr-2"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                        <span className="text-gray-600">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <Button
+                  variant="outline"
+                  fullWidth
+                  className={`mt-auto ${
+                    formData.selectedRateCard === card._id
+                      ? "bg-blue-50 border-blue-500 text-blue-600"
+                      : ""
+                  }`}
+                  onClick={() => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      selectedRateCard: card._id,
+                    }));
+                    // Scroll to form
+                    document
+                      .querySelector("form")
+                      ?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >
+                  {formData.selectedRateCard === card._id
+                    ? "Selected"
+                    : "Select Plan"}
+                </Button>
+              </div>
+            ))}
+          </div>
+        )}
+
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
@@ -84,7 +187,7 @@ const Join = () => {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-xl p-8 mb-16">
+          <div className="rounded-2xl shadow-xl p-8 mb-16 border border-gray-100 hover:shadow-2xl transition-shadow duration-300 bg-gray-100">
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
                 <Input
@@ -166,86 +269,8 @@ const Join = () => {
               </Button>
             </form>
           </div>
-
-          {/* Rate Cards Section */}
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Choose Your Plan
-            </h2>
-            <p className="text-lg text-gray-600">
-              Select the perfect plan for your needs
-            </p>
-          </div>
         </div>
       </div>
-
-      {loading ? (
-        <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
-        </div>
-      ) : (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-            {rateCards.map((card) => (
-              <div
-                key={card.id}
-                className={`bg-white rounded-3xl shadow-xl p-6 md:p-10 relative transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 flex flex-col h-full ${
-                  card.isPopular ? "border-2 border-red-500 md:scale-105" : ""
-                }`}
-              >
-                {card.isPopular && (
-                  <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                    <div className="bg-gradient-to-r from-red-500 to-red-600 text-white px-8 py-3 rounded-full text-sm font-semibold shadow-lg">
-                      Most Popular
-                    </div>
-                  </div>
-                )}
-                <div className="flex-grow">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                    {card.title}
-                  </h3>
-                  <div className="text-3xl font-bold text-gray-900 mb-6">
-                    {card.price}
-                  </div>
-                  <ul className="space-y-4 mb-8">
-                    {card.features.map((feature, index) => (
-                      <li key={index} className="flex items-start">
-                        <svg
-                          className="h-6 w-6 text-green-500 mr-2"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                        <span className="text-gray-600">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <Button
-                  variant="outline"
-                  fullWidth
-                  className="mt-auto"
-                  onClick={() => {
-                    // Scroll to form
-                    document
-                      .querySelector("form")
-                      ?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                >
-                  Select Plan
-                </Button>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 };

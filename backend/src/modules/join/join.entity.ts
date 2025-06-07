@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 
 export type JoinDocument = Join & Document;
 
@@ -25,6 +25,9 @@ export class Join {
 
   @Prop({ required: true })
   interests: string;
+
+  @Prop({ type: Types.ObjectId, ref: "RateCard", required: true })
+  selectedRateCard: Types.ObjectId;
 }
 
 export const JoinSchema = SchemaFactory.createForClass(Join);

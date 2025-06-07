@@ -14,11 +14,15 @@ export class JoinService {
   }
 
   async findAll(): Promise<Join[]> {
-    return this.joinModel.find().sort({ createdAt: -1 }).exec();
+    return this.joinModel
+      .find()
+      .populate("selectedRateCard")
+      .sort({ createdAt: -1 })
+      .exec();
   }
 
   async findOne(id: string): Promise<Join> {
-    return this.joinModel.findById(id).exec();
+    return this.joinModel.findById(id).populate("selectedRateCard").exec();
   }
 
   async remove(id: string): Promise<void> {

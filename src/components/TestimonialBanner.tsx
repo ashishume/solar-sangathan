@@ -1,28 +1,8 @@
-import { useState, useEffect, useRef } from "react";
-import YouTubeIcon from "../assets/icons/youtube";
 import { useHomeStore } from "../store/homeStore";
+import YouTubeIcon from "../assets/icons/youtube";
 
 const TestimonialBanner = () => {
   const { testimonials } = useHomeStore();
-  const [scrollPosition1, setScrollPosition1] = useState(0);
-  // const [scrollPosition2, setScrollPosition2] = useState(0);
-  const containerRef1 = useRef<HTMLDivElement>(null);
-  // const containerRef2 = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setScrollPosition1((prev) => {
-        if (prev <= -100) return 0;
-        return prev - 0.5;
-      });
-      // setScrollPosition2((prev) => {
-      //   if (prev >= 100) return 0;
-      //   return prev + 0.5;
-      // });
-    }, 50);
-
-    return () => clearInterval(timer);
-  }, []);
 
   const renderTestimonialCard = (testimonial: (typeof testimonials)[0]) => (
     <div className="flex-shrink-0 w-[400px] bg-white rounded-xl shadow p-6 mx-4 m-6">
@@ -64,37 +44,16 @@ const TestimonialBanner = () => {
           </p>
         </div>
 
-        {/* First Row of Testimonials */}
-        <div className="relative overflow-hidden mb-8" ref={containerRef1}>
-          <div
-            className="flex transition-transform duration-1000"
-            style={{
-              transform: `translateX(${scrollPosition1}%)`,
-            }}
-          >
-            {testimonials.map((testimonial, index) => (
+        {/* Testimonials Carousel */}
+        <div className="relative overflow-hidden mb-8">
+          <div className="flex animate-marquee">
+            {[...testimonials, ...testimonials].map((testimonial, index) => (
               <div key={`row1-${index}`}>
                 {renderTestimonialCard(testimonial)}
               </div>
             ))}
           </div>
         </div>
-
-        {/* Second Row of Testimonials */}
-        {/* <div className="relative overflow-hidden" ref={containerRef2}>
-          <div
-            className="flex transition-transform duration-1000"
-            style={{
-              transform: `translateX(${scrollPosition2}%)`,
-            }}
-          >
-            {[...testimonials, ...testimonials].map((testimonial, index) => (
-              <div key={`row2-${index}`}>
-                {renderTestimonialCard(testimonial)}
-              </div>
-            ))}
-          </div>
-        </div> */}
 
         {/* CTA Button */}
         <div className="text-center mt-12">
@@ -109,6 +68,22 @@ const TestimonialBanner = () => {
           </a>
         </div>
       </div>
+
+      <style>
+        {`
+          @keyframes marquee {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+          .animate-marquee {
+            animation: marquee 5s linear infinite;
+          }
+        `}
+      </style>
     </div>
   );
 };

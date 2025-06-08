@@ -92,6 +92,14 @@ const Footer = () => {
                   Join Us
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/resources"
+                  className="text-gray-400 hover:text-white transition"
+                >
+                  Important Links
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

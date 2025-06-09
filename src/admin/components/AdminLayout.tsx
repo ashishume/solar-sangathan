@@ -74,6 +74,11 @@ const AdminLayout = () => {
       icon: "📚",
     },
     {
+      title: "Rate Cards",
+      path: "/admin/rate-cards",
+      icon: "💰",
+    },
+    {
       title: "About",
       path: "/admin/about",
       icon: "👥",

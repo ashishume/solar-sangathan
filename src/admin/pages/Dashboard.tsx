@@ -23,6 +23,7 @@ interface Sections {
   about: Section[];
   blog: Section[];
   contact: Section[];
+  joinMembers: Section[];
 }
 
 const Dashboard = () => {
@@ -154,12 +155,30 @@ const Dashboard = () => {
             color: "bg-red-500",
             icon: "📞",
           },
+        ],
+      },
+    ],
+    joinMembers: [
+      {
+        title: "Join Page",
+        description: "Manage contact information and inquiries",
+        link: "/admin/join",
+        color: "bg-red-600",
+        icon: "📞",
+        subSections: [
           {
             title: "Join Submissions",
             description: "View join form submissions",
             link: "/admin/join",
             color: "bg-red-500",
             icon: "📞",
+          },
+          {
+            title: "Rate Cards",
+            description: "Manage rate cards",
+            link: "/admin/rate-cards",
+            color: "bg-red-500",
+            icon: "💸",
           },
         ],
       },
@@ -173,46 +192,25 @@ const Dashboard = () => {
       {/* Tabs */}
       <div className="border-b border-gray-200 mb-6">
         <nav className="-mb-px flex space-x-8">
-          <button
-            onClick={() => setActiveTab("home")}
-            className={`${
-              activeTab === "home"
-                ? "border-blue-500 text-blue-600"
-                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-            } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
-          >
-            Home
-          </button>
-          <button
-            onClick={() => setActiveTab("about")}
-            className={`${
-              activeTab === "about"
-                ? "border-blue-500 text-blue-600"
-                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-            } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
-          >
-            About
-          </button>
-          <button
-            onClick={() => setActiveTab("blog")}
-            className={`${
-              activeTab === "blog"
-                ? "border-blue-500 text-blue-600"
-                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-            } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
-          >
-            Blog
-          </button>
-          <button
-            onClick={() => setActiveTab("contact")}
-            className={`${
-              activeTab === "contact"
-                ? "border-blue-500 text-blue-600"
-                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-            } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
-          >
-            Contact
-          </button>
+          {[
+            { id: "home", label: "Home" },
+            { id: "about", label: "About" },
+            { id: "blog", label: "Blog" },
+            { id: "contact", label: "Contact" },
+            { id: "joinMembers", label: "Join Members" },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id as keyof Sections)}
+              className={`${
+                activeTab === tab.id
+                  ? "border-blue-500 text-blue-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+              } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </nav>
       </div>
 

@@ -39,11 +39,11 @@ const BrandBanner = () => {
               transform: translateX(0);
             }
             100% {
-              transform: translateX(-50%);
+              transform: translateX(-100%);
             }
           }
           .animate-marquee {
-            animation: marquee 30s linear infinite;
+            animation: marquee 100s linear infinite;
           }
         `}
       </style>

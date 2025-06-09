@@ -27,6 +27,8 @@ import Brands from "./pages/Brands/Brands";
 import BrandForm from "./pages/Brands/BrandForm";
 import Resources from "./pages/Resources/Resources";
 import ResourceForm from "./pages/Resources/ResourceForm";
+import RateCards from "./pages/RateCards/RateCards";
+import RateCardForm from "./pages/RateCards/RateCardForm";
 
 const AdminRouter = () => {
   return (
@@ -100,6 +102,11 @@ const AdminRouter = () => {
           <Route index element={<Resources />} />
           <Route path="new" element={<ResourceForm />} />
           <Route path=":id/edit" element={<ResourceForm />} />
+        </Route>
+        <Route path="rate-cards">
+          <Route index element={<RateCards />} />
+          <Route path="new" element={<RateCardForm />} />
+          <Route path=":id/edit" element={<RateCardForm />} />
         </Route>
         <Route path="*" element={<Navigate to="/admin" replace />} />
       </Route>

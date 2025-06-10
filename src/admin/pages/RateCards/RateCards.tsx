@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import CRUDTable from "../../components/CRUDTable";
 import { toast } from "react-hot-toast";
-import axios from "axios";
 import axiosInstance from "@/admin/services/axios";
 import { StarIcon } from "@heroicons/react/24/solid";
 
@@ -27,7 +26,7 @@ const RateCards = () => {
   const handleDelete = async (id: string) => {
     if (window.confirm("Are you sure you want to delete this rate card?")) {
       try {
-        await axios.delete(`/api/rate-cards/${id}`);
+        await axiosInstance.delete(`/rate-cards/${id}`);
         toast.success("Rate card deleted successfully");
         fetchRateCards();
       } catch (error) {

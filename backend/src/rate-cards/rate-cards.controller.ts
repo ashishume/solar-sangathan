@@ -39,7 +39,7 @@ export class RateCardsController {
     return this.rateCardsService.update(id, updateRateCardDto);
   }
 
-  @Delete(":id")
+  @Delete("rate-cards/:id")
   remove(@Param("id") id: string) {
     return this.rateCardsService.remove(id);
   }

@@ -89,8 +89,12 @@ const AdminRouter = () => {
             element={<MemberForm isWorkingCommittee={true} />}
           />
           <Route
-            path=":id/edit"
+            path="other-members/:id/edit"
             element={<MemberForm isWorkingCommittee={false} />}
+          />
+          <Route
+            path="working-committee/:id/edit"
+            element={<MemberForm isWorkingCommittee={true} />}
           />
         </Route>
         <Route path="brands">

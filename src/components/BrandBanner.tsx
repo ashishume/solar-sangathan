@@ -11,7 +11,12 @@ const BrandBanner = () => {
         </h2>
         <div className="relative">
           <div className="overflow-hidden pb-4">
-            <div className="flex space-x-8 min-w-max px-4 animate-marquee">
+            <div
+              className="flex space-x-8 min-w-max px-4"
+              style={{
+                animation: "marquee 25s linear infinite",
+              }}
+            >
               {[...brands, ...brands].map((brand, index) => (
                 <div
                   key={index}
@@ -31,22 +36,6 @@ const BrandBanner = () => {
           <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
         </div>
       </div>
-
-      <style>
-        {`
-          @keyframes marquee {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(-100%);
-            }
-          }
-          .animate-marquee {
-            animation: marquee 100s linear infinite;
-          }
-        `}
-      </style>
     </section>
   );
 };

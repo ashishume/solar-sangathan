@@ -30,13 +30,13 @@ const HeroSection = () => {
 
   return (
     <section className="py-8">
-      <div className="relative w-[95%] h-[250px] sm:h-[320px] md:h-[380px] lg:h-[420px] rounded-3xl overflow-hidden mb-8 mx-auto">
+      <div className="relative w-[95%] h-[250px] sm:h-[320px] md:h-[380px] lg:h-[420px] xl:h-[480px] rounded-3xl overflow-hidden mb-8 mx-auto">
         {heroImages.map((src, index) => (
           <img
             key={src._id.toString()}
             src={src.url}
             alt={`hero ${index + 1}`}
-            className={`absolute w-full h-full object-cover transition-opacity duration-500 ${
+            className={`absolute w-full h-full object-contain md:object-cover transition-opacity duration-500 ${
               index === currentImageIndex ? "opacity-100" : "opacity-0"
             }`}
           />

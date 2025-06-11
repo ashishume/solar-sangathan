@@ -13,6 +13,7 @@ interface Member {
   name: string;
   role: string;
   image: string;
+  contact: string;
   social: {
     linkedin?: string;
     twitter?: string;
@@ -168,6 +169,11 @@ const About = () => {
                 {member.name}
               </h4>
               <p className="text-red-600 font-medium mb-2">{member.role}</p>
+              {member?.contact && (
+                <p className="text-red-600 font-medium mb-2">
+                  (+91) {member.contact}
+                </p>
+              )}
               <div className="flex gap-4 mt-2">
                 {member.social.linkedin && (
                   <a
@@ -238,6 +244,11 @@ const About = () => {
                 <p className="text-red-600 font-medium mb-2 text-center">
                   {member.role}
                 </p>
+                {member?.contact && (
+                  <p className="text-red-600 font-medium mb-2 text-center">
+                    (+91) {member.contact}
+                  </p>
+                )}
                 <div className="flex gap-4 mt-2">
                   {member.social.linkedin && (
                     <a

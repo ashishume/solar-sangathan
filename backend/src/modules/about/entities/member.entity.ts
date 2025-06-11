@@ -25,6 +25,9 @@ export class Member {
     telegram?: string;
   };
 
+  @Prop({ required: false })
+  contact: string;
+
   @Prop({ default: false })
   isWorkingCommittee: boolean;
 

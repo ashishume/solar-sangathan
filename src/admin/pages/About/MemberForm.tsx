@@ -10,6 +10,7 @@ interface Member {
   name: string;
   role: string;
   image: string;
+  contact: string;
   social: {
     linkedin?: string;
     twitter?: string;
@@ -38,6 +39,7 @@ const MemberForm = ({
     name: "",
     role: "",
     image: "",
+    contact: "",
     social: {
       linkedin: "",
       twitter: "",
@@ -157,6 +159,14 @@ const MemberForm = ({
               id="role"
               required
               value={formData.role}
+              onChange={handleChange}
+            />
+
+            <Input
+              label="Contact"
+              name="contact"
+              id="contact"
+              value={formData.contact}
               onChange={handleChange}
             />
 

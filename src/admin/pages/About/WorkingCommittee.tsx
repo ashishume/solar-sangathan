@@ -34,6 +34,7 @@ const WorkingCommittee = () => {
       ),
     },
     { header: "Role", accessor: "role" },
+    { header: "Contact", accessor: "contact" },
     {
       header: "Social Links",
       accessor: (item: any) => (

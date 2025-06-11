@@ -22,6 +22,10 @@ export class CreateMemberDto {
     telegram?: string;
   };
 
+  @IsString()
+  @IsOptional()
+  contact?: string;
+
   @IsBoolean()
   @IsOptional()
   isWorkingCommittee?: boolean;

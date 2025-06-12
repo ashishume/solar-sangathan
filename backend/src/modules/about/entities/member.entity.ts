@@ -31,6 +31,9 @@ export class Member {
   @Prop({ default: false })
   isWorkingCommittee: boolean;
 
+  @Prop({ default: 0 })
+  order: number;
+
   @Prop({ default: Date.now })
   createdAt: Date;
 

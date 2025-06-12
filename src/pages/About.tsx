@@ -154,11 +154,11 @@ const About = () => {
         <h3 className="text-3xl font-bold text-center text-gray-900 mb-10">
           Working Committee
         </h3>
-        <div className="flex flex-col md:flex-row justify-center gap-8">
+        <div className="flex flex-wrap justify-center gap-8">
           {workingCommittee.map((member) => (
             <div
               key={member.id}
-              className="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center w-full md:w-1/3 transition-transform duration-300 hover:scale-105"
+              className="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] transition-transform duration-300 hover:scale-105"
             >
               <img
                 src={member.image}

@@ -21,6 +21,7 @@ interface Member {
     telegram?: string;
   };
   isWorkingCommittee: boolean;
+  order?: number;
   createdAt?: string;
   updatedAt?: string;
   __v?: number;
@@ -40,6 +41,7 @@ const MemberForm = ({
     role: "",
     image: "",
     contact: "",
+    order: 0,
     social: {
       linkedin: "",
       twitter: "",
@@ -180,6 +182,18 @@ const MemberForm = ({
                 onChange={handleChange}
               />
             </div>
+
+            {isWorkingCommittee && (
+              <Input
+                label="Display Order"
+                type="number"
+                name="order"
+                id="order"
+                value={formData.order}
+                onChange={handleChange}
+                required
+              />
+            )}
 
             <div className="sm:col-span-2">
               <h4 className="text-sm font-medium text-gray-700 mb-3">

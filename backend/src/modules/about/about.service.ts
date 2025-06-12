@@ -21,7 +21,10 @@ export class AboutService {
   }
 
   findWorkingCommittee() {
-    return this.memberModel.find({ isWorkingCommittee: true }).exec();
+    return this.memberModel
+      .find({ isWorkingCommittee: true })
+      .sort({ order: 1 })
+      .exec();
   }
 
   findOtherMembers() {

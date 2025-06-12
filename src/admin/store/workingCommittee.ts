@@ -16,6 +16,7 @@ interface Member {
     telegram?: string;
   };
   isWorkingCommittee: boolean;
+  order?: number;
 }
 
 interface WorkingCommitteeStore {

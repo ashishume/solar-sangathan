@@ -102,6 +102,36 @@ const Footer = () => {
               </li>
             </ul>
           </div>
+          <div>
+            <h4 className="text-lg font-semibold mb-4">Contact Us</h4>
+            <ul className="space-y-2 text-gray-400">
+              <li className="flex items-start">
+                <span className="mr-2">📍</span>
+                <span>
+                  B17, Sudarshanpura Industrial Area, 22 Godam, Jaipur Rajasthan
+                  - 302006
+                </span>
+              </li>
+              <li className="flex items-center">
+                <span className="mr-2">📞</span>
+                <a
+                  href="tel:+919214444400"
+                  className="hover:text-white transition"
+                >
+                  +91 92144 44400
+                </a>
+              </li>
+              <li className="flex items-center">
+                <span className="mr-2">✉️</span>
+                <a
+                  href="mailto:solarsangathan@gmail.com"
+                  className="hover:text-white transition"
+                >
+                  solarsangathan@gmail.com
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
         <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
           <p>

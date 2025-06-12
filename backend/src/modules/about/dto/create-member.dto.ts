@@ -1,4 +1,10 @@
-import { IsString, IsOptional, IsBoolean, IsObject } from "class-validator";
+import {
+  IsString,
+  IsOptional,
+  IsBoolean,
+  IsObject,
+  IsNumber,
+} from "class-validator";
 
 export class CreateMemberDto {
   @IsString()
@@ -29,4 +35,8 @@ export class CreateMemberDto {
   @IsBoolean()
   @IsOptional()
   isWorkingCommittee?: boolean;
+
+  @IsNumber()
+  @IsOptional()
+  order?: number;
 }

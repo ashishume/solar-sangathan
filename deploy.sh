@@ -18,8 +18,8 @@ sudo docker build -t solar-sangathan-backend .
 
 # Stop and remove the existing container if it exists
 echo "🧹 Cleaning up existing container..."
-docker stop solar-sangathan-backend || true
-docker rm solar-sangathan-backend || true
+sudo docker stop solar-sangathan-backend || true
+sudo docker rm solar-sangathan-backend || true
 
 # Run the new container
 echo "🚀 Starting new container..."

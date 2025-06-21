@@ -213,7 +213,10 @@ export class HomeService {
 
   // Hero Images CRUD
   async getCarouselImages() {
-    const heroImages = await this.heroImageModel.find().exec();
+    const heroImages = await this.heroImageModel
+      .find()
+      .sort({ createdAt: -1 })
+      .exec();
     return heroImages;
   }
 
